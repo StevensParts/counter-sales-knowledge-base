@@ -236,19 +236,19 @@
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number" id="totalParts">247</div>
+                    <div class="stat-number" id="totalParts">124</div>
                     <div class="stat-label">Total Parts</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="inStockParts">189</div>
+                    <div class="stat-number" id="inStockParts">98</div>
                     <div class="stat-label">In Stock</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="applianceTypes">12</div>
+                    <div class="stat-number" id="applianceTypes">8</div>
                     <div class="stat-label">Appliance Types</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="partCategories">8</div>
+                    <div class="stat-number" id="partCategories">10</div>
                     <div class="stat-label">Brands</div>
                 </div>
             </div>
@@ -262,7 +262,7 @@
     <script>
         // PARTS DATABASE
         const knowledgeBase = [
-            // Whirlpool Parts
+            // WHIRLPOOL PARTS
             {
                 partNumber: "W10310240",
                 title: "Electronic Control Board",
@@ -307,8 +307,74 @@
                 inStock: true,
                 category: "Temperature Sensors"
             },
+            {
+                partNumber: "W10860464",
+                title: "Electronic Control Board",
+                brand: "Whirlpool",
+                appliance: "Washer",
+                description: "Main control board for front-load washers. Controls wash cycles, water temperature, and spin speeds.",
+                errorCodes: ["F1-E1", "F3-E1", "F5-E2"],
+                compatibility: ["WFW9351YW", "WFW8630HW", "WFW85HEFW"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "W11603810",
+                title: "Washer Control Board",
+                brand: "Whirlpool",
+                appliance: "Washer",
+                description: "Advanced control board for top-load washers with digital display. Features F3E1 pressure sensor control.",
+                errorCodes: ["F3-E1", "F9-E1", "dL"],
+                compatibility: ["WTW4816FW", "WTW4655JW", "WTW4850HW"],
+                inStock: false,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "W10295370A",
+                title: "Refrigerator Ice Maker Assembly",
+                brand: "Whirlpool",
+                appliance: "Refrigerator",
+                description: "Complete ice maker assembly for side-by-side refrigerators with automatic ice production.",
+                errorCodes: ["OF OF", "ER IF"],
+                compatibility: ["WRS325FDAM", "WRS588FIHZ", "WRX735SDHZ"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "W10884390",
+                title: "Ice Maker Kit",
+                brand: "Whirlpool",
+                appliance: "Refrigerator",
+                description: "Ice maker assembly kit for French door refrigerators with flexible ice tray design.",
+                errorCodes: ["OF OF", "ER IF", "88 88"],
+                compatibility: ["WRF757SDEM", "WRF767SDEM", "WRF540CWHZ"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "W10408179",
+                title: "Water Inlet Valve Kit",
+                brand: "Whirlpool",
+                appliance: "Refrigerator",
+                description: "Water inlet valve that provides water for ice maker and water dispenser with dual solenoids.",
+                errorCodes: ["ER dH", "OF OF"],
+                compatibility: ["WRS325FDAM", "WRF757SDEM", "WRS588FIHZ"],
+                inStock: true,
+                category: "Water Systems"
+            },
+            {
+                partNumber: "W10195054",
+                title: "Washer Water Inlet Valve",
+                brand: "Whirlpool",
+                appliance: "Washer",
+                description: "Hot and cold water inlet valve assembly for front-load and top-load washers.",
+                errorCodes: ["F2-E1", "F8-E1"],
+                compatibility: ["WFW9351YW", "WTW7500GC"],
+                inStock: true,
+                category: "Water Systems"
+            },
 
-            // LG Parts
+            // LG PARTS
             {
                 partNumber: "4681EA2001T",
                 title: "Drain Pump Assembly",
@@ -342,8 +408,41 @@
                 inStock: true,
                 category: "Control Boards"
             },
+            {
+                partNumber: "EBR67466109",
+                title: "Washer Main Control Board",
+                brand: "LG",
+                appliance: "Washer",
+                description: "Main control board manages washer functions including filling, washing, draining and spinning.",
+                errorCodes: ["OE", "FE", "UE", "IE"],
+                compatibility: ["WM3770HWA", "WM4270HWA", "WM2487HRMA"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "AEQ73110219",
+                title: "Ice Maker Assembly",
+                brand: "LG",
+                appliance: "Refrigerator",
+                description: "Complete ice maker assembly for LG French door refrigerators with smart diagnostics.",
+                errorCodes: ["ER IF", "ER FF", "OF OF"],
+                compatibility: ["LFXS28968S", "LMXS30776S", "LFXC24796S"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "5220FR2075L",
+                title: "Cold Water Inlet Valve",
+                brand: "LG",
+                appliance: "Washer",
+                description: "Cold water inlet valve assembly that controls water flow and prevents overfill conditions.",
+                errorCodes: ["FE", "PE", "OE"],
+                compatibility: ["WM3770HWA", "WM4270HWA", "WM2487HRMA"],
+                inStock: true,
+                category: "Water Systems"
+            },
 
-            // GE Parts
+            // GE PARTS
             {
                 partNumber: "WH12X10355",
                 title: "Water Pump Motor",
@@ -366,8 +465,41 @@
                 inStock: true,
                 category: "Heating Elements"
             },
+            {
+                partNumber: "WR55X10942",
+                title: "Refrigerator Main Control Board",
+                brand: "GE",
+                appliance: "Refrigerator",
+                description: "Main control board assembly for side-by-side refrigerators with temperature management.",
+                errorCodes: ["ER RF", "ER CF", "FF"],
+                compatibility: ["GDS22KCWAWW", "PDS22MFSABB", "PDS22MFSACC"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "WR30X10093",
+                title: "Electronic Ice Maker Assembly",
+                brand: "GE",
+                appliance: "Refrigerator",
+                description: "Electronic ice maker assembly kit with advanced diagnostics and cycle control.",
+                errorCodes: ["88 88", "ER IF"],
+                compatibility: ["GSS25GSHSS", "PSS28KSHSS", "GFE28GMKES"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "WR57X10051",
+                title: "Dual Solenoid Water Valve",
+                brand: "GE",
+                appliance: "Refrigerator",
+                description: "Dual solenoid inlet water valve for refrigerators with ice maker and water dispenser.",
+                errorCodes: ["ER dH", "ER IF"],
+                compatibility: ["GSS25GSHSS", "PDS22MFSABB", "GFE28GMKES"],
+                inStock: true,
+                category: "Water Systems"
+            },
 
-            // Samsung Parts
+            // SAMSUNG PARTS
             {
                 partNumber: "DC97-16782A",
                 title: "Drum Spider Assembly",
@@ -390,8 +522,41 @@
                 inStock: true,
                 category: "Ice Systems"
             },
+            {
+                partNumber: "DC92-01531B",
+                title: "Washer Control Board Assembly",
+                brand: "Samsung",
+                appliance: "Washer",
+                description: "Control board assembly for Samsung front-load washers with smart diagnostics.",
+                errorCodes: ["UB", "UE", "4C", "5C"],
+                compatibility: ["WF42H5000AW", "WF45K6200AW", "WF50K7500AV"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "DA97-05422A",
+                title: "Ice Maker Assembly (7-Cube)",
+                brand: "Samsung",
+                appliance: "Refrigerator",
+                description: "7-cube ice maker assembly for Samsung French door refrigerators with flex tray design.",
+                errorCodes: ["88 88", "OF OF", "PC ER"],
+                compatibility: ["RF267AARS", "RF267ABRS", "RF26VABBP"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "DA62-01477A",
+                title: "Water Inlet Valve",
+                brand: "Samsung",
+                appliance: "Refrigerator",
+                description: "Water inlet valve assembly for Samsung refrigerators with precise flow control.",
+                errorCodes: ["PC ER", "88 88"],
+                compatibility: ["RF28HMEDBSR", "RF23J9011SR", "RS25H5111SG"],
+                inStock: true,
+                category: "Water Systems"
+            },
 
-            // Kenmore Parts
+            // KENMORE PARTS
             {
                 partNumber: "137108100",
                 title: "Dryer Heating Element",
@@ -404,7 +569,7 @@
                 category: "Heating Elements"
             },
 
-            // Frigidaire Parts
+            // FRIGIDAIRE PARTS
             {
                 partNumber: "5304505394",
                 title: "Oven Control Board",
@@ -415,34 +580,168 @@
                 compatibility: ["FGEF3032MF", "CGEF3032MF"],
                 inStock: true,
                 category: "Control Boards"
+            },
+            {
+                partNumber: "241798224",
+                title: "Ice Maker Kit",
+                brand: "Frigidaire",
+                appliance: "Refrigerator",
+                description: "Ice maker replacement kit for Frigidaire side-by-side and French door refrigerators.",
+                errorCodes: ["ER IF", "OF OF"],
+                compatibility: ["FFSS2615TS", "FFHB2750TS"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "241734301",
+                title: "Water Inlet Valve",
+                brand: "Frigidaire",
+                appliance: "Refrigerator",
+                description: "Single solenoid water inlet valve for Frigidaire refrigerators with ice maker feed.",
+                errorCodes: ["ER IF", "OF OF"],
+                compatibility: ["FFSS2615TS", "FFHB2750TS", "FGHS2631PF"],
+                inStock: true,
+                category: "Water Systems"
+            },
+
+            // KITCHENAID PARTS
+            {
+                partNumber: "W10219463",
+                title: "Refrigerator Control Board",
+                brand: "KitchenAid",
+                appliance: "Refrigerator",
+                description: "Main refrigerator control board for French door models with advanced cooling control.",
+                errorCodes: ["ER dH", "ER CF", "ER IF"],
+                compatibility: ["KRFF507HPS", "KRFC704FPS", "KRFF300ESS"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "W10084142",
+                title: "Dishwasher Control Board",
+                brand: "KitchenAid",
+                appliance: "Dishwasher",
+                description: "Main control board for dishwashers with ProWash cycle and soil sensor technology.",
+                errorCodes: ["F2E2", "F6E4", "F7E1"],
+                compatibility: ["KDTE334GPS", "KDTM354DSS"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "W10190965",
+                title: "Ice Maker Assembly",
+                brand: "KitchenAid",
+                appliance: "Refrigerator",
+                description: "Ice maker assembly for KitchenAid counter-depth refrigerators with premium ice quality.",
+                errorCodes: ["OF OF", "ER IF"],
+                compatibility: ["KRFF507HPS", "KRFC704FPS"],
+                inStock: true,
+                category: "Ice Systems"
+            },
+            {
+                partNumber: "W10420083",
+                title: "Water Inlet Valve Assembly",
+                brand: "KitchenAid",
+                appliance: "Refrigerator",
+                description: "Water inlet valve assembly that supplies water to ice maker and water dispenser filter housing.",
+                errorCodes: ["ER dH", "OF OF"],
+                compatibility: ["KRFF507HPS", "KRFC704FPS", "KRFF300ESS"],
+                inStock: true,
+                category: "Water Systems"
+            },
+
+            // BOSCH PARTS
+            {
+                partNumber: "00754603",
+                title: "Dishwasher Control Board",
+                brand: "Bosch",
+                appliance: "Dishwasher",
+                description: "Electronic control board for Bosch dishwashers with AquaSensor and LoadSensor technology.",
+                errorCodes: ["E09", "E15", "E22"],
+                compatibility: ["SHP865WD5N", "SHPM65Z55N", "SHE68TL5UC"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "00622058",
+                title: "Dishwasher Water Valve",
+                brand: "Bosch",
+                appliance: "Dishwasher",
+                description: "Water inlet valve for Bosch dishwashers with AquaStop technology integration.",
+                errorCodes: ["E15", "E22"],
+                compatibility: ["SHP865WD5N", "SHPM65Z55N", "SHE68TL5UC"],
+                inStock: true,
+                category: "Water Systems"
+            },
+
+            // MAYTAG PARTS
+            {
+                partNumber: "W10174745",
+                title: "Dryer Control Board",
+                brand: "Maytag",
+                appliance: "Dryer",
+                description: "Electronic control board for dryers with moisture sensing and wrinkle prevention.",
+                errorCodes: ["F01", "F02", "F22"],
+                compatibility: ["MEDC465HW", "MGDC465HW", "MEDC555DW"],
+                inStock: true,
+                category: "Control Boards"
+            },
+            {
+                partNumber: "W10159839",
+                title: "Washer Water Inlet Valve",
+                brand: "Maytag",
+                appliance: "Washer",
+                description: "Hot and cold water inlet valve for Maytag top-load washers with leak detection.",
+                errorCodes: ["F8-E1", "F2-E1"],
+                compatibility: ["MVWC465HW", "MVWC555DW"],
+                inStock: true,
+                category: "Water Systems"
             }
         ];
 
         // ERROR CODE DATABASE
         const errorCodes = {
             // Whirlpool Error Codes
-            'F1-E1': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Control board communication error', parts: ['W10310240'], probability: 85 },
+            'F1-E1': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Control board communication error', parts: ['W10310240', 'W10860464'], probability: 85 },
             'F2-E1': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Door lock failure', parts: ['W10619654'], probability: 90 },
             'F9-E1': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Drain pump failure', parts: ['W10348269'], probability: 95 },
             'F3-E2': { brand: 'Whirlpool', appliance: 'Range', issue: 'Oven temperature sensor failure', parts: ['W11227912'], probability: 80 },
+            'F3-E1': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Pressure sensor error or drain pump issue', parts: ['W11603810'], probability: 85 },
             'dL': { brand: 'Whirlpool', appliance: 'Washer', issue: 'Door lock error or drain issue', parts: ['W10619654', 'W10348269'], probability: 85 },
             
             // LG Error Codes
             'OE': { brand: 'LG', appliance: 'Washer', issue: 'Drain error - pump or clog', parts: ['4681EA2001T'], probability: 90 },
             'FE': { brand: 'LG', appliance: 'Washer', issue: 'Water overfill error', parts: ['5220FR2075L'], probability: 80 },
             'PE': { brand: 'LG', appliance: 'Washer', issue: 'Water level sensor error', parts: ['5220FR2075L'], probability: 75 },
-            'ER IF': { brand: 'LG', appliance: 'Refrigerator', issue: 'Ice fan error', parts: ['EBR73304203'], probability: 70 },
+            'UE': { brand: 'LG', appliance: 'Washer', issue: 'Unbalanced load error', parts: ['EBR67466109'], probability: 70 },
+            'ER IF': { brand: 'LG', appliance: 'Refrigerator', issue: 'Ice fan error', parts: ['EBR73304203', 'AEQ73110219'], probability: 70 },
             
             // GE Error Codes
             'C1': { brand: 'GE', appliance: 'Dishwasher', issue: 'Wash pump motor failure', parts: ['WH12X10355'], probability: 85 },
+            'C2': { brand: 'GE', appliance: 'Dishwasher', issue: 'Wash pump motor failure', parts: ['WH12X10355'], probability: 85 },
             'FF': { brand: 'GE', appliance: 'Refrigerator', issue: 'Freezer defrost error', parts: ['WR55X10942'], probability: 80 },
             
             // Samsung Error Codes
             'UB': { brand: 'Samsung', appliance: 'Washer', issue: 'Unbalanced load or drum issue', parts: ['DC97-16782A'], probability: 60 },
-            '88 88': { brand: 'Samsung', appliance: 'Refrigerator', issue: 'Ice maker malfunction', parts: ['DA97-12540A'], probability: 75 },
+            'UE': { brand: 'Samsung', appliance: 'Washer', issue: 'Unbalanced load error', parts: ['DC92-01531B'], probability: 70 },
+            '88 88': { brand: 'Samsung', appliance: 'Refrigerator', issue: 'Ice maker malfunction', parts: ['DA97-12540A', 'DA97-05422A'], probability: 75 },
+            '4C': { brand: 'Samsung', appliance: 'Washer', issue: 'Water supply error', parts: ['DA62-01477A'], probability: 85 },
             
             // Frigidaire Error Codes
             'F10': { brand: 'Frigidaire', appliance: 'Range', issue: 'Oven overheating', parts: ['5304505394'], probability: 70 },
+            'F11': { brand: 'Frigidaire', appliance: 'Range', issue: 'Oven control board failure', parts: ['5304505394'], probability: 80 },
+            
+            // KitchenAid Error Codes
+            'F2E2': { brand: 'KitchenAid', appliance: 'Dishwasher', issue: 'UI board communication error', parts: ['W10084142'], probability: 75 },
+            
+            // Bosch Error Codes
+            'E15': { brand: 'Bosch', appliance: 'Dishwasher', issue: 'Water in base pan (leak)', parts: ['00622058'], probability: 85 },
+            
+            // Kenmore Error Codes
+            'F01': { brand: 'Kenmore', appliance: 'Dryer', issue: 'Heating element failure', parts: ['137108100'], probability: 90 },
+            
+            // Generic Ice Maker Codes
+            'OF OF': { brand: 'Multiple', appliance: 'Refrigerator', issue: 'Ice maker turned off or malfunction', parts: ['W10295370A', 'WR30X10093', 'DA97-05422A'], probability: 80 }
         };
 
         // SEARCH FUNCTIONALITY
@@ -450,7 +749,7 @@
             const searchTerm = document.getElementById('searchBox').value.trim().toLowerCase();
             const resultsContainer = document.getElementById('searchResults');
             
-            console.log('Searching for:', searchTerm); // Debug log
+            console.log('Searching for:', searchTerm);
             
             if (!searchTerm) {
                 resultsContainer.innerHTML = '';
@@ -459,53 +758,44 @@
 
             let results = [];
             
-            // Search in parts database
             knowledgeBase.forEach(item => {
                 let score = 0;
                 let matchReasons = [];
                 
-                // Exact part number match (highest priority)
                 if (item.partNumber.toLowerCase() === searchTerm) {
                     score += 100;
                     matchReasons.push('Exact part number match');
                 }
-                // Partial part number match
                 else if (item.partNumber.toLowerCase().includes(searchTerm)) {
                     score += 80;
                     matchReasons.push('Part number contains search term');
                 }
                 
-                // Error code match
                 if (item.errorCodes && item.errorCodes.some(code => code.toLowerCase().includes(searchTerm))) {
                     score += 70;
                     matchReasons.push('Related to error code');
                 }
                 
-                // Brand match
                 if (item.brand.toLowerCase().includes(searchTerm)) {
                     score += 60;
                     matchReasons.push('Brand match');
                 }
                 
-                // Appliance type match
                 if (item.appliance.toLowerCase().includes(searchTerm)) {
                     score += 50;
                     matchReasons.push('Appliance type match');
                 }
                 
-                // Title match
                 if (item.title.toLowerCase().includes(searchTerm)) {
                     score += 40;
                     matchReasons.push('Title contains search term');
                 }
                 
-                // Description match
                 if (item.description.toLowerCase().includes(searchTerm)) {
                     score += 30;
                     matchReasons.push('Description match');
                 }
                 
-                // Category match
                 if (item.category.toLowerCase().includes(searchTerm)) {
                     score += 25;
                     matchReasons.push('Category match');
@@ -520,10 +810,8 @@
                 }
             });
 
-            // Check if search term is an error code
             const errorCodeInfo = errorCodes[searchTerm.toUpperCase()];
             if (errorCodeInfo) {
-                // Find parts related to this error code
                 const relatedParts = knowledgeBase.filter(item => 
                     errorCodeInfo.parts.includes(item.partNumber)
                 );
@@ -544,12 +832,10 @@
                 });
             }
 
-            // Sort results by score (highest first)
             results.sort((a, b) => b.score - a.score);
             
-            console.log('Found results:', results.length); // Debug log
+            console.log('Found results:', results.length);
             
-            // Display results
             displayResults(results, searchTerm);
         }
 
@@ -562,10 +848,10 @@
                         <h3>No results found for "${searchTerm}"</h3>
                         <p>Try searching for:</p>
                         <ul style="list-style: none; margin-top: 15px;">
-                            <li>• Part numbers (e.g., W10310240)</li>
-                            <li>• Error codes (e.g., F1-E1, OE)</li>
+                            <li>• Part numbers (e.g., W10310240, DA97-05422A)</li>
+                            <li>• Error codes (e.g., F1-E1, OE, 88 88)</li>
                             <li>• Appliance types (washer, dryer, refrigerator)</li>
-                            <li>• Brand names (Whirlpool, LG, GE)</li>
+                            <li>• Brand names (Whirlpool, LG, GE, Samsung)</li>
                         </ul>
                     </div>
                 `;
@@ -609,31 +895,26 @@
             resultsContainer.innerHTML = html;
         }
 
-        // TEST FUNCTION
         function testSearch() {
             console.log('Testing search functionality...');
             console.log('Knowledge base items:', knowledgeBase.length);
             console.log('Error codes database entries:', Object.keys(errorCodes).length);
             
-            // Test search function
             document.getElementById('searchBox').value = 'control';
             performSearch();
             
             console.log('Test complete - check results above');
         }
 
-        // EVENT LISTENERS
         document.addEventListener('DOMContentLoaded', function() {
             const searchBox = document.getElementById('searchBox');
             
-            // Search on Enter key
             searchBox.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     performSearch();
                 }
             });
             
-            // Search as you type (with delay)
             let searchTimeout;
             searchBox.addEventListener('input', function() {
                 clearTimeout(searchTimeout);
@@ -643,7 +924,6 @@
             console.log('Search system loaded and ready!');
         });
 
-        // Make functions available globally for testing
         window.performSearch = performSearch;
         window.testSearch = testSearch;
         window.knowledgeBase = knowledgeBase;
