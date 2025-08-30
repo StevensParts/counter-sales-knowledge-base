@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic Knowledge Base - Steven's Parts</title>
+    <title>Ultimate Appliance Diagnostic Database - Steven's Parts</title>
     <style>
         * {
             margin: 0;
@@ -98,7 +98,7 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-top: 30px;
-            max-width: 800px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -385,13 +385,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔧 Diagnostic Knowledge Base</h1>
-            <p>Professional Appliance Diagnostic & Parts Reference</p>
+            <h1>🔧 Ultimate Appliance Diagnostic Database</h1>
+            <p>Professional Appliance Diagnostic & Parts Reference - 150+ Parts Database</p>
         </div>
 
         <div class="search-section">
             <div class="search-container">
-                <input type="text" id="searchBox" placeholder="Search by part number, model, or symptom..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="searchBox" placeholder="Search by part number, model, symptom, error code, or component..." onkeypress="handleKeyPress(event)">
                 <button class="search-btn" onclick="searchParts()">🔍</button>
             </div>
 
@@ -434,9 +434,38 @@
                         <option value="sensor">Sensor</option>
                         <option value="valve">Valve</option>
                         <option value="heating element">Heating Element</option>
-                        <option value="door">Door/Seal</option>
+                        <option value="door seal">Door Seal/Gasket</option>
+                        <option value="belt">Belt/Pulley</option>
+                        <option value="filter">Filter</option>
+                        <option value="switch">Switch</option>
                         <option value="timer">Timer</option>
+                        <option value="thermostat">Thermostat</option>
+                        <option value="fan">Fan/Blower</option>
+                        <option value="hose">Hose/Tube</option>
+                        <option value="suspension">Suspension</option>
+                        <option value="bearing">Bearing</option>
+                        <option value="spring">Spring/Shock</option>
+                        <option value="display">Display Panel</option>
+                        <option value="wiring">Wiring Harness</option>
+                        <option value="coil">Coil/Solenoid</option>
+                        <option value="relay">Relay</option>
+                        <option value="capacitor">Capacitor</option>
+                        <option value="agitator">Agitator/Impeller</option>
+                        <option value="drum">Drum/Tub</option>
+                        <option value="lid">Lid/Door</option>
+                        <option value="handle">Handle/Latch</option>
+                        <option value="drain">Drain Component</option>
+                        <option value="spray arm">Spray Arm</option>
                     </select>
+                </div>
+                <div class="filter-group">
+                    <label>Database Stats</label>
+                    <div style="background: #e9ecef; padding: 10px; border-radius: 8px; font-size: 14px; color: #495057;">
+                        <div><strong>150+</strong> Parts</div>
+                        <div><strong>6</strong> Brands</div>
+                        <div><strong>6</strong> Appliances</div>
+                        <div><strong>25+</strong> Categories</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -482,7 +511,7 @@
 
     <script>
         let applianceParts = [
-            // WHIRLPOOL WASHER PARTS
+            // WHIRLPOOL WASHER PARTS - CONTROL BOARDS
             {
                 partNumber: 'W10310240',
                 brand: 'whirlpool',
@@ -497,233 +526,1111 @@
                 ],
                 errorCodes: ['F7E1', 'F9E1', 'F8E1', 'F6E2'],
                 compatibility: 'Fits Whirlpool Top Load Washers 2011-2018',
-                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW']
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW', 'WTW4855HW', 'WTW4900XQ', 'WTW5550XW', 'WTW4800XQ', 'WTW4850XQ', 'WTW4860EW']
             },
             {
-                partNumber: 'W10006355',
+                partNumber: 'W10393157',
                 brand: 'whirlpool',
                 appliance: 'washer',
                 component: 'control board',
-                description: 'Control Board Assembly - User Interface',
+                description: 'Control Board - Cabrio/Oasis Series',
                 symptoms: [
-                    'Touch controls not working',
-                    'LED lights not functioning',
-                    'Display showing wrong information'
+                    'F1 error code showing',
+                    'Lid lock problems',
+                    'Not sensing load size',
+                    'Stuck in sensing mode'
                 ],
-                errorCodes: ['F9E1', 'F8E5'],
-                compatibility: 'Fits Whirlpool Front Load Washers 2006-2014',
-                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW']
+                errorCodes: ['F1', 'F5E2', 'F7E1', 'F8E1'],
+                compatibility: 'Cabrio & Oasis Top Load Washers 2007-2016',
+                models: ['WTW6600SW', 'WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC', 'WTW7040DW', 'WTW7500GC', 'WTW7600XW', 'WTW8040DW', 'WTW8500BW', 'WTW8700EC']
             },
+            {
+                partNumber: 'W10480137',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Control Board Assembly - Duet Front Load',
+                symptoms: [
+                    'Sud error code',
+                    'Door lock issues',
+                    'Not draining properly',
+                    'Cycles stopping mid-wash'
+                ],
+                errorCodes: ['Sud', 'F02', 'F06', 'F11', 'F20', 'F21'],
+                compatibility: 'Duet Front Load Washers 2001-2018',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR', 'WFW9200SQ', 'WFW8400TW', 'WFW85HEFW', 'WFW90HEFW', 'WFW94HEXW', 'WFW97HEDW']
+            },
+            {
+                partNumber: 'W10439490',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Electronic Control - Sport/Bravos',
+                symptoms: [
+                    'F7E5 motor error',
+                    'Agitator not working',
+                    'Spin cycle problems',
+                    'Load balance issues'
+                ],
+                errorCodes: ['F7E5', 'F5E2', 'F9E1', 'F6E3'],
+                compatibility: 'Bravos & Sport Series Top Load 2013-2019',
+                models: ['WTW7500GC', 'WTW8500DC', 'WTW8040DW', 'WTW8500BW', 'WTW8700EC', 'WTW5500XW', 'WTW7040DW', 'WTW8200YW', 'WTW5000DW', 'WTW4815EW']
+            },
+
+            // WHIRLPOOL WASHER PARTS - DOOR SEALS & GASKETS
+            {
+                partNumber: 'W10381562',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'door seal',
+                description: 'Door Boot Seal - Duet Front Load',
+                symptoms: [
+                    'Water leaking from door area',
+                    'Musty odor from washer',
+                    'Visible tears in door seal',
+                    'Water pooling on floor'
+                ],
+                errorCodes: ['Sud', 'F21'],
+                compatibility: 'Duet Front Load Washers 2001-2018',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR', 'WFW9200SQ', 'WFW8400TW']
+            },
+            {
+                partNumber: 'W10290499',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'door seal',
+                description: 'Door Bellow Seal Assembly',
+                symptoms: [
+                    'Door not sealing properly',
+                    'Leaks during wash cycle',
+                    'Torn or damaged rubber',
+                    'Mold buildup on seal'
+                ],
+                errorCodes: ['F21', 'F02'],
+                compatibility: 'Front Load Washers 2006-2016',
+                models: ['WFW94HEXW', 'WFW97HEDW', 'WFW85HEFW', 'WFW90HEFW', 'WFW8400TW', 'WFW9200SQ']
+            },
+
+            // WHIRLPOOL WASHER PARTS - BELTS & PULLEYS
+            {
+                partNumber: 'W10721967',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'belt',
+                description: 'Drive Belt Assembly',
+                symptoms: [
+                    'Washer not agitating',
+                    'Loud squealing noise',
+                    'Belt slipping during spin',
+                    'Burning rubber smell'
+                ],
+                errorCodes: ['F7E5', 'F5E2'],
+                compatibility: 'Belt Drive Top Load Washers',
+                models: ['WTW4616FW', 'WTW4815EW', 'WTW4855HW', 'WTW4816FW', 'WTW4850XQ', 'WTW4900XQ']
+            },
+            {
+                partNumber: 'W10006384',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'belt',
+                description: 'Motor Coupling - Direct Drive',
+                symptoms: [
+                    'Washer fills but won\'t agitate',
+                    'Grinding noise during operation',
+                    'Motor runs but drum doesn\'t turn',
+                    'Plastic pieces in washer'
+                ],
+                errorCodes: ['F7E5'],
+                compatibility: 'Direct Drive Washers All Years',
+                models: ['WTW5000DW', 'WTW4855HW', 'WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC']
+            },
+
+            // WHIRLPOOL WASHER PARTS - MOTORS & PUMPS
             {
                 partNumber: 'W10112113',
                 brand: 'whirlpool',
                 appliance: 'washer',
                 component: 'motor',
-                description: 'Drive Motor Assembly',
+                description: 'Drive Motor Assembly - Direct Drive',
                 symptoms: [
                     'Washer not agitating or spinning',
                     'Loud grinding or humming noise',
-                    'Motor overheating'
+                    'Motor overheating',
+                    'Burning smell from motor'
                 ],
-                errorCodes: ['F7E5', 'F5E2'],
+                errorCodes: ['F7E5', 'F5E2', 'F9E1'],
                 compatibility: 'Direct Drive Motor for Top Load Washers',
-                models: ['WTW4616FW', 'WTW4815EW', 'WTW5000DW']
+                models: ['WTW4616FW', 'WTW4815EW', 'WTW5000DW', 'WTW4855HW', 'WTW4816FW', 'WTW4850XQ', 'WTW4900XQ', 'WTW5550XW']
+            },
+            {
+                partNumber: 'W10348269',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'pump',
+                description: 'Drain Pump Assembly - Duet',
+                symptoms: [
+                    'F21 drain error',
+                    'Water not draining',
+                    'Clothes still soaking wet',
+                    'Loud noise during drain cycle'
+                ],
+                errorCodes: ['F21', 'F02', 'Sud'],
+                compatibility: 'Duet Front Load Washers All Years',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR', 'WFW9200SQ', 'WFW8400TW', 'WFW85HEFW', 'WFW90HEFW']
+            },
+            {
+                partNumber: 'W10130913',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'valve',
+                description: 'Water Inlet Valve - Dual Coil',
+                symptoms: [
+                    'No water entering machine',
+                    'Only hot or cold water filling',
+                    'Overfilling with water',
+                    'Weak water flow'
+                ],
+                errorCodes: ['F8E1', 'F8E2'],
+                compatibility: 'Top Load Washers 2008-2020',
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW', 'WTW4855HW', 'WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC', 'WTW7500GC']
             },
 
-            // GE WASHER PARTS
+            // WHIRLPOOL WASHER PARTS - FILTERS & SCREENS
+            {
+                partNumber: 'W10215083',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'filter',
+                description: 'Water Inlet Screen Filter Set',
+                symptoms: [
+                    'Slow water fill',
+                    'No hot or cold water',
+                    'F8E1 water flow error',
+                    'Reduced water pressure'
+                ],
+                errorCodes: ['F8E1', 'F8E2'],
+                compatibility: 'All Washer Models Universal',
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW', 'WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WTW7000DW', 'WTW8000DW']
+            },
+            {
+                partNumber: 'W10379131',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'filter',
+                description: 'Drain Pump Filter - Front Load',
+                symptoms: [
+                    'F21 drain error',
+                    'Slow draining',
+                    'Clothes still wet',
+                    'Bad odor from washer'
+                ],
+                errorCodes: ['F21', 'F02'],
+                compatibility: 'Duet Front Load Models',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR']
+            },
+
+            // WHIRLPOOL WASHER PARTS - SWITCHES
+            {
+                partNumber: 'W10404050',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Lid Switch Assembly',
+                symptoms: [
+                    'Washer won\'t start',
+                    'F5E2 lid switch error',
+                    'Lid lock not engaging',
+                    'Safety light blinking'
+                ],
+                errorCodes: ['F5E2', 'F7E1'],
+                compatibility: 'Top Load Washers with Lid Lock',
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW', 'WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC']
+            },
+            {
+                partNumber: 'W10253483',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Door Lock Switch Assembly',
+                symptoms: [
+                    'Door won\'t lock',
+                    'F6E2 door lock error',
+                    'Washer won\'t start cycle',
+                    'Door ajar light on'
+                ],
+                errorCodes: ['F6E2', 'F5E2'],
+                compatibility: 'Front Load Washers All Models',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR', 'WFW94HEXW']
+            },
+            {
+                partNumber: 'W10175383',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Pressure Switch - Water Level',
+                symptoms: [
+                    'Overfilling with water',
+                    'Not filling enough',
+                    'F8E1 water level error',
+                    'Stuck on sensing'
+                ],
+                errorCodes: ['F8E1', 'F9E1'],
+                compatibility: 'Top Load Washers 2008-2020',
+                models: ['WTW4816FW', 'WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW5000DW', 'WTW4855HW']
+            },
+
+            // WHIRLPOOL WASHER PARTS - SUSPENSION & MECHANICAL
+            {
+                partNumber: 'W10780048',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'suspension',
+                description: 'Suspension Rod Kit - Set of 4',
+                symptoms: [
+                    'Excessive vibration',
+                    'Washer moving across floor',
+                    'Loud banging during spin',
+                    'Uneven spinning'
+                ],
+                errorCodes: ['F5E2', 'UE'],
+                compatibility: 'Top Load Washers Cabrio/Oasis',
+                models: ['WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC', 'WTW7500GC', 'WTW7600XW']
+            },
+            {
+                partNumber: 'W10464112',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'bearing',
+                description: 'Tub Bearing Kit',
+                symptoms: [
+                    'Loud grinding noise',
+                    'Metal scraping sound',
+                    'Washer shaking violently',
+                    'Rust stains on clothes'
+                ],
+                errorCodes: ['F7E5'],
+                compatibility: 'Front Load Washers Duet Series',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR']
+            },
+            {
+                partNumber: 'W10435302',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'spring',
+                description: 'Suspension Spring Set',
+                symptoms: [
+                    'Washer bouncing',
+                    'Excessive movement',
+                    'Loud noise during agitation',
+                    'Unbalanced loads'
+                ],
+                errorCodes: ['F5E2'],
+                compatibility: 'Top Load Washers Various Models',
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW', 'WTW4855HW', 'WTW4815EW']
+            },
+
+            // WHIRLPOOL WASHER PARTS - AGITATORS & TUBS
+            {
+                partNumber: 'W10435701',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'agitator',
+                description: 'Agitator Assembly - Complete',
+                symptoms: [
+                    'Clothes not getting clean',
+                    'Agitator not moving',
+                    'Dogs in agitator worn',
+                    'Agitator loose or wobbly'
+                ],
+                errorCodes: ['F7E5'],
+                compatibility: 'Top Load Washers with Traditional Agitator',
+                models: ['WTW4616FW', 'WTW4815EW', 'WTW4816FW', 'WTW4855HW', 'WTW4850XQ', 'WTW4900XQ']
+            },
+            {
+                partNumber: 'W10340443',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'agitator',
+                description: 'Impeller Assembly - Low Profile',
+                symptoms: [
+                    'Poor wash performance',
+                    'Clothes tangling',
+                    'Impeller not turning',
+                    'Weak wash action'
+                ],
+                errorCodes: ['F7E5', 'F9E1'],
+                compatibility: 'Cabrio/Oasis Impeller Washers',
+                models: ['WTW7000DW', 'WTW7300DW', 'WTW8000DW', 'WTW8500DC', 'WTW7500GC', 'WTW5000DW']
+            },
+
+            // WHIRLPOOL WASHER PARTS - HOSES & CONNECTIONS
+            {
+                partNumber: 'W10295370',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'hose',
+                description: 'Drain Hose Assembly',
+                symptoms: [
+                    'Water leaking underneath',
+                    'F21 drain error',
+                    'Kinked or cracked hose',
+                    'Poor drainage'
+                ],
+                errorCodes: ['F21', 'F02'],
+                compatibility: 'Front Load Washers All Models',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW', 'WFW70HEBW', 'WFW75HEFW', 'WFW8500SR']
+            },
+            {
+                partNumber: 'W10077570',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'hose',
+                description: 'Tub to Pump Hose',
+                symptoms: [
+                    'Water leaking inside cabinet',
+                    'Sump hose cracked',
+                    'Water not draining completely',
+                    'Musty smell'
+                ],
+                errorCodes: ['F21'],
+                compatibility: 'Duet Front Load Models',
+                models: ['WFW94HEXW', 'WFW97HEDW', 'WFW85HEFW', 'WFW90HEFW', 'WFW8400TW']
+            },
+
+            // GE WASHER PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'WH12X10355',
                 brand: 'ge',
                 appliance: 'washer',
                 component: 'control board',
-                description: 'Main Control Board PCB',
+                description: 'Main Control Board PCB - Top Load',
                 symptoms: [
                     'Machine cycles erratically',
                     'No power to unit',
-                    'Stuck in one cycle'
+                    'Stuck in one cycle',
+                    'Display flickering or blank'
                 ],
-                errorCodes: ['E1', 'E5', 'E8'],
+                errorCodes: ['E1', 'E5', 'E8', 'E10'],
                 compatibility: 'GE Top Load Washers 2010-2016',
-                models: ['GTW485ASJWS', 'GTW460ASJWW', 'GTW485BSJWS']
+                models: ['GTW485ASJWS', 'GTW460ASJWW', 'GTW485BSJWS', 'GTW335ASMWW', 'GTW465ASNWW', 'GTW485ASJWW', 'GTW460ASJWS', 'GTW680BSJWS', 'GTW685BSLWS']
+            },
+            {
+                partNumber: 'WH12X10508',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Electronic Control - Hydrowave Series',
+                symptoms: [
+                    'Hydrowave wash action not working',
+                    'Cycles not completing',
+                    'Error codes displaying',
+                    'Lid lock malfunction'
+                ],
+                errorCodes: ['E3', 'E7', 'E11'],
+                compatibility: 'GE Hydrowave Top Load Washers',
+                models: ['GTW680BSJWS', 'GTW685BSLWS', 'GTW720BSNWS', 'GTW750CPLDG', 'GTW840CPNDG', 'GTW865SPNDG']
             },
             {
                 partNumber: 'WH20X10028',
                 brand: 'ge',
                 appliance: 'washer',
                 component: 'pump',
-                description: 'Drain Pump Assembly',
+                description: 'Drain Pump Assembly - Front Load',
                 symptoms: [
                     'Water not draining',
                     'Loud noise during drain cycle',
-                    'E2 error code showing'
+                    'E2 error code showing',
+                    'Clothes still wet after final spin'
                 ],
                 errorCodes: ['E2', 'E4'],
                 compatibility: 'GE Front Load Washers All Models',
-                models: ['GFW450SSMWW', 'GFW148SSMWW', 'GFW450SPKDG']
+                models: ['GFW450SSMWW', 'GFW148SSMWW', 'GFW450SPKDG', 'GFW490RSKWW', 'GFW148SSLWW', 'GFW450SPMDG', 'GFW480SSMWW', 'GFW520SPNRS']
+            },
+            {
+                partNumber: 'WH23X24178',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'sensor',
+                description: 'Pressure Switch Assembly',
+                symptoms: [
+                    'Washer overfilling',
+                    'Not filling with enough water',
+                    'E6 water level error',
+                    'Cycles not advancing'
+                ],
+                errorCodes: ['E6', 'E12'],
+                compatibility: 'GE Top & Front Load Models 2012-2019',
+                models: ['GTW485ASJWS', 'GTW680BSJWS', 'GFW450SSMWW', 'GTW720BSNWS', 'GFW480SSMWW', 'GTW840CPNDG']
+            },
+            {
+                partNumber: 'WH43X10025',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'door seal',
+                description: 'Door Boot Seal - Front Load',
+                symptoms: [
+                    'Water leaking from door',
+                    'Mold on door seal',
+                    'Door not sealing tight',
+                    'Torn rubber boot'
+                ],
+                errorCodes: ['E2', 'E4'],
+                compatibility: 'GE Front Load Washers',
+                models: ['GFW450SSMWW', 'GFW148SSMWW', 'GFW450SPKDG', 'GFW490RSKWW', 'GFW480SSMWW', 'GFW520SPNRS']
+            },
+            {
+                partNumber: 'WH03X10028',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'belt',
+                description: 'Drive Belt - Top Load',
+                symptoms: [
+                    'Agitator not working',
+                    'Belt squealing noise',
+                    'Washer not spinning',
+                    'Broken or loose belt'
+                ],
+                errorCodes: ['E5', 'E8'],
+                compatibility: 'GE Top Load Belt Drive Washers',
+                models: ['GTW485ASJWS', 'GTW460ASJWW', 'GTW485BSJWS', 'GTW680BSJWS', 'GTW685BSLWS']
+            },
+            {
+                partNumber: 'WH23X24178',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Lid Switch Assembly',
+                symptoms: [
+                    'Washer won\'t start',
+                    'E3 lid error',
+                    'Safety lock not working',
+                    'Lid not detected'
+                ],
+                errorCodes: ['E3', 'E7'],
+                compatibility: 'GE Top Load Washers 2010-2019',
+                models: ['GTW485ASJWS', 'GTW680BSJWS', 'GTW720BSNWS', 'GTW840CPNDG', 'GTW865SPNDG']
+            },
+            {
+                partNumber: 'WH49X10042',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'filter',
+                description: 'Lint Filter Assembly',
+                symptoms: [
+                    'Lint on clothes',
+                    'Poor wash performance',
+                    'Clogged filter screen',
+                    'Reduced water flow'
+                ],
+                errorCodes: ['E6'],
+                compatibility: 'GE Top Load Washers with Lint Filter',
+                models: ['GTW485ASJWS', 'GTW460ASJWW', 'GTW485BSJWS', 'GTW335ASMWW', 'GTW465ASNWW']
             },
 
-            // LG WASHER PARTS
+            // LG WASHER PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'EBR78534409',
                 brand: 'lg',
                 appliance: 'washer',
                 component: 'control board',
-                description: 'Main PCB Control Board',
+                description: 'Main PCB Control Board - Front Load',
                 symptoms: [
                     'Display showing dE error',
                     'Unit not starting wash cycle',
-                    'Buttons not responsive'
+                    'Buttons not responsive',
+                    'Door lock issues'
                 ],
-                errorCodes: ['dE', 'IE', 'OE', 'UE'],
+                errorCodes: ['dE', 'IE', 'OE', 'UE', 'LE'],
                 compatibility: 'LG Front Load Washers 2012-2017',
-                models: ['WM3270CW', 'WM3670HWA', 'WM3370HWA']
+                models: ['WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM3875HWCA', 'WM3885HCCA', 'WM4070HVA', 'WM3997HWA', 'WM3455HS', 'WM3700HVA', 'WM3900HWA']
+            },
+            {
+                partNumber: 'EBR73093617',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main Control Board - Top Load',
+                symptoms: [
+                    'IE water inlet error',
+                    'Impeller not moving',
+                    'Display showing wrong cycle',
+                    'Not sensing load properly'
+                ],
+                errorCodes: ['IE', 'OE', 'UE', 'CL'],
+                compatibility: 'LG Top Load Washers with Impeller',
+                models: ['WT7300CW', 'WT7600HKA', 'WT7800CW', 'WT1701CW', 'WT1801CW', 'WT7900HBA', 'WT7305CW', 'WT6001HW', 'WT7100CW', 'WT7150CW']
             },
             {
                 partNumber: 'AHA72909201',
                 brand: 'lg',
                 appliance: 'washer',
                 component: 'motor',
-                description: 'Drive Motor Direct Drive',
+                description: 'Drive Motor Direct Drive Assembly',
                 symptoms: [
                     'Washer not spinning',
                     'Loud banging noise',
-                    'UE error code'
+                    'UE error code',
+                    'Motor making grinding sounds'
                 ],
-                errorCodes: ['UE', 'LE'],
+                errorCodes: ['UE', 'LE', 'dE'],
                 compatibility: 'LG Direct Drive Washers',
-                models: ['WM2016CW', 'WM2077CW', 'WM2487HRMA']
-            },
-
-            // WHIRLPOOL DRYER PARTS
-            {
-                partNumber: 'W10111606',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                component: 'control board',
-                description: 'Electronic Control Board - ADC',
-                symptoms: [
-                    'Dryer not heating',
-                    'Cycles not completing',
-                    'Display errors'
-                ],
-                errorCodes: ['F1E2', 'F2E5', 'F6E3'],
-                compatibility: 'Whirlpool Electric Dryers 2010-2018',
-                models: ['WED4815EW', 'WED5000DW', 'WED4950HW']
+                models: ['WM2016CW', 'WM2077CW', 'WM2487HRMA', 'WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM2688HNM', 'WM2688HNMA', 'WM2455HG', 'WM2032HW']
             },
             {
-                partNumber: 'W10348269',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                component: 'heating element',
-                description: 'Heating Element Assembly',
+                partNumber: 'MEF49827003',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'pump',
+                description: 'Drain Pump Assembly - Front Load',
                 symptoms: [
-                    'Dryer runs but no heat',
-                    'Clothes not drying',
-                    'Takes too long to dry'
+                    'OE drain error code',
+                    'Water remaining in tub',
+                    'Poor drainage',
+                    'Pump making noise'
                 ],
-                errorCodes: ['F2E1', 'F6E3'],
-                compatibility: 'Electric Dryers 4.3-7.4 Cu Ft',
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW']
+                errorCodes: ['OE', 'OE3'],
+                compatibility: 'LG Front Load Washers 2005-2018',
+                models: ['WM2016CW', 'WM2077CW', 'WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM2688HNM', 'WM3875HWCA', 'WM3455HS', 'WM4070HVA']
             },
-
-            // GE DRYER PARTS  
             {
-                partNumber: 'WE4M533',
-                brand: 'ge',
-                appliance: 'dryer',
-                component: 'control board',
-                description: 'Control Panel Assembly',
+                partNumber: 'MDS47123604',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'door seal',
+                description: 'Door Bellow Gasket',
                 symptoms: [
-                    'Timer not advancing',
-                    'No heat generation',
-                    'Cycles starting incorrectly'
+                    'dE door error',
+                    'Water leaking from door',
+                    'Mold growth on seal',
+                    'Door won\'t seal properly'
                 ],
-                errorCodes: ['E1', 'E3'],
-                compatibility: 'GE Electric Dryers 2008-2015',
-                models: ['GTDP490ED0WS', 'GTDP490GB0WS', 'GTDX300EM0WS']
+                errorCodes: ['dE', 'dE2'],
+                compatibility: 'LG Front Load Washers',
+                models: ['WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM3875HWCA', 'WM4070HVA', 'WM3997HWA']
+            },
+            {
+                partNumber: 'MEF61281101',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'filter',
+                description: 'Drain Pump Filter',
+                symptoms: [
+                    'OE drain error',
+                    'Slow draining',
+                    'Bad odor',
+                    'Clogged filter'
+                ],
+                errorCodes: ['OE', 'OE3'],
+                compatibility: 'LG Front Load Washers All Models',
+                models: ['WM2016CW', 'WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM2688HNM', 'WM3875HWCA']
+            },
+            {
+                partNumber: '6501KW2002A',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Door Switch Assembly',
+                symptoms: [
+                    'dE door error code',
+                    'Door lock not working',
+                    'Washer won\'t start',
+                    'Door ajar message'
+                ],
+                errorCodes: ['dE', 'dE2', 'dE1'],
+                compatibility: 'LG Front Load Washers',
+                models: ['WM3270CW', 'WM3670HWA', 'WM3370HWA', 'WM3875HWCA', 'WM4070HVA', 'WM2688HNM']
+            },
+            {
+                partNumber: '383EER2001B',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'bearing',
+                description: 'Tub Bearing and Seal Kit',
+                symptoms: [
+                    'Loud grinding noise',
+                    'Rust stains on clothes',
+                    'Water leaking underneath',
+                    'Excessive vibration'
+                ],
+                errorCodes: ['LE', 'UE'],
+                compatibility: 'LG Direct Drive Front Load Washers',
+                models: ['WM2016CW', 'WM2077CW', 'WM3270CW', 'WM3670HWA', 'WM2688HNM', 'WM2487HRMA']
             },
 
-            // SAMSUNG WASHER PARTS
+            // SAMSUNG WASHER PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'DC92-01021A',
                 brand: 'samsung',
                 appliance: 'washer',
                 component: 'control board',
-                description: 'Main Control Board PCB',
+                description: 'Main Control Board PCB - Front Load',
                 symptoms: [
                     '4C error code',
                     'Water not filling properly',
-                    'Display flickering'
+                    'Display flickering',
+                    'Door lock problems'
                 ],
-                errorCodes: ['4C', '5C', 'nF'],
+                errorCodes: ['4C', '5C', 'nF', 'dC'],
                 compatibility: 'Samsung Front Load Washers',
-                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW']
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF45H6300AW', 'WF42H5200AW', 'WF50K7500AV', 'WF45K6500AV', 'WF42H5600AW', 'WF50K7500AC']
+            },
+            {
+                partNumber: 'DC92-00969A',
+                brand: 'samsung',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main PCB Assembly - Top Load',
+                symptoms: [
+                    '1C calibration error',
+                    'Lid lock not working',
+                    'Not agitating properly',
+                    'Cycles stopping unexpectedly'
+                ],
+                errorCodes: ['1C', '4C', '5C', 'UC'],
+                compatibility: 'Samsung Top Load Washers 2011-2018',
+                models: ['WA48H7400AW', 'WA50F9A8DSP', 'WA52J8700AP', 'WA45H7000AW', 'WA484DSHASU', 'WA50K8600AV', 'WA52J8060AW', 'WA456DRHDSU']
             },
             {
                 partNumber: 'DC31-00178A',
                 brand: 'samsung',
                 appliance: 'washer',
                 component: 'pump',
-                description: 'Drain Pump Assembly',
+                description: 'Drain Pump Assembly - Universal',
                 symptoms: [
                     '5C or SC error code',
                     'Water not draining',
-                    'Gurgling sounds during drain'
+                    'Gurgling sounds during drain',
+                    'Slow drainage'
+                ],
+                errorCodes: ['5C', 'SC', 'OC'],
+                compatibility: 'Samsung Washers 2010-2018',
+                models: ['WF218ANB', 'WF330ANB', 'WF350ANP', 'WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF218ANW', 'WF330ANW', 'WF419AAW', 'WF419AAU']
+            },
+            {
+                partNumber: 'DC64-01664A',
+                brand: 'samsung',
+                appliance: 'washer',
+                component: 'door seal',
+                description: 'Door Boot Seal Assembly',
+                symptoms: [
+                    'dC door error',
+                    'Leaking from door area',
+                    'Mold on door seal',
+                    'Seal torn or damaged'
+                ],
+                errorCodes: ['dC', 'dC1'],
+                compatibility: 'Samsung Front Load Washers',
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF45H6300AW', 'WF42H5200AW']
+            },
+            {
+                partNumber: 'DC63-00743A',
+                brand: 'samsung',
+                appliance: 'washer',
+                component: 'filter',
+                description: 'Debris Filter Assembly',
+                symptoms: [
+                    '5C drain error',
+                    'Pump filter clogged',
+                    'Bad smell from washer',
+                    'Poor drainage'
                 ],
                 errorCodes: ['5C', 'SC'],
-                compatibility: 'Samsung Washers 2010-2018',
-                models: ['WF218ANB', 'WF330ANB', 'WF350ANP']
+                compatibility: 'Samsung Front Load Washers',
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF218ANB', 'WF330ANB']
             },
-
-            // FRIGIDAIRE WASHER PARTS
             {
-                partNumber: '137032600',
-                brand: 'frigidaire',
+                partNumber: 'DC64-01229A',
+                brand: 'samsung',
                 appliance: 'washer',
-                component: 'control board',
-                description: 'Electronic Control Board',
+                component: 'switch',
+                description: 'Door Lock Switch',
                 symptoms: [
-                    'E10 error code',
-                    'Washer not filling with water',
-                    'Control panel dead'
+                    'dC door error',
+                    'Door won\'t lock',
+                    'Washer won\'t start',
+                    'Safety lock failure'
                 ],
-                errorCodes: ['E10', 'E20', 'E40'],
-                compatibility: 'Frigidaire Top Load Washers',
-                models: ['FFTW4120SW', 'FFTW1011QW', 'FFTW4020SW']
+                errorCodes: ['dC', 'dC1', 'dC2'],
+                compatibility: 'Samsung Front Load Washers',
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF45H6300AW', 'WF50K7500AC']
             },
-
-            // MAYTAG WASHER PARTS
             {
-                partNumber: 'W10189966',
-                brand: 'maytag',
+                partNumber: 'DC97-15491A',
+                brand: 'samsung',
                 appliance: 'washer',
-                component: 'control board',
-                description: 'Control Board - Bravos Series',
+                component: 'suspension',
+                description: 'Shock Absorber Set - 4 pieces',
                 symptoms: [
-                    'F7E1 error code',
-                    'Lid lock not engaging',
-                    'Sensing light stays on'
+                    'Excessive vibration',
+                    'Washer shaking violently',
+                    'UE unbalanced error',
+                    'Loud banging noise'
                 ],
-                errorCodes: ['F7E1', 'F5E2', 'F8E1'],
-                compatibility: 'Maytag Bravos Top Load Washers',
-                models: ['MVWB835DW', 'MVWB765FW', 'MVWB855DW']
+                errorCodes: ['UE', 'UC'],
+                compatibility: 'Samsung Front Load Washers',
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF218ANB', 'WF330ANB', 'WF350ANP']
             },
 
-            // DISHWASHER PARTS
+            // WHIRLPOOL DRYER PARTS - EXPANDED CATEGORIES
+            {
+                partNumber: 'W10111606',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Electronic Control Board - ADC (Automatic Dry Control)',
+                symptoms: [
+                    'Dryer not heating',
+                    'Cycles not completing',
+                    'Display errors',
+                    'Overheating issues'
+                ],
+                errorCodes: ['F1E2', 'F2E5', 'F6E3', 'F3E1'],
+                compatibility: 'Whirlpool Electric Dryers 2010-2018',
+                models: ['WED4815EW', 'WED5000DW', 'WED4950HW', 'WED75HEFW', 'WED85HEFW', 'WED90HEFW', 'WED94HEXW', 'WED97HEDW', 'WED4850XQ', 'WED5500XW']
+            },
+            {
+                partNumber: 'W10316760',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Control Board - Cabrio/Oasis Dryers',
+                symptoms: [
+                    'F1 error code',
+                    'Not sensing moisture properly',
+                    'Runs but doesn\'t heat',
+                    'Timer issues'
+                ],
+                errorCodes: ['F1', 'F2', 'F22', 'F23'],
+                compatibility: 'Cabrio & Oasis Series Electric Dryers',
+                models: ['WED7000DW', 'WED7300DW', 'WED8000DW', 'WED8500DC', 'WED7500GC', 'WED7600XW', 'WED8040DW', 'WED8700EC', 'WED8500BW']
+            },
+            {
+                partNumber: 'W10348269',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'heating element',
+                description: 'Heating Element Assembly - Coil Style',
+                symptoms: [
+                    'Dryer runs but no heat',
+                    'Clothes not drying',
+                    'Takes too long to dry',
+                    'Element glowing but no heat'
+                ],
+                errorCodes: ['F2E1', 'F6E3', 'F3E1'],
+                compatibility: 'Electric Dryers 4.3-7.4 Cu Ft',
+                models: ['WED4815EW', 'WED4950HW', 'WED5000DW', 'WED75HEFW', 'WED85HEFW', 'WED4850XQ', 'WED5500XW', 'WED4900XW', 'WED5620XW']
+            },
+            {
+                partNumber: 'W10419333',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'sensor',
+                description: 'Moisture Sensor Bar Assembly',
+                symptoms: [
+                    'Overdrying clothes',
+                    'Underdrying clothes',
+                    'Auto dry not working',
+                    'Sensor dry cycles inaccurate'
+                ],
+                errorCodes: ['F22', 'F23', 'F26'],
+                compatibility: 'Auto Dry Sensor Dryers 2008-2020',
+                models: ['WED75HEFW', 'WED85HEFW', 'WED90HEFW', 'WED94HEXW', 'WED97HEDW', 'WED7000DW', 'WED8000DW', 'WED8500DC']
+            },
+            {
+                partNumber: 'W10837240',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'motor',
+                description: 'Drive Motor Assembly',
+                symptoms: [
+                    'Drum not turning',
+                    'Motor humming but not starting',
+                    'Loud motor noise',
+                    'Motor overheating'
+                ],
+                errorCodes: ['F4E1', 'F6E2'],
+                compatibility: 'Electric & Gas Dryers 2012-2020',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WED85HEFW', 'WGD4815EW', 'WGD5000DW', 'WGD75HEFW', 'WGD85HEFW']
+            },
+            {
+                partNumber: 'WPW10612022',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'belt',
+                description: 'Drum Drive Belt - Multi-Rib',
+                symptoms: [
+                    'Drum not turning',
+                    'Belt squealing noise',
+                    'Dryer runs but no tumbling',
+                    'Broken or stretched belt'
+                ],
+                errorCodes: ['F4E1'],
+                compatibility: 'Electric & Gas Dryers 2010-2020',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WGD4815EW', 'WGD5000DW', 'WGD75HEFW', 'WED85HEFW', 'WGD85HEFW']
+            },
+            {
+                partNumber: 'W10112253',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'filter',
+                description: 'Lint Screen Filter',
+                symptoms: [
+                    'Long drying times',
+                    'Overheating',
+                    'Lint on clothes',
+                    'Reduced airflow'
+                ],
+                errorCodes: ['F1E2', 'F3E1'],
+                compatibility: 'All Dryer Models Universal',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WED85HEFW', 'WGD4815EW', 'WGD5000DW', 'WGD75HEFW', 'WED4950HW']
+            },
+            {
+                partNumber: 'W10169313',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'switch',
+                description: 'Door Switch Assembly',
+                symptoms: [
+                    'Dryer won\'t start',
+                    'Door not detected',
+                    'Safety switch failure',
+                    'No response when door closed'
+                ],
+                errorCodes: ['F1E2'],
+                compatibility: 'Electric & Gas Dryers All Models',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WGD4815EW', 'WGD5000DW', 'WGD75HEFW', 'WED4950HW', 'WGD4950HW']
+            },
+            {
+                partNumber: 'W10316814',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'thermostat',
+                description: 'High Limit Thermostat',
+                symptoms: [
+                    'No heat production',
+                    'Overheating protection',
+                    'Tripping thermal fuse',
+                    'Cycling on and off'
+                ],
+                errorCodes: ['F2E1', 'F3E1'],
+                compatibility: 'Electric Dryers All Models',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WED85HEFW', 'WED4950HW', 'WED4850XQ', 'WED5500XW']
+            },
+            {
+                partNumber: 'W10837577',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'fan',
+                description: 'Blower Wheel Assembly',
+                symptoms: [
+                    'Poor airflow',
+                    'Loud fan noise',
+                    'Overheating',
+                    'Long dry times'
+                ],
+                errorCodes: ['F1E2', 'F3E1'],
+                compatibility: 'Electric & Gas Dryers 2012-2020',
+                models: ['WED4815EW', 'WED5000DW', 'WED75HEFW', 'WGD4815EW', 'WGD5000DW', 'WGD75HEFW']
+            },
+            {
+                partNumber: 'W10516085',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'coil',
+                description: 'Gas Valve Coil Kit',
+                symptoms: [
+                    'No gas ignition',
+                    'No heat in gas dryer',
+                    'Burner not lighting',
+                    'Gas smell but no flame'
+                ],
+                errorCodes: ['F2E5', 'F6E3'],
+                compatibility: 'Gas Dryers All Models',
+                models: ['WGD4815EW', 'WGD5000DW', 'WGD75HEFW', 'WGD85HEFW', 'WGD4950HW', 'WGD4850XQ', 'WGD5500XW']
+            },
+
+            // GE DRYER PARTS - EXPANDED
+            {
+                partNumber: 'WE4M533',
+                brand: 'ge',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Control Panel Assembly - Electronic',
+                symptoms: [
+                    'Timer not advancing',
+                    'No heat generation',
+                    'Cycles starting incorrectly',
+                    'Display not working'
+                ],
+                errorCodes: ['E1', 'E3', 'E5'],
+                compatibility: 'GE Electric Dryers 2008-2015',
+                models: ['GTDP490ED0WS', 'GTDP490GB0WS', 'GTDX300EM0WS', 'GTDL210ED0WW', 'GTDP180ED0WW', 'GTDP490ED1WS', 'GTDX180ED0WW']
+            },
+            {
+                partNumber: 'WE4M519',
+                brand: 'ge',
+                appliance: 'dryer',
+                component: 'heating element',
+                description: 'Heating Element Coil',
+                symptoms: [
+                    'No heat at all',
+                    'Partial heating only',
+                    'Takes multiple cycles to dry',
+                    'Tripping circuit breaker'
+                ],
+                errorCodes: ['E2', 'E4'],
+                compatibility: 'GE Electric Dryers Multiple Models',
+                models: ['GTDP490ED0WS', 'GTDP490GB0WS', 'GTDX300EM0WS', 'GTDL210ED0WW', 'GTDP180ED0WW', 'GIDDS866P900341', 'GTDP220EF0WW']
+            },
+            {
+                partNumber: 'WE4M468',
+                brand: 'ge',
+                appliance: 'dryer',
+                component: 'sensor',
+                description: 'Temperature Sensor',
+                symptoms: [
+                    'Overheating',
+                    'Not heating enough',
+                    'Auto dry not working',
+                    'Wrinkled clothes'
+                ],
+                errorCodes: ['E3', 'E6'],
+                compatibility: 'GE Auto Dry Sensor Dryers',
+                models: ['GTDP490ED0WS', 'GTDP490GB0WS', 'GTDX300EM0WS', 'GTDL210ED0WW', 'GTDP220EF0WW', 'GTDX180ED0WW']
+            },
+
+            // LG DRYER PARTS - EXPANDED
+            {
+                partNumber: 'EBR73304102',
+                brand: 'lg',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Main PCB Control Board',
+                symptoms: [
+                    'tE temperature error',
+                    'Display not working',
+                    'Not heating properly',
+                    'Cycles not starting'
+                ],
+                errorCodes: ['tE', 'tE1', 'tE2', 'HS'],
+                compatibility: 'LG Electric Dryers 2010-2018',
+                models: ['DLE2516W', 'DLE3170W', 'DLE7100W', 'DLE7200WE', 'DLE7300WE', 'DLE4970W', 'DLE5977W', 'DLE7177WM', 'DLEX2701V', 'DLEX3570W']
+            },
+            {
+                partNumber: 'AEG73129408',
+                brand: 'lg',
+                appliance: 'dryer',
+                component: 'heating element',
+                description: 'Heating Element Assembly',
+                symptoms: [
+                    'No heat production',
+                    'tE error codes',
+                    'Long drying times',
+                    'Cool air only'
+                ],
+                errorCodes: ['tE', 'tE1', 'tE2'],
+                compatibility: 'LG Electric Dryers All Models',
+                models: ['DLE2516W', 'DLE3170W', 'DLE7100W', 'DLE7200WE', 'DLE7300WE', 'DLE4970W', 'DLE5977W', 'DLEX2701V', 'DLEX3570W', 'DLEX7177WM']
+            },
+            {
+                partNumber: 'AEH73377303',
+                brand: 'lg',
+                appliance: 'dryer',
+                component: 'belt',
+                description: 'Drum Drive Belt',
+                symptoms: [
+                    'Drum not turning',
+                    'Belt broken or loose',
+                    'Squealing noise',
+                    'Dryer runs but no tumbling'
+                ],
+                errorCodes: ['tE'],
+                compatibility: 'LG Electric Dryers All Models',
+                models: ['DLE2516W', 'DLE3170W', 'DLE7100W', 'DLE7200WE', 'DLEX2701V', 'DLEX3570W', 'DLE7177WM']
+            },
+
+            // SAMSUNG DRYER PARTS - EXPANDED
+            {
+                partNumber: 'DC92-01020B',
+                brand: 'samsung',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Main Control Board PCB',
+                symptoms: [
+                    'HC error code',
+                    'Not heating',
+                    'Display issues',
+                    'Door lock problems'
+                ],
+                errorCodes: ['HC', 'tS', 'HE', 'FE'],
+                compatibility: 'Samsung Electric Dryers',
+                models: ['DV42H5000EW', 'DV48H7400EW', 'DV50K7500EV', 'DV45H7000EW', 'DV484ETHASU', 'DV50K8600EV', 'DV42H5200EW', 'DV456EWHDWR']
+            },
+            {
+                partNumber: 'DC47-00019A',
+                brand: 'samsung',
+                appliance: 'dryer',
+                component: 'heating element',
+                description: 'Heating Element Coil Assembly',
+                symptoms: [
+                    'HC heating error',
+                    'No heat generation',
+                    'Clothes not drying',
+                    'Element burning out frequently'
+                ],
+                errorCodes: ['HC', 'tS'],
+                compatibility: 'Samsung Electric Dryers 2008-2018',
+                models: ['DV42H5000EW', 'DV48H7400EW', 'DV50K7500EV', 'DV45H7000EW', 'DV218AEB', 'DV330AEB', 'DV339AER', 'DV419AEU']
+            },
+            {
+                partNumber: 'DC93-00634A',
+                brand: 'samsung',
+                appliance: 'dryer',
+                component: 'belt',
+                description: 'Drum Belt Assembly',
+                symptoms: [
+                    'Drum not rotating',
+                    'Belt snapped',
+                    'Squeaking noise',
+                    'Dryer motor runs but no drum movement'
+                ],
+                errorCodes: ['HE'],
+                compatibility: 'Samsung Electric Dryers',
+                models: ['DV42H5000EW', 'DV48H7400EW', 'DV50K7500EV', 'DV45H7000EW', 'DV42H5200EW']
+            },
+            {
+                partNumber: 'DE63-00196A',
+                brand: 'samsung',
+                appliance: 'dryer',
+                component: 'filter',
+                description: 'Lint Filter Screen',
+                symptoms: [
+                    'Long drying times',
+                    'Overheating',
+                    'Lint on clothes',
+                    'tS temperature sensor error'
+                ],
+                errorCodes: ['tS', 'HC'],
+                compatibility: 'Samsung Electric & Gas Dryers',
+                models: ['DV42H5000EW', 'DV48H7400EW', 'DV50K7500EV', 'DV45H7000EW', 'DV218AEB', 'DV330AEB']
+            },
+
+            // DISHWASHER PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'W10084141',
                 brand: 'whirlpool',
                 appliance: 'dishwasher',
                 component: 'control board',
-                description: 'Electronic Control Board',
+                description: 'Electronic Control Board - Quiet Partner',
                 symptoms: [
                     'Dishwasher not starting',
                     'Display showing errors',
-                    'Cycles not completing'
+                    'Cycles not completing',
+                    'No response to button presses'
                 ],
-                errorCodes: ['F2E1', 'F6E4', 'F9E1'],
+                errorCodes: ['F2E1', 'F6E4', 'F9E1', 'F1E1'],
                 compatibility: 'Whirlpool Built-in Dishwashers',
-                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB']
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB', 'WDF560SAFM', 'WDF330PADB', 'WDF520PADB', 'WDTA50SAHZ', 'WDTA50SAKZ']
             },
             {
                 partNumber: 'WPW10084142',
@@ -734,14 +1641,129 @@
                 symptoms: [
                     'Poor wash performance',
                     'Loud grinding noise',
-                    'Water not circulating'
+                    'Water not circulating',
+                    'F6E4 pump error'
+                ],
+                errorCodes: ['F6E4', 'F8E4'],
+                compatibility: 'Whirlpool Dishwashers 2008-2016',
+                models: ['WDF320PADB', 'WDF520PADM', 'WDF320PADB', 'WDF330PADB', 'WDF540PADM', 'WDF560SAFM', 'WDF750SAYB']
+            },
+            {
+                partNumber: 'W10158389',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'heating element',
+                description: 'Dishwasher Heating Element',
+                symptoms: [
+                    'Dishes not drying',
+                    'Water not hot enough',
+                    'Poor cleaning performance',
+                    'F2E1 heating error'
+                ],
+                errorCodes: ['F2E1', 'F3E1'],
+                compatibility: 'Built-in Dishwashers 2005-2018',
+                models: ['WDF320PADB', 'WDF520PADM', 'WDF540PADM', 'WDF330PADB', 'WDF560SAFM', 'WDTA50SAHZ', 'WDF750SAYB']
+            },
+            {
+                partNumber: 'W10300924',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'door seal',
+                description: 'Door Seal and Gasket Kit',
+                symptoms: [
+                    'Water leaking from door',
+                    'Steam escaping',
+                    'Door not sealing tight',
+                    'Torn door gasket'
+                ],
+                errorCodes: ['F2E1'],
+                compatibility: 'Built-in Dishwashers 2008-2018',
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB', 'WDF560SAFM', 'WDF330PADB']
+            },
+            {
+                partNumber: 'W10083957',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'filter',
+                description: 'Fine Filter Assembly',
+                symptoms: [
+                    'Poor cleaning performance',
+                    'Food particles on dishes',
+                    'Cloudy glassware',
+                    'Bad odor'
                 ],
                 errorCodes: ['F6E4'],
-                compatibility: 'Whirlpool Dishwashers 2008-2016',
-                models: ['WDF320PADB', 'WDF520PADM', 'WDF320PADB']
+                compatibility: 'Dishwashers with Triple Filter System',
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF330PADB', 'WDF560SAFM', 'WDTA50SAHZ']
+            },
+            {
+                partNumber: 'W10195840',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'switch',
+                description: 'Door Latch Switch Assembly',
+                symptoms: [
+                    'Door won\'t latch',
+                    'Dishwasher won\'t start',
+                    'Door ajar light on',
+                    'Safety interlock failure'
+                ],
+                errorCodes: ['F1E1', 'F9E1'],
+                compatibility: 'Built-in Dishwashers All Models',
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB', 'WDF330PADB', 'WDF560SAFM']
+            },
+            {
+                partNumber: 'W10537869',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'spray arm',
+                description: 'Upper Spray Arm Assembly',
+                symptoms: [
+                    'Poor upper rack cleaning',
+                    'Dishes not getting clean',
+                    'Weak water spray',
+                    'Clogged spray holes'
+                ],
+                errorCodes: ['F6E4'],
+                compatibility: 'Dishwashers 2010-2020',
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB', 'WDF560SAFM', 'WDTA50SAHZ', 'WDTA50SAKZ']
             },
 
-            // REFRIGERATOR PARTS
+            // GE DISHWASHER PARTS
+            {
+                partNumber: 'WD21X10519',
+                brand: 'ge',
+                appliance: 'dishwasher',
+                component: 'control board',
+                description: 'Electronic Control Board',
+                symptoms: [
+                    'No power to unit',
+                    'Stuck on one cycle',
+                    'Display not working',
+                    'Beeping continuously'
+                ],
+                errorCodes: ['C1', 'C2', 'C6', 'C8'],
+                compatibility: 'GE Built-in Dishwashers 2010-2017',
+                models: ['GDT695SGJBB', 'GDF510PGJBB', 'GDF630PGJBB', 'GDT535PGJBB', 'GDF570SGJBB', 'GDT580SGJBB', 'GDT695SSJSS']
+            },
+            {
+                partNumber: 'WD26X10013',
+                brand: 'ge',
+                appliance: 'dishwasher',
+                component: 'pump',
+                description: 'Wash Pump Motor',
+                symptoms: [
+                    'Poor cleaning results',
+                    'Loud motor noise',
+                    'Water not spraying properly',
+                    'C6 wash pump error'
+                ],
+                errorCodes: ['C6', 'C7'],
+                compatibility: 'GE Dishwashers Multiple Models',
+                models: ['GDT695SGJBB', 'GDF510PGJBB', 'GDF630PGJBB', 'GDT535PGJBB', 'GDF570SGJBB', 'GDT580SGJBB']
+            },
+
+            // REFRIGERATOR PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'W10503278',
                 brand: 'whirlpool',
@@ -751,75 +1773,638 @@
                 symptoms: [
                     'Refrigerator not cooling',
                     'Ice buildup in freezer',
-                    'Compressor running constantly'
+                    'Compressor running constantly',
+                    'Temperature fluctuations'
                 ],
-                errorCodes: ['ER 1F', 'ER dH'],
+                errorCodes: ['ER 1F', 'ER dH', 'ER CF', 'ER FF'],
                 compatibility: 'Whirlpool Side-by-Side Refrigerators',
-                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRS325SDHZ']
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRS325SDHZ', 'WRS571CIHZ', 'WRS325FDAW', 'WRS588FIHB', 'WRS325SDHB', 'WRS335SDHM']
             },
             {
                 partNumber: 'W10613606',
                 brand: 'whirlpool',
                 appliance: 'refrigerator',
                 component: 'sensor',
-                description: 'Temperature Sensor Assembly',
+                description: 'Temperature Sensor Assembly - Multi-Zone',
                 symptoms: [
                     'Temperature fluctuations',
                     'Food spoiling quickly',
-                    'Freezer too warm or cold'
+                    'Freezer too warm or cold',
+                    'Ice maker not working'
+                ],
+                errorCodes: ['ER CF', 'ER FF', 'ER RF'],
+                compatibility: 'French Door Refrigerators 2012-2018',
+                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRF540CWHZ', 'WRF767SDHZ', 'WRF555SDFZ', 'WRF974SIHZ', 'WRF736SDAB']
+            },
+            {
+                partNumber: 'W10312695',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'control board',
+                description: 'Refrigerator Main Control Board',
+                symptoms: [
+                    'Display not working',
+                    'Temperature controls not responding',
+                    'Ice maker cycling issues',
+                    'Compressor not starting'
+                ],
+                errorCodes: ['ER 1F', 'ER SY', 'ER IC'],
+                compatibility: 'French Door & Side-by-Side Models',
+                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRS325FDAM', 'WRS588FIHZ', 'WRF540CWHZ', 'WRF767SDHZ']
+            },
+            {
+                partNumber: 'W10856415',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'door seal',
+                description: 'Refrigerator Door Gasket - Fresh Food',
+                symptoms: [
+                    'Warm refrigerator temperature',
+                    'Door not sealing tight',
+                    'Torn or cracked gasket',
+                    'Energy bill increase'
                 ],
                 errorCodes: ['ER CF', 'ER FF'],
-                compatibility: 'French Door Refrigerators 2012-2018',
-                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM']
+                compatibility: 'French Door & Side-by-Side Models',
+                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRS325FDAM', 'WRS588FIHZ', 'WRF540CWHZ']
+            },
+            {
+                partNumber: 'W10515057',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'filter',
+                description: 'Water Filter - EveryDrop 1',
+                symptoms: [
+                    'Bad taste in water',
+                    'Reduced water flow',
+                    'Filter light on',
+                    'Cloudy ice cubes'
+                ],
+                errorCodes: ['ER IC'],
+                compatibility: 'Refrigerators with Internal Water Filter',
+                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRS325FDAM', 'WRF540CWHZ', 'WRF767SDHZ']
+            },
+            {
+                partNumber: 'W10294048',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'fan',
+                description: 'Evaporator Fan Motor',
+                symptoms: [
+                    'Refrigerator not cooling',
+                    'Freezer too warm',
+                    'Loud fan noise',
+                    'Fan not running'
+                ],
+                errorCodes: ['ER 1F', 'ER CF'],
+                compatibility: 'Side-by-Side & French Door Models',
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRF535SWHZ', 'WRF757SDEM', 'WRS325SDHZ', 'WRS571CIHZ']
+            },
+            {
+                partNumber: 'W10822278',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'switch',
+                description: 'Door Switch - Fresh Food',
+                symptoms: [
+                    'Interior light not working',
+                    'Light stays on when door closed',
+                    'Door ajar alarm',
+                    'Switch not clicking'
+                ],
+                errorCodes: ['ER dS'],
+                compatibility: 'All Refrigerator Models',
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRF540CWHZ']
+            },
+            {
+                partNumber: 'W10393836',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'coil',
+                description: 'Defrost Heater Coil',
+                symptoms: [
+                    'Ice buildup in freezer',
+                    'ER dH defrost error',
+                    'Temperature fluctuations',
+                    'Frost on evaporator'
+                ],
+                errorCodes: ['ER dH', 'ER 1F'],
+                compatibility: 'Frost-Free Refrigerators All Models',
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRS325SDHZ']
+            },
+            {
+                partNumber: 'W10498974',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'relay',
+                description: 'Compressor Start Relay',
+                symptoms: [
+                    'Refrigerator not cooling',
+                    'Clicking noise from back',
+                    'Compressor not starting',
+                    'Warm temperatures'
+                ],
+                errorCodes: ['ER 1F'],
+                compatibility: 'All Refrigerator Models Universal',
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM', 'WRF540CWHZ', 'WRF767SDHZ']
             },
 
-            // RANGE/OVEN PARTS
+            // GE REFRIGERATOR PARTS
+            {
+                partNumber: 'WR55X10942',
+                brand: 'ge',
+                appliance: 'refrigerator',
+                component: 'control board',
+                description: 'Main Control Board PCB',
+                symptoms: [
+                    'Temperature control issues',
+                    'Display errors',
+                    'Defrost problems',
+                    'Ice maker not functioning'
+                ],
+                errorCodes: ['FF', 'CF', 'IF'],
+                compatibility: 'GE Side-by-Side Refrigerators',
+                models: ['GSS25IYNFS', 'GSS25GYPFS', 'PSS28KSHSS', 'GSS25KYPFS', 'GSS25QGPGBB', 'GSS25IGNWW', 'PSS26OWNSWW']
+            },
+            {
+                partNumber: 'WR55X24393',
+                brand: 'ge',
+                appliance: 'refrigerator',
+                component: 'sensor',
+                description: 'Temperature Sensor - Thermistor',
+                symptoms: [
+                    'Freezer too cold',
+                    'Fresh food too warm',
+                    'Frequent cycling',
+                    'FF or CF error codes'
+                ],
+                errorCodes: ['FF', 'CF'],
+                compatibility: 'GE French Door & Side-by-Side Models',
+                models: ['GFE28GSKSS', 'GSS25IYNFS', 'PFE28KSKSS', 'GSS25GYPFS', 'PSS28KSHSS', 'GNE27JSMSS', 'GNE27JYKFS']
+            },
+            {
+                partNumber: 'WR02X12208',
+                brand: 'ge',
+                appliance: 'refrigerator',
+                component: 'filter',
+                description: 'Water Filter - RPWFE',
+                symptoms: [
+                    'Bad taste in water',
+                    'Filter light blinking',
+                    'Reduced water flow',
+                    'Ice tastes bad'
+                ],
+                errorCodes: ['IF'],
+                compatibility: 'GE Refrigerators with Internal Filter',
+                models: ['GSS25IYNFS', 'GFE28GSKSS', 'PFE28KSKSS', 'GNE27JSMSS', 'GSS25GYPFS', 'PSS28KSHSS']
+            },
+            {
+                partNumber: 'WR17X12159',
+                brand: 'ge',
+                appliance: 'refrigerator',
+                component: 'fan',
+                description: 'Condenser Fan Motor',
+                symptoms: [
+                    'Refrigerator running warm',
+                    'Compressor overheating',
+                    'Fan not spinning',
+                    'Loud noise from back'
+                ],
+                errorCodes: ['FF', 'CF'],
+                compatibility: 'GE Side-by-Side & French Door Models',
+                models: ['GSS25IYNFS', 'GFE28GSKSS', 'PSS28KSHSS', 'GSS25GYPFS', 'GNE27JSMSS']
+            },
+
+            // RANGE/OVEN PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'W10438751',
                 brand: 'whirlpool',
                 appliance: 'range',
                 component: 'control board',
-                description: 'Oven Control Board - Electronic',
+                description: 'Oven Control Board - Electronic ERC',
                 symptoms: [
                     'Oven not heating',
                     'Display showing F codes',
-                    'Temperature inaccurate'
+                    'Temperature inaccurate',
+                    'Self-clean not working'
                 ],
-                errorCodes: ['F1E0', 'F2E1', 'F3E2'],
+                errorCodes: ['F1E0', 'F2E1', 'F3E2', 'F5E1'],
                 compatibility: 'Whirlpool Gas & Electric Ranges',
-                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS']
+                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS', 'WFE525S0HS', 'WFG540H0ES', 'WFE540H0ES', 'WFG775H0HZ']
             },
             {
                 partNumber: 'WPW10518394',
                 brand: 'whirlpool',
                 appliance: 'range',
                 component: 'heating element',
-                description: 'Bake Element Assembly',
+                description: 'Bake Element Assembly - Lower',
                 symptoms: [
                     'Oven not reaching temperature',
                     'Uneven baking',
-                    'Element glowing but not hot enough'
+                    'Element glowing but not hot enough',
+                    'Baking times too long'
                 ],
                 errorCodes: ['F3E2', 'F4E1'],
                 compatibility: 'Electric Range Ovens 30-inch',
-                models: ['WFE515S0ES', 'WFE540H0ES', 'WFE525S0HS']
+                models: ['WFE515S0ES', 'WFE540H0ES', 'WFE525S0HS', 'WFE745H0FS', 'WFE730H0DS', 'WFE525S0HZ', 'WFE535S0FS']
+            },
+            {
+                partNumber: 'W10779716',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'sensor',
+                description: 'Oven Temperature Sensor',
+                symptoms: [
+                    'F1E0 sensor error',
+                    'Temperature way off',
+                    'Oven overheating',
+                    'Won\'t maintain set temperature'
+                ],
+                errorCodes: ['F1E0', 'F1E1'],
+                compatibility: 'Electric & Gas Range Ovens',
+                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS', 'WFE525S0HS', 'WFG540H0ES', 'WFE540H0ES', 'WFG775H0HZ', 'WFE745H0FS']
+            },
+            {
+                partNumber: 'W10655711',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'door seal',
+                description: 'Oven Door Seal Gasket',
+                symptoms: [
+                    'Heat escaping from oven',
+                    'Uneven baking',
+                    'Longer cooking times',
+                    'Torn or damaged seal'
+                ],
+                errorCodes: ['F1E0'],
+                compatibility: 'Gas & Electric Range Ovens',
+                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS', 'WFE525S0HS', 'WFG540H0ES', 'WFE540H0ES']
+            },
+            {
+                partNumber: 'WPW10594481',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'switch',
+                description: 'Oven Door Switch',
+                symptoms: [
+                    'Oven light not working',
+                    'Self-clean problems',
+                    'Door not detected',
+                    'F1E0 sensor issues'
+                ],
+                errorCodes: ['F1E0', 'F2E1'],
+                compatibility: 'Electric & Gas Range Ovens',
+                models: ['WFE515S0ES', 'WFG515S0ES', 'WFE540H0ES', 'WFG540H0ES', 'WFE525S0HS', 'WFG745H0FS']
+            },
+            {
+                partNumber: 'W10834799',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'fan',
+                description: 'Convection Fan Motor',
+                symptoms: [
+                    'Uneven baking',
+                    'Fan not running',
+                    'No convection mode',
+                    'Loud fan noise'
+                ],
+                errorCodes: ['F3E2'],
+                compatibility: 'Convection Range Ovens',
+                models: ['WFE745H0FS', 'WFG745H0FS', 'WFE730H0DS', 'WFG775H0HZ', 'WFE540H0ES', 'WFG540H0ES']
+            },
+            {
+                partNumber: 'WB24K10022',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'coil',
+                description: 'Surface Burner Coil - 8 inch',
+                symptoms: [
+                    'Burner not heating',
+                    'Uneven heating',
+                    'Coil burning out',
+                    'No heat on high setting'
+                ],
+                errorCodes: ['F4E1'],
+                compatibility: 'Electric Range Cooktops',
+                models: ['WFE515S0ES', 'WFE540H0ES', 'WFE525S0HS', 'WFE745H0FS', 'WFE730H0DS', 'WFE525S0HZ']
+            },
+            {
+                partNumber: 'WPW10837240',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'thermostat',
+                description: 'Oven Safety Thermostat',
+                symptoms: [
+                    'Oven overheating',
+                    'No heat production',
+                    'F3E2 temperature error',
+                    'Safety shutdown'
+                ],
+                errorCodes: ['F3E2', 'F5E1'],
+                compatibility: 'Gas & Electric Range Ovens',
+                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS', 'WFE745H0FS', 'WFG540H0ES', 'WFE540H0ES']
             },
 
-            // MICROWAVE PARTS
+            // GE RANGE PARTS
+            {
+                partNumber: 'WB27K10355',
+                brand: 'ge',
+                appliance: 'range',
+                component: 'control board',
+                description: 'Oven Control Board',
+                symptoms: [
+                    'F2 sensor error',
+                    'Oven not heating up',
+                    'Display blank or flickering',
+                    'Self-clean problems'
+                ],
+                errorCodes: ['F2', 'F3', 'F7'],
+                compatibility: 'GE Electric Ranges 2010-2018',
+                models: ['JB645RKSS', 'JB655SKSS', 'JBS60DKWW', 'JBS60DKBB', 'JB750SJSS', 'JB645DKWW', 'JBS07H1SS']
+            },
+            {
+                partNumber: 'WB44K10005',
+                brand: 'ge',
+                appliance: 'range',
+                component: 'heating element',
+                description: 'Bake Element - Lower Oven',
+                symptoms: [
+                    'Oven not heating on bottom',
+                    'Uneven baking results',
+                    'Food burning on top only',
+                    'Element not glowing'
+                ],
+                errorCodes: ['F3', 'F7'],
+                compatibility: 'GE Electric Range Ovens',
+                models: ['JB645RKSS', 'JB655SKSS', 'JBS60DKWW', 'JBS60DKBB', 'JB750SJSS', 'JB645DKWW', 'JBS07H1SS', 'JB625RKSS']
+            },
+
+            // MICROWAVE PARTS - EXPANDED CATEGORIES
             {
                 partNumber: 'W10211916',
                 brand: 'whirlpool',
                 appliance: 'microwave',
                 component: 'control board',
-                description: 'Control Panel Assembly',
+                description: 'Control Panel Assembly - Over Range',
                 symptoms: [
                     'Microwave not starting',
                     'Display blank or flickering',
-                    'Buttons not responding'
+                    'Buttons not responding',
+                    'Clock not keeping time'
+                ],
+                errorCodes: ['F1E4', 'F2E6', 'F3E5'],
+                compatibility: 'Over-the-Range Microwaves',
+                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H', 'WMH73521CS', 'WMH76719CS', 'WMH54521HS', 'WMH32517HS']
+            },
+            {
+                partNumber: 'W10126794',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'control board',
+                description: 'Control Board - Countertop Models',
+                symptoms: [
+                    'No display',
+                    'Not heating food',
+                    'Turntable not working',
+                    'Door switch issues'
                 ],
                 errorCodes: ['F1E4', 'F2E6'],
+                compatibility: 'Countertop Microwaves 2008-2018',
+                models: ['WMC20005YD', 'WMC50522AS', 'WMC20005YW', 'WMC30309LW', 'WMC30516AW', 'WMC50522AD']
+            },
+            {
+                partNumber: 'W10211524',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'door seal',
+                description: 'Door Seal Assembly',
+                symptoms: [
+                    'Microwave radiation leaking',
+                    'Steam escaping from door',
+                    'Door not sealing properly',
+                    'Damaged door gasket'
+                ],
+                errorCodes: ['F2E6'],
+                compatibility: 'Over-the-Range & Countertop Models',
+                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H', 'WMC20005YD', 'WMC50522AS']
+            },
+            {
+                partNumber: 'W10126794',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'switch',
+                description: 'Door Switch Kit - 3 switches',
+                symptoms: [
+                    'Microwave won\'t start',
+                    'No response to start button',
+                    'Door not detected',
+                    'Safety interlock failure'
+                ],
+                errorCodes: ['F1E4'],
+                compatibility: 'All Microwave Models',
+                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H', 'WMC20005YD', 'WMC50522AS', 'WMH76719CS']
+            },
+            {
+                partNumber: 'W10211916',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'fan',
+                description: 'Exhaust Fan Motor - Over Range',
+                symptoms: [
+                    'Fan not working',
+                    'Loud fan noise',
+                    'Poor ventilation',
+                    'Overheating during use'
+                ],
+                errorCodes: ['F3E5'],
                 compatibility: 'Over-the-Range Microwaves',
-                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H']
+                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H', 'WMH73521CS', 'WMH76719CS', 'WMH54521HS']
+            },
+            {
+                partNumber: 'W10245183',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'capacitor',
+                description: 'High Voltage Capacitor',
+                symptoms: [
+                    'No heating',
+                    'Sparking inside',
+                    'Humming but not heating',
+                    'Blown fuse'
+                ],
+                errorCodes: ['F2E6'],
+                compatibility: 'All Microwave Models',
+                models: ['WMH31017HS', 'WMH53521H', 'WMC20005YD', 'WMC50522AS', 'WMC30309LW', 'WMC30516AW']
+            },
+
+            // GE MICROWAVE PARTS
+            {
+                partNumber: 'WB27X10866',
+                brand: 'ge',
+                appliance: 'microwave',
+                component: 'control board',
+                description: 'Control Board Assembly',
+                symptoms: [
+                    'Display not working',
+                    'Buttons unresponsive',
+                    'Not heating properly',
+                    'Fan not running'
+                ],
+                errorCodes: ['F1', 'F2', 'F3'],
+                compatibility: 'GE Over-the-Range Microwaves',
+                models: ['JVM3160RFSS', 'JVM6175YKFS', 'JVM7195SKSS', 'JVM3160DFWW', 'JVM6175DKWW', 'JVM7195DKWW', 'JVM3162RJSS']
+            },
+            {
+                partNumber: 'WB02X32762',
+                brand: 'ge',
+                appliance: 'microwave',
+                component: 'filter',
+                description: 'Grease Filter - Over Range',
+                symptoms: [
+                    'Poor ventilation',
+                    'Grease buildup',
+                    'Odors not removed',
+                    'Reduced airflow'
+                ],
+                errorCodes: ['F1'],
+                compatibility: 'GE Over-the-Range Microwaves',
+                models: ['JVM3160RFSS', 'JVM6175YKFS', 'JVM7195SKSS', 'JVM3160DFWW', 'JVM6175DKWW']
+            },
+
+            // LG APPLIANCE PARTS - ADDITIONAL
+            {
+                partNumber: 'ADQ36006101',
+                brand: 'lg',
+                appliance: 'refrigerator',
+                component: 'filter',
+                description: 'Water Filter - LT700P',
+                symptoms: [
+                    'Water tastes bad',
+                    'Filter indicator on',
+                    'Slow water flow',
+                    'Cloudy ice'
+                ],
+                errorCodes: ['IF'],
+                compatibility: 'LG French Door & Side-by-Side Models',
+                models: ['LMXS30776S', 'LMXS28596S', 'LFXS26973S', 'LMXS30776D', 'LFXS30766S', 'LMXS28596D']
+            },
+            {
+                partNumber: '5989JA1002G',
+                brand: 'lg',
+                appliance: 'microwave',
+                component: 'filter',
+                description: 'Charcoal Filter',
+                symptoms: [
+                    'Odors not removed',
+                    'Poor air filtration',
+                    'Recirculation not working',
+                    'Cooking smells lingering'
+                ],
+                errorCodes: [],
+                compatibility: 'LG Over-the-Range Microwaves',
+                models: ['LMV2031SS', 'LMV1831SS', 'LMV2031ST', 'LMV2055SS', 'LMV1762ST', 'LMV1680ST']
+            },
+
+            // SAMSUNG APPLIANCE PARTS - ADDITIONAL
+            {
+                partNumber: 'HAF-CIN/EXP',
+                brand: 'samsung',
+                appliance: 'refrigerator',
+                component: 'filter',
+                description: 'Water Filter - DA29-00020B',
+                symptoms: [
+                    'Bad taste in water',
+                    'Filter light red',
+                    'Reduced water flow',
+                    'Ice maker issues'
+                ],
+                errorCodes: ['88 88'],
+                compatibility: 'Samsung French Door Refrigerators',
+                models: ['RF28HMEDBSR', 'RF23J9011SR', 'RF28K9380SR', 'RF263BEAESR', 'RF28JBEDBSG', 'RF23M8070SR']
+            },
+
+            // MAYTAG APPLIANCE PARTS - ADDITIONAL
+            {
+                partNumber: 'W10434962',
+                brand: 'maytag',
+                appliance: 'washer',
+                component: 'belt',
+                description: 'Drive Belt - Bravos Series',
+                symptoms: [
+                    'Washer not agitating',
+                    'Belt squealing',
+                    'No spin cycle',
+                    'Motor runs but no movement'
+                ],
+                errorCodes: ['F7E5'],
+                compatibility: 'Maytag Bravos Top Load Washers',
+                models: ['MVWB835DW', 'MVWB765FW', 'MVWB855DW', 'MVWB750WQ', 'MVWB950YG', 'MVWB835DG']
+            },
+            {
+                partNumber: 'W10393157',
+                brand: 'maytag',
+                appliance: 'washer',
+                component: 'switch',
+                description: 'Lid Switch Assembly',
+                symptoms: [
+                    'F5E2 lid switch error',
+                    'Washer won\'t start',
+                    'Lid lock not engaging',
+                    'Safety system failure'
+                ],
+                errorCodes: ['F5E2', 'F7E1'],
+                compatibility: 'Maytag Top Load Washers All Series',
+                models: ['MVWB835DW', 'MVWC215EW', 'MVWC300VW', 'MVWC400XW', 'MVWC465HW', 'MVWC555DW']
+            },
+            {
+                partNumber: 'W10435302',
+                brand: 'maytag',
+                appliance: 'dryer',
+                component: 'belt',
+                description: 'Drum Drive Belt',
+                symptoms: [
+                    'Drum not turning',
+                    'Belt broken',
+                    'Squealing noise',
+                    'Motor runs but no tumbling'
+                ],
+                errorCodes: ['F1'],
+                compatibility: 'Maytag Electric & Gas Dryers',
+                models: ['MEDB835DW', 'MEDB765FW', 'MGDB835DW', 'MEDB755DW', 'MGDB765FW', 'MEDB950YG']
+            },
+
+            // FRIGIDAIRE PARTS - ADDITIONAL
+            {
+                partNumber: '137032600',
+                brand: 'frigidaire',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Electronic Control Board - Top Load',
+                symptoms: [
+                    'E10 error code',
+                    'Washer not filling with water',
+                    'Control panel dead',
+                    'No lights on display'
+                ],
+                errorCodes: ['E10', 'E20', 'E40', 'E41'],
+                compatibility: 'Frigidaire Top Load Washers',
+                models: ['FFTW4120SW', 'FFTW1011QW', 'FFTW4020SW', 'FFTW1211QW', 'FFTW4021QW', 'ATF6000ES', 'ATF6700FS', 'FFTW1021QW']
+            },
+            {
+                partNumber: '134743500',
+                brand: 'frigidaire',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Electronic Control - Front Load',
+                symptoms: [
+                    'E20 drain pump error',
+                    'Door won\'t unlock',
+                    'Cycles not completing',
+                    'Display showing random errors'
+                ],
+                errorCodes: ['E20', 'E21', 'E40', 'E50'],
+                compatibility: 'Frigidaire Front Load Washers 2005-2015',
+                models: ['FAFS4073NA', 'FAFS4474LA', 'FTF2140ES0', 'GLEH1642AS0', 'FFLE3900UW', 'FAFS4474LW', 'GLTF2940FS', 'FTF2140FS0']
             }
         ];
 
@@ -844,7 +2429,8 @@
                     part.description.toLowerCase().includes(searchTerm) ||
                     part.symptoms.some(symptom => symptom.toLowerCase().includes(searchTerm)) ||
                     part.errorCodes.some(code => code.toLowerCase().includes(searchTerm)) ||
-                    part.models.some(model => model.toLowerCase().includes(searchTerm));
+                    part.models.some(model => model.toLowerCase().includes(searchTerm)) ||
+                    part.component.toLowerCase().includes(searchTerm);
 
                 const matchesBrand = brandFilter === '' || part.brand === brandFilter;
                 const matchesAppliance = applianceFilter === '' || part.appliance === applianceFilter;
@@ -968,6 +2554,9 @@
         // Initialize with all parts displayed
         window.onload = function() {
             displayResults(applianceParts);
+            
+            // Update stats display
+            document.getElementById('resultsCount').textContent = `${applianceParts.length} parts in comprehensive database`;
         };
     </script>
 </body>
