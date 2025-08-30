@@ -3,96 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stevens Parts - Test Page</title>
+    <title>Stevens Parts - Counter Sales Database</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
+            margin: 0;
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            min-height: 100vh;
         }
+        
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
             border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 15px;
-        }
-        .success {
-            background: rgba(46, 204, 113, 0.2);
-            border: 2px solid #2ecc71;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 30px 0;
-        }
-        .test-button {
-            background: #e74c3c;
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            margin: 10px;
+            padding: 30px;
+            text-align: center;
         }
-        .test-button:hover {
-            background: #c0392b;
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+        
+        .main-section {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .button {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .button:hover {
+            background: #2980b9;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        
+        .part-result {
+            background: #e8f5e8;
+            border: 1px solid #27ae60;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .part-number {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #27ae60;
+        }
+        
+        .part-price {
+            color: #e74c3c;
+            font-weight: bold;
+            float: right;
+        }
+        
+        .customer-result {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .customer-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .main-section {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎉 SUCCESS!</h1>
-        <p>Your GitHub Pages is working!</p>
-        
-        <div class="success">
-            <h2>✅ Stevens Parts Website Test</h2>
-            <p><strong>Repository:</strong> counter-sales-knowledge-base</p>
-            <p><strong>URL:</strong> https://stevensparts.github.io/counter-sales-knowledge-base</p>
-            <p><strong>Status:</strong> GitHub Pages is properly configured!</p>
+        <div class="header">
+            <h1>🏪 Stevens Parts - Counter Sales System</h1>
+            <p>Parts Database & Customer Lookup</p>
         </div>
         
-        <p>If you can see this page, your GitHub Pages deployment is working correctly.</p>
-        
-        <button class="test-button" onclick="showMessage()">Test JavaScript</button>
-        
-        <p id="message" style="display: none; margin-top: 20px; font-size: 1.3em;">
-            🚀 JavaScript is working too!
-        </p>
-        
-        <hr style="margin: 40px 0; border: 1px solid rgba(255,255,255,0.3);">
-        
-        <h2>Next Steps:</h2>
-        <p>1. If you see this page, GitHub Pages is working</p>
-        <p>2. Replace this test code with your full database</p>
-        <p>3. Wait 2-3 minutes after committing changes</p>
-        
-        <p style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
-            Test page created: <span id="timestamp"></span>
-        </p>
+        <div class="main-section">
+            <!-- Customer Lookup Section -->
+            <div class="section">
+                <h2>📞 Customer Lookup</h2>
+                <input type="text" class="search-box" id="phoneSearch" placeholder="Enter phone number... (402) 555-1234">
+                
+                <div>
+                    <button class="button" onclick="searchCustomer('(402) 555-1234')">Test Omaha Account</button>
+                    <button class="button" onclick="searchCustomer('(773) 555-5555')">Test Chicago VIP</button>
+                    <button class="button" onclick="searchCustomer('(708) 555-9876')">Test Apartment</button>
+                    <button class="button" onclick="clearCustomer()">Clear</button>
+                </div>
+                
+                <div id="customerResults" class="results"></div>
+            </div>
+            
+            <!-- Parts Database Section -->
+            <div class="section">
+                <h2>🔧 Parts Database</h2>
+                <input type="text" class="search-box" id="partsSearch" placeholder="Search parts... washer control board">
+                
+                <div>
+                    <button class="button" onclick="searchParts('washer control')">Washer Controls</button>
+                    <button class="button" onclick="searchParts('dryer element')">Dryer Elements</button>
+                    <button class="button" onclick="searchParts('W11316466')">Test Part #</button>
+                    <button class="button" onclick="clearParts()">Clear</button>
+                </div>
+                
+                <div id="partsResults" class="results"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function showMessage() {
-            document.getElementById('message').style.display = 'block';
+        // Customer Database
+        const customers = {
+            "(402) 555-1234": {
+                name: "Seldin Property Management",
+                contact: "Mike Stevens - Property Manager",
+                type: "Apartment Complex - 147 units",
+                terms: "Net 30 with PO Required",
+                notes: "Large orders, always needs PO numbers, prefers pickup",
+                history: "$47,000 YTD"
+            },
+            "(773) 555-5555": {
+                name: "Premium Home Services ⭐ VIP",
+                contact: "Lisa Totten - Owner",
+                type: "Service Company",
+                terms: "Net 30 Terms - 15% VIP Discount",
+                notes: "High volume repair company, priority shipping",
+                history: "VIP Customer since 2015 - $89,500 YTD"
+            },
+            "(708) 555-9876": {
+                name: "Broodmoore Apartments",
+                contact: "Tom Hines - Maintenance Manager",
+                type: "Large Apartment Complex - 240 units",
+                terms: "Net 15 with credit approval",
+                notes: "Unit 304 recurring dryer issues, prefers Whirlpool",
+                history: "$28,750 YTD"
+            }
+        };
+
+        // Parts Database
+        const parts = [
+            {
+                number: "W11316466",
+                description: "Whirlpool Washer Electronic Control Board",
+                price: "$284.99",
+                stock: 12,
+                brand: "Whirlpool",
+                appliance: "Washer"
+            },
+            {
+                number: "WH12X10468", 
+                description: "GE Washer Main Control Board",
+                price: "$312.45",
+                stock: 8,
+                brand: "GE",
+                appliance: "Washer"
+            },
+            {
+                number: "W11676806",
+                description: "Whirlpool Dryer Electronic Control Board",
+                price: "$198.77",
+                stock: 15,
+                brand: "Whirlpool",
+                appliance: "Dryer"
+            },
+            {
+                number: "DC47-00019A",
+                description: "Samsung Dryer Heating Element",
+                price: "$67.89",
+                stock: 24,
+                brand: "Samsung",
+                appliance: "Dryer"
+            },
+            {
+                number: "W10348269",
+                description: "Whirlpool Washer Drain Pump",
+                price: "$78.99",
+                stock: 22,
+                brand: "Whirlpool",
+                appliance: "Washer"
+            }
+        ];
+
+        // Search customers
+        function searchCustomer(phone) {
+            const customer = customers[phone];
+            const results = document.getElementById('customerResults');
+            
+            if (customer) {
+                results.innerHTML = `
+                    <div class="customer-result">
+                        <div class="customer-name">${customer.name}</div>
+                        <p><strong>Contact:</strong> ${customer.contact}</p>
+                        <p><strong>Type:</strong> ${customer.type}</p>
+                        <p><strong>Terms:</strong> ${customer.terms}</p>
+                        <p><strong>Notes:</strong> ${customer.notes}</p>
+                        <p><strong>History:</strong> ${customer.history}</p>
+                    </div>
+                `;
+                results.style.display = 'block';
+                document.getElementById('phoneSearch').value = phone;
+            } else {
+                results.innerHTML = `<div class="customer-result">No customer found for ${phone}</div>`;
+                results.style.display = 'block';
+            }
         }
-        
-        // Show current timestamp
-        document.getElementById('timestamp').textContent = new Date().toLocaleString();
-        
-        // Test console
-        console.log('Stevens Parts - GitHub Pages test successful!');
+
+        // Search parts
+        function searchParts(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            const matches = parts.filter(part => 
+                part.description.toLowerCase().includes(term) ||
+                part.number.toLowerCase().includes(term) ||
+                part.brand.toLowerCase().includes(term) ||
+                part.appliance.toLowerCase().includes(term)
+            );
+            
+            const results = document.getElementById('partsResults');
+            
+            if (matches.length > 0) {
+                results.innerHTML = matches.map(part => `
+                    <div class="part-result">
+                        <div class="part-number">${part.number} <span class="part-price">${part.price}</span></div>
+                        <p>${part.description}</p>
+                        <p><strong>Brand:</strong> ${part.brand} | <strong>Stock:</strong> ${part.stock} units</p>
+                    </div>
+                `).join('');
+                results.style.display = 'block';
+                document.getElementById('partsSearch').value = searchTerm;
+            } else {
+                results.innerHTML = `<div class="part-result">No parts found for "${searchTerm}"</div>`;
+                results.style.display = 'block';
+            }
+        }
+
+        // Clear functions
+        function clearCustomer() {
+            document.getElementById('phoneSearch').value = '';
+            document.getElementById('customerResults').style.display = 'none';
+        }
+
+        function clearParts() {
+            document.getElementById('partsSearch').value = '';
+            document.getElementById('partsResults').style.display = 'none';
+        }
+
+        // Auto-search on input
+        document.getElementById('phoneSearch').addEventListener('input', function(e) {
+            const phone = e.target.value;
+            if (phone.length >= 10) {
+                searchCustomer(phone);
+            }
+        });
+
+        document.getElementById('partsSearch').addEventListener('input', function(e) {
+            const search = e.target.value;
+            if (search.length >= 3) {
+                searchParts(search);
+            }
+        });
+
+        // Console test
+        console.log('Stevens Parts Database loaded successfully!');
     </script>
 </body>
 </html>
