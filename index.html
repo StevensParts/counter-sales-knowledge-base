@@ -1,4 +1,829 @@
-// Comprehensive customer database across all branch territories
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sundberg - Multi-Branch Caller ID System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .website-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            height: 800px;
+            overflow-y: auto;
+        }
+
+        .website-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .website-header h2 {
+            color: #764ba2;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .website-search {
+            margin-bottom: 20px;
+        }
+
+        .website-search input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .website-search input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+        }
+
+        .website-filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .website-filters select {
+            padding: 8px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 13px;
+            background: white;
+        }
+
+        .website-results {
+            display: grid;
+            gap: 15px;
+        }
+
+        .website-part-card {
+            border: 1px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 15px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .website-part-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #764ba2;
+        }
+
+        .website-part-number {
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 5px;
+        }
+
+        .website-part-brand {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .website-part-description {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .website-part-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .website-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .website-stat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .website-stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .website-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 20px;
+        }
+
+        .branch-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .branch-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .call-status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .branch-name {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .branch-info {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .incoming-calls {
+            min-height: 200px;
+        }
+
+        .call-item {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .call-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+
+        .call-item.vip {
+            border-left: 4px solid #f39c12;
+        }
+
+        .call-item.apartment {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .call-item.business {
+            border-left: 4px solid #3498db;
+        }
+
+        .call-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .call-phone {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+
+        .call-time {
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
+
+        .call-details {
+            margin-top: 5px;
+        }
+
+        .call-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .call-type {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .no-calls {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 50px 20px;
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .customer-display {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        .no-customer {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 50px 20px;
+        }
+
+        .no-customer-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .customer-info {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .customer-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .customer-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .customer-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .customer-type.vip {
+            background: #f39c12;
+            color: white;
+        }
+
+        .customer-type.apartment {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .customer-type.business {
+            background: #3498db;
+            color: white;
+        }
+
+        .customer-type.residential {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .customer-details {
+            display: grid;
+            gap: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: right;
+            flex: 1;
+        }
+
+        .order-history {
+            margin-top: 20px;
+        }
+
+        .order-history h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .order-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .order-date {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .order-amount {
+            float: right;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .branch-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .stats-row {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sundberg Multi-Branch Caller ID System</h1>
+            <p>Real-time call tracking across all warehouse locations</p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalCalls">47</span>
+                    <span>Calls Today</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">9</span>
+                    <span>Active Warehouses</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="activeCalls">2</span>
+                    <span>Live Calls</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Branch Call Tracking Panel -->
+            <div>
+                <div class="branch-grid">
+                    <!-- Chicago HQ -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">LIVE CALL</div>
+                                <div class="branch-name">Chicago HQ (100)</div>
+                                <div class="branch-info">312, 773, 708 • Corporate</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="call-item vip" onclick="showCustomer('(312) 555-4567')">
+                                <div class="call-header">
+                                    <span class="call-phone">(312) 555-4567</span>
+                                    <span class="call-time">Live now</span>
+                                </div>
+                                <div class="call-details">
+                                    <div class="call-name">Premium Home Services</div>
+                                    <div class="call-type">VIP Account</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Oak Forest -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">LIVE CALL</div>
+                                <div class="branch-name">Oak Forest (200)</div>
+                                <div class="branch-info">708, 630 • South Suburbs</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="call-item apartment" onclick="showCustomer('(402) 555-3456')">
+                                <div class="call-header">
+                                    <span class="call-phone">(402) 555-3456</span>
+                                    <span class="call-time">Live now</span>
+                                </div>
+                                <div class="call-details">
+                                    <div class="call-name">Broodmoore Property Group</div>
+                                    <div class="call-type">Apartment Account</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Omaha -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">BUSY</div>
+                                <div class="branch-name">Omaha (300)</div>
+                                <div class="branch-info">402, 531 • Nebraska Territory</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="call-item apartment" onclick="showCustomer('(402) 555-1234')">
+                                <div class="call-header">
+                                    <span class="call-phone">(402) 555-1234</span>
+                                    <span class="call-time">15 min ago</span>
+                                </div>
+                                <div class="call-details">
+                                    <div class="call-name">Seldin Property Management</div>
+                                    <div class="call-type">Apartment Account</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milwaukee -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">QUIET</div>
+                                <div class="branch-name">Milwaukee (400)</div>
+                                <div class="branch-info">414, 262 • Wisconsin</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="call-item business" onclick="showCustomer('(414) 555-6789')">
+                                <div class="call-header">
+                                    <span class="call-phone">(414) 555-6789</span>
+                                    <span class="call-time">1 hr ago</span>
+                                </div>
+                                <div class="call-details">
+                                    <div class="call-name">Brew City Appliance Repair</div>
+                                    <div class="call-type">Business Account</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rockford -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">ACTIVE</div>
+                                <div class="branch-name">Rockford (500)</div>
+                                <div class="branch-info">815, 779 • Northern Illinois</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="call-item business" onclick="showCustomer('(815) 555-7890')">
+                                <div class="call-header">
+                                    <span class="call-phone">(815) 555-7890</span>
+                                    <span class="call-time">33 min ago</span>
+                                </div>
+                                <div class="call-details">
+                                    <div class="call-name">Joliet Appliance Center</div>
+                                    <div class="call-type">Business Account</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- South Elgin -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">QUIET</div>
+                                <div class="branch-name">South Elgin (700)</div>
+                                <div class="branch-info">847, 224 • Northwest Suburbs</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="no-calls">No recent calls</div>
+                        </div>
+                    </div>
+
+                    <!-- Quad Cities -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">QUIET</div>
+                                <div class="branch-name">Quad Cities (600)</div>
+                                <div class="branch-info">563, 309 • Iowa/Illinois Border</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="no-calls">No recent calls</div>
+                        </div>
+                    </div>
+
+                    <!-- Additional branches -->
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">QUIET</div>
+                                <div class="branch-name">Madison (800)</div>
+                                <div class="branch-info">608 • Southern Wisconsin</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="no-calls">No recent calls</div>
+                        </div>
+                    </div>
+
+                    <div class="branch-panel">
+                        <div class="branch-header">
+                            <div>
+                                <div class="call-status">QUIET</div>
+                                <div class="branch-name">Des Moines (900)</div>
+                                <div class="branch-info">515 • Central Iowa</div>
+                            </div>
+                        </div>
+                        <div class="incoming-calls">
+                            <div class="no-calls">No recent calls</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stevens Parts Website Panel -->
+            <div>
+                <div class="website-panel">
+                    <div class="website-header">
+                        <h2>Stevens Parts</h2>
+                        <p>Professional Appliance Parts Database</p>
+                    </div>
+
+                    <div class="website-stats">
+                        <div class="website-stat">
+                            <span class="website-stat-number">8,547</span>
+                            <span class="website-stat-label">Total Parts</span>
+                        </div>
+                        <div class="website-stat">
+                            <span class="website-stat-number">18</span>
+                            <span class="website-stat-label">Brands</span>
+                        </div>
+                        <div class="website-stat">
+                            <span class="website-stat-number">47</span>
+                            <span class="website-stat-label">Categories</span>
+                        </div>
+                    </div>
+
+                    <div class="website-search">
+                        <input type="text" id="websiteSearch" placeholder="Search 8,547+ parts by number, brand, or model...">
+                    </div>
+
+                    <div class="website-filters">
+                        <select id="websiteBrand">
+                            <option value="">All Brands</option>
+                            <option value="whirlpool">Whirlpool (2,847)</option>
+                            <option value="ge">GE (1,285)</option>
+                            <option value="samsung">Samsung (987)</option>
+                            <option value="lg">LG (865)</option>
+                            <option value="frigidaire">Frigidaire (743)</option>
+                            <option value="mars">Mars (158)</option>
+                        </select>
+                        <select id="websiteCategory">
+                            <option value="">All Categories</option>
+                            <option value="control_board">Control Boards</option>
+                            <option value="motor">Motors</option>
+                            <option value="pump">Pumps</option>
+                            <option value="heating_element">Heating Elements</option>
+                            <option value="door_lock">Door Locks</option>
+                        </select>
+                    </div>
+
+                    <div class="website-results" id="websiteResults">
+                        <div class="website-part-card">
+                            <div class="website-part-number">W11608056</div>
+                            <span class="website-part-brand">WHIRLPOOL</span>
+                            <div class="website-part-description">Electronic Control Board - Smart Series 2024</div>
+                            <div class="website-part-price">$289.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">DC92-01021A</div>
+                            <span class="website-part-brand">SAMSUNG</span>
+                            <div class="website-part-description">Main Control PCB - Smart</div>
+                            <div class="website-part-price">$295.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">6871EC1073D</div>
+                            <span class="website-part-brand">LG</span>
+                            <div class="website-part-description">Main Control Board - ThinQ</div>
+                            <div class="website-part-price">$275.50</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">W10724237</div>
+                            <span class="website-part-brand">WHIRLPOOL</span>
+                            <div class="website-part-description">Electric Heating Element - 5400W</div>
+                            <div class="website-part-price">$125.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">12905</div>
+                            <span class="website-part-brand">MARS</span>
+                            <div class="website-part-description">Run Capacitor 370V 45MFD</div>
+                            <div class="website-part-price">$35.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">W10619876</div>
+                            <span class="website-part-brand">WHIRLPOOL</span>
+                            <div class="website-part-description">Front Load Door Lock</div>
+                            <div class="website-part-price">$95.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">W11259272</div>
+                            <span class="website-part-brand">WHIRLPOOL</span>
+                            <div class="website-part-description">Direct Drive Motor Assembly</div>
+                            <div class="website-part-price">$425.99</div>
+                        </div>
+                        
+                        <div class="website-part-card">
+                            <div class="website-part-number">RCS3</div>
+                            <span class="website-part-brand">SUPCO</span>
+                            <div class="website-part-description">3-in-1 Start Kit</div>
+                            <div class="website-part-price">$75.99</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Lookup Section -->
+        <div class="search-section">
+            <h2 style="margin-bottom: 15px; color: #2c3e50;">Customer Lookup</h2>
+            <input type="text" class="search-box" placeholder="Enter phone number for customer details..." id="phoneSearch" maxlength="14">
+        </div>
+
+        <div class="customer-display">
+            <div id="customerDisplay">
+                <div class="no-customer">
+                    <div class="no-customer-icon">📞</div>
+                    <h3>Click any call above to view customer details</h3>
+                    <p style="margin-top: 10px;">Real-time caller ID information across all branches</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive customer database across all branch territories
         const customerDatabase = {
             // OMAHA TERRITORY - Apartment Accounts
             "(402) 555-1234": {
@@ -24,9 +849,7 @@
                     { date: "2024-08-25", amount: 847.23, po: "PO-2408-0156", items: "Dishwasher pumps, door seals" },
                     { date: "2024-08-18", amount: 1235.67, po: "PO-2408-0142", items: "Washer control boards x3, belts" },
                     { date: "2024-08-12", amount: 678.90, po: "PO-2408-0138", items: "Dryer heating elements, thermostats" }
-                ],
-                commonParts: ["W11096164", "W10724237", "W10619876", "DC92-01021A"],
-                specialInstructions: "Property name FIRST, then caller details. PO can be provided at pickup if needed."
+                ]
             },
             
             "(402) 555-2345": {
@@ -47,12 +870,7 @@
                 ytdSpent: 41250.50,
                 lastOrder: "2024-08-28",
                 lastOrderAmount: 1456.78,
-                notes: "Premium account. Emergency after-hours contact available. Prefers OEM parts only.",
-                orderHistory: [
-                    { date: "2024-08-28", amount: 1456.78, po: "LUND-8874", items: "Refrigerator compressor, ice maker kit" },
-                    { date: "2024-08-21", amount: 892.34, po: "LUND-8869", items: "Range control boards x2, igniter" },
-                    { date: "2024-08-15", amount: 734.56, po: "LUND-8863", items: "Washer door locks, drain pump" }
-                ]
+                notes: "Premium account. Emergency after-hours contact available. Prefers OEM parts only."
             },
 
             "(402) 555-3456": {
@@ -73,11 +891,7 @@
                 ytdSpent: 18675.25,
                 lastOrder: "2024-08-26",
                 lastOrderAmount: 623.45,
-                notes: "High-end property. Quality parts only. Tenant satisfaction critical.",
-                orderHistory: [
-                    { date: "2024-08-26", amount: 623.45, po: "BPG-2024-156", items: "Dishwasher control board, wash pump" },
-                    { date: "2024-08-19", amount: 478.90, po: "BPG-2024-153", items: "Microwave magnetron, door switch" }
-                ]
+                notes: "High-end property. Quality parts only. Tenant satisfaction critical."
             },
 
             // CHICAGO TERRITORY - VIP & Business Accounts
@@ -125,11 +939,6 @@
                 lastOrder: "2024-08-28",
                 lastOrderAmount: 1234.56,
                 notes: "High volume customer. Stocks common parts. Weekly delivery route.",
-                orderHistory: [
-                    { date: "2024-08-28", amount: 1234.56, items: "Whirlpool control boards x5, Samsung door locks x3" },
-                    { date: "2024-08-23", amount: 987.34, items: "GE heating elements x4, LG pumps x2" },
-                    { date: "2024-08-21", amount: 1456.78, items: "Mixed repair kits, universal capacitors" }
-                ],
                 serviceArea: "Northwest suburbs, Evanston, Skokie, Wilmette"
             },
 
@@ -151,10 +960,6 @@
                 lastOrder: "2024-08-27",
                 lastOrderAmount: 678.90,
                 notes: "Local family business. Prefers morning deliveries. Cash discount customer.",
-                orderHistory: [
-                    { date: "2024-08-27", amount: 678.90, items: "Whirlpool washer pumps x2, belt kit" },
-                    { date: "2024-08-22", amount: 445.67, items: "Maytag dryer elements, thermostat kit" }
-                ],
                 serviceArea: "Milwaukee metro, West Allis, Wauwatosa"
             },
 
@@ -176,56 +981,10 @@
                 lastOrder: "2024-08-29",
                 lastOrderAmount: 1567.89,
                 notes: "Established dealer. Large service department. Bulk order discounts.",
-                orderHistory: [
-                    { date: "2024-08-29", amount: 1567.89, po: "JAC-240829-001", items: "Samsung control boards x3, LG door seals x4" },
-                    { date: "2024-08-25", amount: 2134.56, po: "JAC-240825-002", items: "Mixed inventory restock" }
-                ],
                 serviceArea: "Will County, Grundy County, Kankakee area"
             },
 
-            // QUAD CITIES TERRITORY  
-            "(563) 555-8901": {
-                name: "Quad Cities Service Co",
-                type: "business",
-                phone: "(563) 555-8901",
-                address: "2156 E Kimberly Rd, Davenport, IA 52807", 
-                contact: "Steve Parker - Operations Manager",
-                email: "sparker@qcservice.com",
-                creditLimit: 25000,
-                paymentTerms: "Net 30", 
-                poRequired: false,
-                preferredWarehouse: "Rockford (500)",
-                accountSince: "2017-08-30",
-                totalOrders: 567,
-                ytdSpent: 56789.12,
-                lastOrder: "2024-08-26",
-                lastOrderAmount: 934.78,
-                notes: "Covers Iowa/Illinois border. Reliable customer. Emergency service contractor.",
-                serviceArea: "Quad Cities metro, Iowa side coverage"
-            },
-
-            // SOUTH ELGIN TERRITORY
-            "(847) 555-9012": {
-                name: "Northwest Suburbs Repair",
-                type: "business",
-                phone: "(847) 555-9012",
-                address: "456 Randall Rd, South Elgin, IL 60177",
-                contact: "Maria Santos - Owner", 
-                email: "maria@nwsuburbsrepair.com",
-                creditLimit: 18000,
-                paymentTerms: "Net 30",
-                poRequired: false,
-                preferredWarehouse: "South Elgin (700)",
-                accountSince: "2020-02-14",
-                totalOrders: 289,
-                ytdSpent: 28934.67,
-                lastOrder: "2024-08-28",
-                lastOrderAmount: 567.45,
-                notes: "Growing business. Female-owned. Community focused service.",
-                serviceArea: "Kane County, western suburbs"
-            },
-
-            // RESIDENTIAL CUSTOMERS - Multiple territories
+            // Additional customers...
             "(312) 555-0123": {
                 name: "Patricia Williams",
                 type: "residential", 
@@ -237,95 +996,10 @@
                 ytdSpent: 287.45,
                 lastOrder: "2024-08-15",
                 lastOrderAmount: 89.99,
-                notes: "Lincoln Park condo owner. Whirlpool washer. Prefers pickup.",
-                orderHistory: [
-                    { date: "2024-08-15", amount: 89.99, items: "Washer door seal W10772617" },
-                    { date: "2024-03-22", amount: 125.50, items: "Control board W11035674" }
-                ]
-            },
-
-            "(402) 555-0234": {
-                name: "John Martinez",
-                type: "residential",
-                phone: "(402) 555-0234", 
-                address: "8756 Dodge Street, Omaha, NE 68114",
-                preferredWarehouse: "Omaha (300)",
-                accountSince: "2023-05-12",
-                totalOrders: 2,
-                ytdSpent: 156.78,
-                lastOrder: "2024-07-18",
-                lastOrderAmount: 67.89,
-                notes: "DIY homeowner. Samsung appliances. Researches parts thoroughly.",
-                orderHistory: [
-                    { date: "2024-07-18", amount: 67.89, items: "Dryer belt DC47-00019A" },
-                    { date: "2023-12-14", amount: 88.89, items: "Door lock DC64-01570A" }
-                ]
-            },
-
-            "(847) 555-0345": {
-                name: "Rachel Thompson", 
-                type: "residential",
-                phone: "(847) 555-0345",
-                address: "567 Oak Street, Evanston, IL 60201",
-                preferredWarehouse: "Oak Forest (200)",
-                accountSince: "2024-01-28",
-                totalOrders: 1,
-                ytdSpent: 45.99,
-                lastOrder: "2024-08-20",
-                lastOrderAmount: 45.99,
-                notes: "New customer. LG front-load washer. First-time repair.",
-                orderHistory: [
-                    { date: "2024-08-20", amount: 45.99, items: "Water filter replacement" }
-                ]
-            },
-
-            // COMMERCIAL/INSTITUTIONAL ACCOUNTS
-            "(312) 555-0456": {
-                name: "Chicago Public Housing Authority",
-                type: "commercial",
-                phone: "(312) 555-0456",
-                address: "60 E Van Buren St, Chicago, IL 60605",
-                contact: "James Wilson - Facilities Director",
-                email: "jwilson@cha.org", 
-                creditLimit: 100000,
-                paymentTerms: "Net 45",
-                poRequired: true,
-                preferredWarehouse: "Chicago HQ (100)",
-                accountSince: "2014-06-01",
-                totalOrders: 2156,
-                ytdSpent: 234567.89,
-                lastOrder: "2024-08-29",
-                lastOrderAmount: 5678.90,
-                notes: "Government account. Requires competitive pricing. Volume discounts applied.",
-                orderHistory: [
-                    { date: "2024-08-29", amount: 5678.90, po: "CHA-2024-0892", items: "Bulk washer/dryer parts for housing projects" },
-                    { date: "2024-08-26", amount: 3456.78, po: "CHA-2024-0887", items: "Refrigerator controls, compressors" }
-                ],
-                serviceArea: "Public housing citywide"
-            },
-
-            "(402) 555-0567": {
-                name: "University of Nebraska - Facilities",
-                type: "commercial", 
-                phone: "(402) 555-0567",
-                address: "1400 R St, Lincoln, NE 68588",
-                contact: "Dr. Susan Chen - Facilities Manager",
-                email: "schen@unl.edu",
-                creditLimit: 75000,
-                paymentTerms: "Net 60", 
-                poRequired: true,
-                preferredWarehouse: "Omaha (300)",
-                accountSince: "2016-08-15",
-                totalOrders: 1834,
-                ytdSpent: 167890.34,
-                lastOrder: "2024-08-27",
-                lastOrderAmount: 3456.78,
-                notes: "Educational institution. State purchasing rules. Semester-based heavy usage.",
-                orderHistory: [
-                    { date: "2024-08-27", amount: 3456.78, po: "UNL-FM-24-0156", items: "Dormitory laundry equipment parts" }
-                ],
-                serviceArea: "University campuses, dormitories"
+                notes: "Lincoln Park condo owner. Whirlpool washer. Prefers pickup."
             }
+        };
+
         // Website parts database for search functionality
         const websiteParts = [
             { partNumber: 'W11608056', brand: 'whirlpool', category: 'control_board', description: 'Electronic Control Board - Smart Series 2024', price: 289.99 },
@@ -341,6 +1015,106 @@
             { partNumber: 'WH12X10355', brand: 'ge', category: 'control_board', description: 'Front Load Control Board - Smart', price: 285.50 },
             { partNumber: 'W10613606', brand: 'whirlpool', category: 'igniter', description: 'Gas Igniter - Hot Surface Type', price: 75.99 }
         ];
+
+        function showCustomer(phone) {
+            const customer = customerDatabase[phone];
+            const display = document.getElementById('customerDisplay');
+            
+            if (customer) {
+                let orderHistoryHTML = '';
+                if (customer.orderHistory && customer.orderHistory.length > 0) {
+                    orderHistoryHTML = `
+                        <div class="order-history">
+                            <h4>Recent Orders</h4>
+                            ${customer.orderHistory.map(order => `
+                                <div class="order-item">
+                                    <span class="order-date">${order.date}</span>
+                                    <span class="order-amount">$${order.amount}</span>
+                                    <br>
+                                    ${order.po ? `PO: ${order.po} - ` : ''}${order.items}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                display.innerHTML = `
+                    <div class="customer-info">
+                        <div class="customer-header">
+                            <div class="customer-name">${customer.name}</div>
+                            <span class="customer-type ${customer.type}">${customer.type}</span>
+                        </div>
+                        <div class="customer-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Phone:</span>
+                                <span class="detail-value">${customer.phone}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value">${customer.address}</span>
+                            </div>
+                            ${customer.property ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">Property:</span>
+                                    <span class="detail-value">${customer.property} (${customer.units} units)</span>
+                                </div>
+                            ` : ''}
+                            ${customer.contact ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">Contact:</span>
+                                    <span class="detail-value">${customer.contact}</span>
+                                </div>
+                            ` : ''}
+                            <div class="detail-row">
+                                <span class="detail-label">Credit Limit:</span>
+                                <span class="detail-value">$${customer.creditLimit ? customer.creditLimit.toLocaleString() : 'N/A'}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Payment Terms:</span>
+                                <span class="detail-value">${customer.paymentTerms || 'COD'}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">PO Required:</span>
+                                <span class="detail-value">${customer.poRequired ? 'YES' : 'No'}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">YTD Spent:</span>
+                                <span class="detail-value">$${customer.ytdSpent ? customer.ytdSpent.toLocaleString() : '0'}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Total Orders:</span>
+                                <span class="detail-value">${customer.totalOrders || 0}</span>
+                            </div>
+                        </div>
+                        ${orderHistoryHTML}
+                        ${customer.notes ? `
+                            <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px; font-size: 0.9em;">
+                                <strong>Notes:</strong> ${customer.notes}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+        }
+
+        function formatPhoneNumber(input) {
+            const numbers = input.replace(/\D/g, '');
+            const match = numbers.match(/^(\d{3})(\d{3})(\d{4})$/);
+            if (match) {
+                return `(${match[1]}) ${match[2]}-${match[3]}`;
+            }
+            return input;
+        }
+
+        function searchCustomer() {
+            const phoneInput = document.getElementById('phoneSearch');
+            const phone = formatPhoneNumber(phoneInput.value);
+            phoneInput.value = phone;
+            
+            if (phone.length === 14) { // Complete phone number
+                showCustomer(phone);
+            }
+        }
 
         function filterWebsiteParts() {
             const searchTerm = document.getElementById('websiteSearch').value.toLowerCase();
@@ -375,16 +1149,18 @@
                     <div class="website-part-number">${part.partNumber}</div>
                     <span class="website-part-brand">${part.brand.toUpperCase()}</span>
                     <div class="website-part-description">${part.description}</div>
-                    <div class="website-part-price">${part.price}</div>
+                    <div class="website-part-price">$${part.price}</div>
                 </div>
             `).join('');
         }
 
-        // Add event listeners for website functionality
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('phoneSearch').addEventListener('input', searchCustomer);
             document.getElementById('websiteSearch').addEventListener('input', filterWebsiteParts);
             document.getElementById('websiteBrand').addEventListener('change', filterWebsiteParts);
             document.getElementById('websiteCategory').addEventListener('change', filterWebsiteParts);
         });
-
-        };
+    </script>
+</body>
+</html>
