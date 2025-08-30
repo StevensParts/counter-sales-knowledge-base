@@ -5,12 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diagnostic Knowledge Base - Steven's Parts</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -45,10 +41,6 @@
             color: #2a5298;
         }
 
-        .main-content {
-            padding: 2rem 0;
-        }
-
         .hero-section {
             text-align: center;
             padding: 3rem 0;
@@ -60,28 +52,45 @@
             margin-bottom: 1rem;
         }
 
-        .hero-section p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .master-search {
+            margin: 2rem 0;
+            position: relative;
+            text-align: center;
         }
 
-        .diagnostic-wizard {
+        .search-container input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem 3rem 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .search-examples {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .diagnostic-wizard, .quick-diagnosis, .parts-database {
             background: white;
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem auto;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 800px;
+            max-width: 1000px;
         }
 
-        .diagnostic-step {
-            margin-bottom: 2rem;
-        }
-
-        .diagnostic-step h3 {
+        .diagnostic-wizard h2, .quick-diagnosis h2, .parts-database h2 {
             color: #2a5298;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .diagnostic-options {
@@ -113,34 +122,6 @@
             transform: scale(1.05);
         }
 
-        .diagnostic-results {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .diagnostic-results h3 {
-            color: #2a5298;
-            margin-bottom: 1rem;
-        }
-
-        .quick-diagnosis {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 1000px;
-        }
-
-        .quick-diagnosis h2 {
-            color: #2a5298;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
         .symptom-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -165,79 +146,37 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
-        .error-code-section {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
+        .search-filters {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
         }
 
-        .error-code-section h3 {
+        .search-filters h4 {
             color: #2a5298;
             margin-bottom: 1rem;
-        }
-
-        .error-code-input {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .error-code-input input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .error-code-input button {
-            background: #2a5298;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .error-code-input button:hover {
-            background: #1e3c72;
-        }
-
-        .parts-database {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 1200px;
-        }
-
-        .parts-database h2 {
-            color: #2a5298;
-            margin-bottom: 1.5rem;
             text-align: center;
         }
 
-        .search-filters {
+        .filter-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
-            margin-bottom: 2rem;
         }
 
-        .search-filters select,
-        .search-filters input {
+        .search-filters select, .search-filters button {
             padding: 0.8rem;
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
         }
 
-        .parts-table {
-            overflow-x: auto;
-            margin-top: 1rem;
+        .search-filters button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
         table {
@@ -277,29 +216,70 @@
             color: #666;
         }
 
+        .repair-kits {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+            border-radius: 15px;
+        }
+
+        .repair-kits h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .kit-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .kit-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .kit-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .show-all-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #6c757d;
+            font-style: italic;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-
-            .diagnostic-options {
-                grid-template-columns: 1fr;
-            }
-
-            .symptom-buttons {
-                grid-template-columns: 1fr;
-            }
-
-            .search-filters {
-                grid-template-columns: 1fr;
-            }
-
-            .diagnostic-wizard,
-            .quick-diagnosis,
-            .parts-database {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
+            .hero-section h1 { font-size: 2rem; }
+            .diagnostic-options, .symptom-buttons { grid-template-columns: 1fr; }
+            .filter-grid { grid-template-columns: 1fr; }
+            .diagnostic-wizard, .quick-diagnosis, .parts-database { margin: 1rem; padding: 1.5rem; }
         }
     </style>
 </head>
@@ -313,557 +293,362 @@
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="container">
-            <div class="hero-section">
-                <h1>🎯 Appliance Diagnostic Knowledge Base</h1>
-                <p>Professional diagnostic tools for all major appliance brands</p>
+    <div class="container">
+        <div class="hero-section">
+            <h1>🎯 Appliance Diagnostic Knowledge Base</h1>
+            <p>Professional diagnostic tools for all major appliance brands</p>
+            
+            <div class="master-search">
+                <div class="search-container">
+                    <input type="text" id="masterSearch" 
+                           placeholder="Search by part number, brand, symptom, or error code..." 
+                           oninput="masterSearch()">
+                    <div class="search-examples">
+                        <strong>Try:</strong> "W10310240" • "capacitor" • "repair kit" • "Mars" • "won't start"
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- DIAGNOSTIC WIZARD -->
-            <div class="diagnostic-wizard">
-                <h2>🧙‍♂️ Smart Diagnostic Wizard</h2>
-                <p>Step-by-step diagnosis to find the exact part you need</p>
+        <!-- DIAGNOSTIC WIZARD -->
+        <div class="diagnostic-wizard">
+            <h2>🧙‍♂️ Smart Diagnostic Wizard</h2>
+            <p>Step-by-step diagnosis to find the exact part you need</p>
 
-                <div class="diagnostic-step">
-                    <h3>1. What type of appliance?</h3>
-                    <div class="diagnostic-options">
-                        <div class="diagnostic-btn" onclick="selectAppliance('washer')">🧺 Washer</div>
-                        <div class="diagnostic-btn" onclick="selectAppliance('dryer')">🔥 Dryer</div>
-                        <div class="diagnostic-btn" onclick="selectAppliance('dishwasher')">🍽️ Dishwasher</div>
-                        <div class="diagnostic-btn" onclick="selectAppliance('refrigerator')">❄️ Refrigerator</div>
-                        <div class="diagnostic-btn" onclick="selectAppliance('range')">🔥 Range/Oven</div>
-                    </div>
-                </div>
-
-                <div id="brandStep" class="diagnostic-step" style="display: none;">
-                    <h3>2. What's the brand?</h3>
-                    <div id="brandOptions" class="diagnostic-options">
-                        <!-- Brand options will be populated dynamically -->
-                    </div>
-                </div>
-
-                <div id="symptomStep" class="diagnostic-step" style="display: none;">
-                    <h3>3. What's the main problem?</h3>
-                    <div id="symptomOptions" class="diagnostic-options">
-                        <!-- Symptom options will be populated dynamically -->
-                    </div>
-                </div>
-
-                <div class="diagnostic-results" id="diagnosticResults">
-                    <h3>🎯 Diagnosis Complete!</h3>
-                    <div id="diagnosisText"></div>
-                    <div id="recommendedParts"></div>
+            <div>
+                <h3 style="color: #2a5298; margin: 1rem 0;">1. What type of appliance?</h3>
+                <div class="diagnostic-options">
+                    <div class="diagnostic-btn" onclick="selectAppliance('washer')">🧺 Washer</div>
+                    <div class="diagnostic-btn" onclick="selectAppliance('dryer')">🔥 Dryer</div>
+                    <div class="diagnostic-btn" onclick="selectAppliance('dishwasher')">🍽️ Dishwasher</div>
+                    <div class="diagnostic-btn" onclick="selectAppliance('refrigerator')">❄️ Refrigerator</div>
+                    <div class="diagnostic-btn" onclick="selectAppliance('air_conditioner')">❄️ Air Conditioner</div>
+                    <div class="diagnostic-btn" onclick="selectAppliance('range')">🔥 Range/Oven</div>
                 </div>
             </div>
 
-            <!-- QUICK DIAGNOSIS SECTION -->
-            <div class="quick-diagnosis">
-                <h2>⚡ Quick Symptom Diagnosis</h2>
-                <div class="symptom-buttons">
-                    <div class="symptom-btn" onclick="quickDiagnose('no_power')">🔌 No Power</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('wont_start')">▶️ Won't Start</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('no_heat')">🌡️ No Heat</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('wont_drain')">💧 Won't Drain</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('making_noise')">🔊 Making Noise</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('door_issues')">🚪 Door Issues</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('temperature_issues')">🌡️ Temperature Issues</div>
-                    <div class="symptom-btn" onclick="quickDiagnose('water_issues')">💧 Water Issues</div>
-                </div>
-
-                <!-- ERROR CODE SECTION -->
-                <div class="error-code-section">
-                    <h3>🚨 Have an Error Code?</h3>
-                    <p>Enter the error code from your appliance display for instant diagnosis:</p>
-                    <div class="error-code-input">
-                        <input type="text" id="errorCodeInput" placeholder="Enter error code (e.g., F21, OE, 4C)" style="text-transform: uppercase;">
-                        <button onclick="diagnoseErrorCode()">Diagnose Code</button>
-                    </div>
-                    <div id="errorCodeResults" style="margin-top: 1rem;"></div>
-                </div>
+            <div id="brandStep" style="display: none;">
+                <h3 style="color: #2a5298; margin: 1rem 0;">2. What's the brand?</h3>
+                <div id="brandOptions" class="diagnostic-options"></div>
             </div>
 
-            <!-- PARTS DATABASE -->
-            <div class="parts-database">
-                <h2>🔍 Diagnostic Parts Database</h2>
-                
-                <div class="search-filters">
-                    <input type="text" id="searchInput" placeholder="Search by part number, model, or symptom..." oninput="filterParts()">
+            <div id="resultStep" style="display: none;">
+                <h3 style="color: #2a5298; margin: 1rem 0;">🎯 Common Parts & Solutions</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+
+        <!-- QUICK DIAGNOSIS -->
+        <div class="quick-diagnosis">
+            <h2>⚡ Quick Symptom Diagnosis</h2>
+            <div class="symptom-buttons">
+                <div class="symptom-btn" onclick="quickDiagnose('no_power')">🔌 No Power</div>
+                <div class="symptom-btn" onclick="quickDiagnose('wont_start')">▶️ Won't Start</div>
+                <div class="symptom-btn" onclick="quickDiagnose('no_heat')">🌡️ No Heat</div>
+                <div class="symptom-btn" onclick="quickDiagnose('making_noise')">🔊 Making Noise</div>
+                <div class="symptom-btn" onclick="quickDiagnose('wont_drain')">💧 Won't Drain</div>
+                <div class="symptom-btn" onclick="quickDiagnose('wont_cool')">❄️ Won't Cool</div>
+            </div>
+
+            <!-- REPAIR KITS -->
+            <div class="repair-kits">
+                <h3>🔧 Popular Repair Kits</h3>
+                <div class="kit-buttons">
+                    <button class="kit-btn" onclick="quickDiagnose('repair_kit')">🛠️ Dryer Repair Kits</button>
+                    <button class="kit-btn" onclick="quickDiagnose('capacitor')">⚡ HVAC Capacitors</button>
+                    <button class="kit-btn" onclick="quickDiagnose('bearing_kit')">⚙️ Bearing Kits</button>
+                    <button class="kit-btn" onclick="quickDiagnose('heating_element')">🌡️ Heating Elements</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PARTS DATABASE -->
+        <div class="parts-database">
+            <h2>🔍 Parts Database</h2>
+            <p>Use filters to find specific parts or search above</p>
+            
+            <div style="margin-bottom: 1rem;">
+                <button class="show-all-btn" onclick="showAllParts()">📋 Show All Parts</button>
+                <span id="resultCount" style="color: #666; margin-left: 1rem;"></span>
+            </div>
+
+            <div class="search-filters">
+                <h4>🔍 Filter Parts</h4>
+                <div class="filter-grid">
                     <select id="brandFilter" onchange="filterParts()">
                         <option value="">All Brands</option>
                         <option value="whirlpool">Whirlpool</option>
                         <option value="ge">GE</option>
-                        <option value="lg">LG</option>
                         <option value="samsung">Samsung</option>
-                        <option value="frigidaire">Frigidaire</option>
-                        <option value="maytag">Maytag</option>
+                        <option value="lg">LG</option>
+                        <option value="mars">Mars</option>
+                        <option value="supco">Supco</option>
                     </select>
                     <select id="applianceFilter" onchange="filterParts()">
                         <option value="">All Appliances</option>
                         <option value="washer">Washers</option>
                         <option value="dryer">Dryers</option>
-                        <option value="dishwasher">Dishwashers</option>
+                        <option value="air_conditioner">Air Conditioners</option>
                         <option value="refrigerator">Refrigerators</option>
-                        <option value="range">Ranges/Ovens</option>
                     </select>
-                    <select id="symptomFilter" onchange="filterParts()">
-                        <option value="">All Symptoms</option>
-                        <option value="no_power">No Power</option>
-                        <option value="wont_start">Won't Start</option>
-                        <option value="no_heat">No Heat</option>
-                        <option value="wont_drain">Won't Drain</option>
-                        <option value="making_noise">Making Noise</option>
-                        <option value="door_issues">Door Issues</option>
-                    </select>
+                    <button onclick="resetFilters()">🔄 Reset</button>
                 </div>
+            </div>
 
-                <div class="parts-table">
-                    <table id="partsTable">
-                        <thead>
-                            <tr>
-                                <th>Part Number</th>
-                                <th>Brand</th>
-                                <th>Appliance</th>
-                                <th>Common Symptoms</th>
-                                <th>Error Codes</th>
-                                <th>Compatible Models</th>
-                            </tr>
-                        </thead>
-                        <tbody id="partsTableBody">
-                            <!-- Parts data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Part Number</th>
+                            <th>Brand</th>
+                            <th>Appliance</th>
+                            <th>Description</th>
+                            <th>Common Issues</th>
+                        </tr>
+                    </thead>
+                    <tbody id="partsTableBody">
+                        <tr><td colspan="5" class="empty-state">
+                            <h3>🔍 Choose filters above to find parts</h3>
+                            <div>Select a brand or appliance type • Use the search bar • Or click "Show All Parts"</div>
+                        </td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script>
-        // Global variables
-        let currentAppliance = '';
-        let currentBrand = '';
-        let allParts = [];
-
-        // Comprehensive parts database with brand-specific diagnostics
+        // Essential parts database - streamlined for performance
         const partsDatabase = [
-            // WHIRLPOOL PARTS
+            // POPULAR WASHER PARTS
             {
                 partNumber: "W10310240",
                 brand: "whirlpool",
                 appliance: "washer",
                 name: "Main Control Board",
-                symptoms: ["no_power", "wont_start", "display_issues"],
-                errorCodes: ["F21", "F02", "F01", "Lid"],
-                models: ["WTW4816FW", "WTW5000DW", "WTW4815EW"],
-                diagnosis: "Controls all wash functions including water fill, drain, and spin cycles"
+                symptoms: ["no_power", "wont_start"],
+                description: "Electronic control board for Whirlpool top-load washers"
             },
             {
-                partNumber: "W10189966",
-                brand: "whirlpool",
-                appliance: "dryer",
-                name: "Electronic Control Board",
-                symptoms: ["no_heat", "wont_start", "temperature_issues"],
-                errorCodes: ["F01", "F02", "F70", "F71"],
-                models: ["WED4815EW", "WED5000DW", "WGD4815EW"],
-                diagnosis: "Controls heating elements, motor, and timer functions"
+                partNumber: "DC97-15328A",
+                brand: "samsung",
+                appliance: "washer", 
+                name: "Bearing Kit",
+                symptoms: ["making_noise", "bearing_kit"],
+                description: "Complete bearing and seal kit for Samsung front-load washers"
             },
             {
-                partNumber: "W10084142",
-                brand: "whirlpool",
-                appliance: "dishwasher",
-                name: "Control Module",
-                symptoms: ["wont_start", "water_issues", "no_heat"],
-                errorCodes: ["F6E2", "F7E1", "F8E4"],
-                models: ["WDT710PAYM", "WDF520PADM", "WDT730PAHZ"],
-                diagnosis: "Manages wash cycles, water temperature, and drain functions"
+                partNumber: "EBR78534409",
+                brand: "lg",
+                appliance: "washer",
+                name: "Main Control PCB",
+                symptoms: ["no_power", "wont_drain"],
+                description: "Main control board for LG front-load washers"
             },
 
-            // GE PARTS
+            // POPULAR DRYER PARTS  
             {
-                partNumber: "WH12X10355",
-                brand: "ge",
-                appliance: "washer",
-                name: "Main Control Board",
-                symptoms: ["no_power", "wont_start", "cycle_issues"],
-                errorCodes: ["E10", "E20", "E23", "E40"],
-                models: ["GTW465ASNWW", "GTW485ASJWS", "GTW680BSJWS"],
-                diagnosis: "Primary control for all wash operations and error detection"
+                partNumber: "4392067",
+                brand: "whirlpool",
+                appliance: "dryer",
+                name: "Dryer Maintenance Kit",
+                symptoms: ["making_noise", "repair_kit"],
+                description: "4-roller kit: rollers, belt, idler pulley, instructions"
+            },
+            {
+                partNumber: "DC47-00019A",
+                brand: "samsung",
+                appliance: "dryer",
+                name: "Heating Element Kit",
+                symptoms: ["no_heat", "heating_element"],
+                description: "Complete heating element with thermostats and thermal fuse"
             },
             {
                 partNumber: "WE04X20374",
                 brand: "ge",
                 appliance: "dryer",
                 name: "Control Board Assembly",
-                symptoms: ["no_heat", "temperature_issues", "timer_issues"],
-                errorCodes: ["E01", "E02", "E64", "E66"],
-                models: ["GTD42EASJWW", "GTD65EBSJWS", "GFD45ESSMWW"],
-                diagnosis: "Controls heat settings, cycle timing, and motor functions"
-            },
-            {
-                partNumber: "WD21X24901",
-                brand: "ge",
-                appliance: "dishwasher",
-                name: "Control Board",
-                symptoms: ["wont_start", "cycle_problems", "display_issues"],
-                errorCodes: ["C1", "C2", "C6", "C7"],
-                models: ["GDT695SSJSS", "GDF630PGRWW", "GDT545PGJWW"],
-                diagnosis: "Main control for wash cycles, water heating, and user interface"
+                symptoms: ["no_heat", "wont_start"],
+                description: "Electronic control for GE electric dryers"
             },
 
-            // LG PARTS
+            // HVAC PARTS
             {
-                partNumber: "EBR78534409",
-                brand: "lg",
-                appliance: "washer",
-                name: "PCB Main Control",
-                symptoms: ["no_power", "wont_drain", "spin_issues"],
-                errorCodes: ["OE", "UE", "LE", "FE"],
-                models: ["WM3500CW", "WM3900HWA", "WM4000HWA"],
-                diagnosis: "Controls wash motor, drain pump, and load balancing system"
+                partNumber: "12905",
+                brand: "mars",
+                appliance: "air_conditioner",
+                name: "Dual Run Capacitor 45/5 MFD",
+                symptoms: ["wont_cool", "capacitor"],
+                description: "440V dual run capacitor for 3.5-4 ton AC units"
             },
             {
-                partNumber: "EBR73304203",
-                brand: "lg",
-                appliance: "dryer",
-                name: "Main PCB Board",
-                symptoms: ["no_heat", "wont_start", "sensor_issues"],
-                errorCodes: ["d80", "d90", "d95", "tE1"],
-                models: ["DLEX3900B", "DLEX3900W", "DLE3500W"],
-                diagnosis: "Manages heating element, moisture sensors, and safety systems"
+                partNumber: "CD45+5X440",
+                brand: "supco",
+                appliance: "air_conditioner", 
+                name: "Dual Run Capacitor 45/5 MFD",
+                symptoms: ["wont_cool", "capacitor"],
+                description: "Premium oval capacitor with metal case"
+            },
+            {
+                partNumber: "5304476054",
+                brand: "frigidaire",
+                appliance: "air_conditioner",
+                name: "Condenser Fan Motor",
+                symptoms: ["wont_cool", "making_noise"],
+                description: "Condenser fan motor for window and portable AC units"
+            },
+
+            // REFRIGERATOR PARTS
+            {
+                partNumber: "W10190965",
+                brand: "whirlpool",
+                appliance: "refrigerator",
+                name: "Ice Maker Control Module", 
+                symptoms: ["no_ice", "wont_start"],
+                description: "Controls ice making cycle and water fill"
             },
             {
                 partNumber: "EBR84240401",
                 brand: "lg",
-                appliance: "dishwasher",
-                name: "Control Board",
-                symptoms: ["wont_start", "water_issues", "cleaning_problems"],
-                errorCodes: ["OE", "FE", "1E", "HE"],
-                models: ["LDT7808SS", "LDP6797ST", "LDF5545ST"],
-                diagnosis: "Controls water intake, spray arms, and wash cycle programs"
-            },
-
-            // SAMSUNG PARTS
-            {
-                partNumber: "DC92-01019A",
-                brand: "samsung",
-                appliance: "washer",
+                appliance: "refrigerator",
                 name: "Main Control Board",
-                symptoms: ["no_power", "door_issues", "cycle_problems"],
-                errorCodes: ["4C", "5C", "DC", "UC"],
-                models: ["WF45K6200AW", "WF42H5000AW", "WF50K7500AW"],
-                diagnosis: "Primary controller for wash functions and door lock system"
-            },
-            {
-                partNumber: "DC92-00669A",
-                brand: "samsung",
-                appliance: "dryer",
-                name: "Electronic Control Board",
-                symptoms: ["no_heat", "temperature_issues", "time_issues"],
-                errorCodes: ["HC", "tS", "C80", "HE2"],
-                models: ["DV42H5000EW", "DV45K6200EW", "DV50K7500EV"],
-                diagnosis: "Controls heating system, temperature sensors, and cycle timing"
-            },
-            {
-                partNumber: "DE41-00519A",
-                brand: "samsung",
-                appliance: "dishwasher",
-                name: "Control Module",
-                symptoms: ["wont_start", "water_issues", "display_problems"],
-                errorCodes: ["4C", "5C", "9C", "PC"],
-                models: ["DW80R9950UT", "DW80R5060US", "DW80R7060US"],
-                diagnosis: "Main control for water systems, pumps, and user interface"
-            },
-
-            // FRIGIDAIRE PARTS
-            {
-                partNumber: "137006200",
-                brand: "frigidaire",
-                appliance: "washer",
-                name: "Control Board",
-                symptoms: ["no_power", "wont_start", "agitator_issues"],
-                errorCodes: ["E20", "E21", "E23", "E24"],
-                models: ["FAFW3801LW", "FAFW4011LW", "FFTW1001PW"],
-                diagnosis: "Controls motor, agitator, and water level systems"
-            },
-            {
-                partNumber: "134503612",
-                brand: "frigidaire",
-                appliance: "dryer",
-                name: "Control Board",
-                symptoms: ["no_heat", "wont_start", "timer_problems"],
-                errorCodes: ["E64", "E68", "EF1", "EF2"],
-                models: ["FFRE4120SW", "FFRG4120SW", "FFQE5000QW"],
-                diagnosis: "Primary control for heating elements and cycle timing"
-            },
-
-            // MAYTAG PARTS
-            {
-                partNumber: "W10906394",
-                brand: "maytag",
-                appliance: "washer",
-                name: "Control Board",
-                symptoms: ["no_power", "wont_drain", "lid_issues"],
-                errorCodes: ["F21", "F02", "Lid", "dU"],
-                models: ["MVWC465HW", "MVWC565FW", "MVWX655DW"],
-                diagnosis: "Controls wash cycles, lid lock, and drain operations"
-            },
-            {
-                partNumber: "W10840140",
-                brand: "maytag",
-                appliance: "dryer",
-                name: "Electronic Control",
-                symptoms: ["no_heat", "temperature_issues", "cycle_issues"],
-                errorCodes: ["F01", "F02", "F70", "F28"],
-                models: ["MEDC465HW", "MEDC555DW", "MGDC465HW"],
-                diagnosis: "Manages heating system, sensors, and cycle programs"
+                symptoms: ["temperature_issues", "no_power"],
+                description: "Main control PCB for LG refrigerators"
             }
         ];
 
-        // Initialize the application
-        function init() {
-            allParts = partsDatabase;
-            populatePartsTable();
-        }
-
-        // Diagnostic Wizard Functions
-        function selectAppliance(appliance) {
-            currentAppliance = appliance;
-            
-            // Update UI
-            document.querySelectorAll('.diagnostic-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            // Show brand selection
-            const brandStep = document.getElementById('brandStep');
-            const brandOptions = document.getElementById('brandOptions');
-            
-            // Get all available brands for this appliance
-            const brands = [...new Set(partsDatabase
-                .filter(part => part.appliance === appliance)
-                .map(part => part.brand))];
-            
-            brandOptions.innerHTML = brands.map(brand => 
-                `<div class="diagnostic-btn" onclick="selectBrand('${brand}')">${brand.charAt(0).toUpperCase() + brand.slice(1)}</div>`
-            ).join('');
-            
-            brandStep.style.display = 'block';
-            
-            // Hide subsequent steps
-            document.getElementById('symptomStep').style.display = 'none';
-            document.getElementById('diagnosticResults').style.display = 'none';
-        }
-
-        function selectBrand(brand) {
-            currentBrand = brand;
-            
-            // Update UI
-            document.querySelectorAll('#brandOptions .diagnostic-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            // Show symptom selection
-            const symptomStep = document.getElementById('symptomStep');
-            const symptomOptions = document.getElementById('symptomOptions');
-            
-            // Get symptoms for this appliance and brand combination
-            const symptoms = [...new Set(partsDatabase
-                .filter(part => part.appliance === currentAppliance && part.brand === currentBrand)
-                .flatMap(part => part.symptoms))];
-            
-            // Create symptom options with readable names
-            const symptomNames = {
-                'no_power': '🔌 No Power',
-                'wont_start': '▶️ Won\'t Start',
-                'no_heat': '🌡️ No Heat',
-                'wont_drain': '💧 Won\'t Drain',
-                'making_noise': '🔊 Making Noise',
-                'door_issues': '🚪 Door Issues',
-                'temperature_issues': '🌡️ Temperature Issues',
-                'water_issues': '💧 Water Issues',
-                'cycle_issues': '🔄 Cycle Problems',
-                'display_issues': '📺 Display Issues',
-                'spin_issues': '🌪️ Spin Issues',
-                'agitator_issues': '🔄 Agitator Issues',
-                'lid_issues': '🔒 Lid Issues',
-                'sensor_issues': '📡 Sensor Issues',
-                'timer_issues': '⏲️ Timer Issues',
-                'cleaning_problems': '🧽 Cleaning Problems',
-                'cycle_problems': '🔄 Cycle Problems',
-                'timer_problems': '⏲️ Timer Problems'
-            };
-            
-            symptomOptions.innerHTML = symptoms.map(symptom => 
-                `<div class="diagnostic-btn" onclick="selectSymptom('${symptom}')">${symptomNames[symptom] || symptom}</div>`
-            ).join('');
-            
-            symptomStep.style.display = 'block';
-            document.getElementById('diagnosticResults').style.display = 'none';
-        }
-
-        function selectSymptom(symptom) {
-            // Update UI
-            document.querySelectorAll('#symptomOptions .diagnostic-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            // Find matching parts
-            const matchingParts = partsDatabase.filter(part => 
-                part.appliance === currentAppliance && 
-                part.brand === currentBrand && 
-                part.symptoms.includes(symptom)
-            );
-            
-            // Show results
-            const resultsDiv = document.getElementById('diagnosticResults');
-            const diagnosisText = document.getElementById('diagnosisText');
-            const recommendedParts = document.getElementById('recommendedParts');
-            
-            if (matchingParts.length > 0) {
-                const part = matchingParts[0]; // Take the first matching part
-                
-                diagnosisText.innerHTML = `
-                    <p><strong>Diagnosis:</strong> ${part.diagnosis}</p>
-                    <p><strong>Brand:</strong> ${part.brand.toUpperCase()}</p>
-                    <p><strong>Appliance:</strong> ${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1)}</p>
-                    <p><strong>Common Error Codes:</strong> ${part.errorCodes.join(', ')}</p>
-                `;
-                
-                recommendedParts.innerHTML = `
-                    <h4>🔧 Recommended Part:</h4>
-                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                        <p><strong>Part Number:</strong> ${part.partNumber}</p>
-                        <p><strong>Description:</strong> ${part.name}</p>
-                        <p><strong>Compatible Models:</strong> ${part.models.join(', ')}</p>
-                    </div>
-                `;
-            } else {
-                diagnosisText.innerHTML = `<p>No specific parts found for this combination. Please check our parts database below or contact support.</p>`;
-                recommendedParts.innerHTML = '';
+        // Search and filter functions
+        function masterSearch() {
+            const searchTerm = document.getElementById('masterSearch').value.toLowerCase().trim();
+            if (!searchTerm) {
+                showEmptyTable();
+                return;
             }
-            
-            resultsDiv.style.display = 'block';
+
+            const matchingParts = partsDatabase.filter(part => 
+                part.partNumber.toLowerCase().includes(searchTerm) ||
+                part.name.toLowerCase().includes(searchTerm) ||
+                part.brand.toLowerCase().includes(searchTerm) ||
+                part.appliance.toLowerCase().includes(searchTerm) ||
+                part.description.toLowerCase().includes(searchTerm) ||
+                part.symptoms.some(symptom => symptom.toLowerCase().includes(searchTerm))
+            );
+
+            displayParts(matchingParts);
+            updateResultCount(matchingParts.length, searchTerm);
         }
 
-        // Quick diagnosis functions
         function quickDiagnose(symptom) {
-            const symptomDescriptions = {
-                'no_power': 'No Power - Check main control boards and power supply components',
-                'wont_start': 'Won\'t Start - Likely door lock, control board, or safety switch issues',
-                'no_heat': 'No Heat - Heating element control boards or temperature sensors',
-                'wont_drain': 'Won\'t Drain - Drain pump control or water level sensor issues',
-                'making_noise': 'Making Noise - Motor control boards or bearing assemblies',
-                'door_issues': 'Door Issues - Door lock mechanisms and control boards',
-                'temperature_issues': 'Temperature Issues - Temperature sensors and control boards',
-                'water_issues': 'Water Issues - Water valve controls and level sensors'
-            };
-
-            // Filter parts database by symptom
             const matchingParts = partsDatabase.filter(part => part.symptoms.includes(symptom));
-            
-            // Update parts table to show only matching parts
-            displayFilteredParts(matchingParts);
-            
-            // Scroll to parts database
+            displayParts(matchingParts);
+            updateResultCount(matchingParts.length, symptom.replace('_', ' '));
             document.querySelector('.parts-database').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Error code diagnosis
-        function diagnoseErrorCode() {
-            const errorCode = document.getElementById('errorCodeInput').value.trim().toLowerCase();
-            const resultsDiv = document.getElementById('errorCodeResults');
-            
-            if (!errorCode) {
-                resultsDiv.innerHTML = '<p style="color: red;">Please enter an error code.</p>';
-                return;
-            }
-            
-            // Find parts that handle this error code
+        function selectAppliance(appliance) {
+            const brands = [...new Set(partsDatabase
+                .filter(part => part.appliance === appliance)
+                .map(part => part.brand))];
+
+            const brandOptions = document.getElementById('brandOptions');
+            brandOptions.innerHTML = brands.map(brand => 
+                `<div class="diagnostic-btn" onclick="selectBrand('${appliance}', '${brand}')">${brand.charAt(0).toUpperCase() + brand.slice(1)}</div>`
+            ).join('');
+
+            document.getElementById('brandStep').style.display = 'block';
+        }
+
+        function selectBrand(appliance, brand) {
             const matchingParts = partsDatabase.filter(part => 
-                part.errorCodes.some(code => code.toLowerCase() === errorCode)
+                part.appliance === appliance && part.brand === brand
             );
-            
+
+            const resultContent = document.getElementById('resultContent');
             if (matchingParts.length > 0) {
-                let resultHTML = `<h4>🎯 Error Code "${errorCode.toUpperCase()}" Found!</h4>`;
-                
-                matchingParts.forEach(part => {
-                    resultHTML += `
-                        <div style="background: white; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 4px solid #2a5298;">
-                            <p><strong>${part.brand.toUpperCase()} ${part.appliance.toUpperCase()}</strong></p>
-                            <p><strong>Part:</strong> ${part.partNumber} - ${part.name}</p>
-                            <p><strong>Diagnosis:</strong> ${part.diagnosis}</p>
-                            <p><strong>Models:</strong> ${part.models.join(', ')}</p>
-                        </div>
-                    `;
-                });
-                
-                resultsDiv.innerHTML = resultHTML;
+                resultContent.innerHTML = matchingParts.map(part => 
+                    `<div style="background: #f8f9fa; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                        <strong>${part.partNumber}</strong> - ${part.name}<br>
+                        <small style="color: #666;">${part.description}</small>
+                    </div>`
+                ).join('');
             } else {
-                resultsDiv.innerHTML = `
-                    <div style="background: #ffe6e6; padding: 1rem; border-radius: 8px; border-left: 4px solid #ff4444;">
-                        <p><strong>Error code "${errorCode.toUpperCase()}" not found in our database.</strong></p>
-                        <p>Try searching our parts database below or contact technical support.</p>
-                    </div>
-                `;
+                resultContent.innerHTML = '<p>No specific parts found for this combination. Check our full database below.</p>';
             }
-        }
 
-        // Parts database functions
-        function populatePartsTable() {
-            const tbody = document.getElementById('partsTableBody');
-            tbody.innerHTML = '';
-            
-            allParts.forEach(part => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td><strong>${part.partNumber}</strong><br><small>${part.name}</small></td>
-                    <td><span class="brand-badge">${part.brand.toUpperCase()}</span></td>
-                    <td>${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1)}</td>
-                    <td class="compatibility-list">${part.symptoms.map(s => s.replace('_', ' ')).join(', ')}</td>
-                    <td><strong>${part.errorCodes.join(', ')}</strong></td>
-                    <td class="compatibility-list">${part.models.join(', ')}</td>
-                `;
-            });
-        }
-
-        function displayFilteredParts(parts) {
-            const tbody = document.getElementById('partsTableBody');
-            tbody.innerHTML = '';
-            
-            parts.forEach(part => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td><strong>${part.partNumber}</strong><br><small>${part.name}</small></td>
-                    <td><span class="brand-badge">${part.brand.toUpperCase()}</span></td>
-                    <td>${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1)}</td>
-                    <td class="compatibility-list">${part.symptoms.map(s => s.replace('_', ' ')).join(', ')}</td>
-                    <td><strong>${part.errorCodes.join(', ')}</strong></td>
-                    <td class="compatibility-list">${part.models.join(', ')}</td>
-                `;
-            });
+            document.getElementById('resultStep').style.display = 'block';
         }
 
         function filterParts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const brandFilter = document.getElementById('brandFilter').value;
             const applianceFilter = document.getElementById('applianceFilter').value;
-            const symptomFilter = document.getElementById('symptomFilter').value;
-            
+
+            if (!brandFilter && !applianceFilter) {
+                showEmptyTable();
+                return;
+            }
+
             let filteredParts = partsDatabase.filter(part => {
-                const matchesSearch = !searchTerm || 
-                    part.partNumber.toLowerCase().includes(searchTerm) ||
-                    part.name.toLowerCase().includes(searchTerm) ||
-                    part.models.some(model => model.toLowerCase().includes(searchTerm));
-                
                 const matchesBrand = !brandFilter || part.brand === brandFilter;
                 const matchesAppliance = !applianceFilter || part.appliance === applianceFilter;
-                const matchesSymptom = !symptomFilter || part.symptoms.includes(symptomFilter);
-                
-                return matchesSearch && matchesBrand && matchesAppliance && matchesSymptom;
+                return matchesBrand && matchesAppliance;
             });
-            
-            displayFilteredParts(filteredParts);
+
+            displayParts(filteredParts);
+            updateResultCount(filteredParts.length, 'filtered results');
         }
 
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', init);
+        function showAllParts() {
+            displayParts(partsDatabase);
+            updateResultCount(partsDatabase.length, 'all parts');
+        }
+
+        function resetFilters() {
+            document.getElementById('brandFilter').value = '';
+            document.getElementById('applianceFilter').value = '';
+            document.getElementById('masterSearch').value = '';
+            showEmptyTable();
+            updateResultCount(0, '');
+        }
+
+        function displayParts(parts) {
+            const tbody = document.getElementById('partsTableBody');
+            
+            if (parts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No parts match your search criteria</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = parts.map(part => `
+                <tr>
+                    <td><strong>${part.partNumber}</strong></td>
+                    <td><span class="brand-badge">${part.brand.toUpperCase()}</span></td>
+                    <td>${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1)}</td>
+                    <td>${part.name}<br><small class="compatibility-list">${part.description}</small></td>
+                    <td class="compatibility-list">${part.symptoms.map(s => s.replace('_', ' ')).join(', ')}</td>
+                </tr>
+            `).join('');
+        }
+
+        function showEmptyTable() {
+            const tbody = document.getElementById('partsTableBody');
+            tbody.innerHTML = `<tr><td colspan="5" class="empty-state">
+                <h3>🔍 Choose filters above to find parts</h3>
+                <div>Select a brand or appliance type • Use the search bar • Or click "Show All Parts"</div>
+            </td></tr>`;
+        }
+
+        function updateResultCount(count, searchTerm) {
+            const resultCount = document.getElementById('resultCount');
+            if (count > 0) {
+                resultCount.textContent = `Found ${count} parts matching "${searchTerm}"`;
+                resultCount.style.color = '#28a745';
+            } else if (searchTerm) {
+                resultCount.textContent = `No parts found for "${searchTerm}"`;
+                resultCount.style.color = '#dc3545';
+            } else {
+                resultCount.textContent = '';
+            }
+        }
     </script>
 </body>
 </html>
