@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sundberg Omaha 300 Branch - Diagnostic System</title>
+    <title>Sundberg Knowledge Base & Live Caller ID</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -21,13 +21,14 @@
             CheckCircle, Clock, Phone
         } = lucide;
 
-        const SundbergOmaha300System = () => {
+        const SundbergKnowledgeBase = () => {
             const [activeSection, setActiveSection] = useState('callerid');
             const [sidebarOpen, setSidebarOpen] = useState(true);
             const [searchTerm, setSearchTerm] = useState('');
             const [selectedBrand, setSelectedBrand] = useState('all');
             const [selectedType, setSelectedType] = useState('all');
             const [selectedPart, setSelectedPart] = useState(null);
+            const [selectedLocation, setSelectedLocation] = useState('all');
             const [selectedDepartment, setSelectedDepartment] = useState('all');
             const [selectedPriority, setSelectedPriority] = useState('all');
             const [selectedStatus, setSelectedStatus] = useState('all');
@@ -39,140 +40,223 @@
                 { id: 'callerid', name: 'Live Caller ID', icon: Phone },
                 { id: 'diagnostics', name: 'Diagnostics', icon: Wrench },
                 { id: 'troubleshooting', name: 'Troubleshooting', icon: AlertCircle },
-                { id: 'locations', name: 'Branch Network', icon: Building },
+                { id: 'locations', name: 'Branch Locations', icon: Building },
                 { id: 'directory', name: 'Staff Directory', icon: Users }
             ];
 
-            // Live caller data - ONLY Omaha 300 Branch customers
+            // Live caller data - All Sundberg locations
             const [liveCalls] = useState([
+                // Omaha Branch 300
                 {
                     id: 'call_001',
                     phoneNumber: '+1 (402) 555-7891',
                     callerName: 'Nebraska Farming Co.',
                     accountId: 'OMA_AGR_001',
+                    location: 'Sundberg Branch 300 - Omaha',
+                    branch: 'omaha',
                     callType: 'external',
                     status: 'active',
                     duration: 156,
                     startTime: new Date(Date.now() - 156000),
                     department: 'Agricultural Diagnostics',
                     priority: 'high',
-                    issue: 'Combine harvester control system failure',
-                    customerType: 'Large Farm Operation'
+                    issue: 'Combine harvester control system failure'
                 },
                 {
                     id: 'call_002',
                     phoneNumber: '+1 (402) 555-3456',
                     callerName: 'Midwest Dairy Equipment',
                     accountId: 'OMA_DAI_002',
+                    location: 'Sundberg Branch 300 - Omaha',
+                    branch: 'omaha',
                     callType: 'external',
                     status: 'active',
                     duration: 89,
                     startTime: new Date(Date.now() - 89000),
                     department: 'Mobile Service',
                     priority: 'normal',
-                    issue: 'Milking system diagnostic needed',
-                    customerType: 'Dairy Operations'
+                    issue: 'Milking system diagnostic needed'
                 },
+                // Chicago Branch 100
                 {
                     id: 'call_003',
-                    phoneNumber: '+1 (402) 555-9012',
-                    callerName: 'Johnson Family Farm',
-                    accountId: 'OMA_FAM_003',
-                    callType: 'external',
-                    status: 'hold',
-                    duration: 234,
-                    startTime: new Date(Date.now() - 234000),
-                    department: 'Technical Support',
-                    priority: 'normal',
-                    issue: 'Irrigation controller troubleshooting',
-                    customerType: 'Family Farm'
-                },
-                {
-                    id: 'call_004',
-                    phoneNumber: '+1 (402) 555-5678',
-                    callerName: 'Great Plains Ag Supply',
-                    accountId: 'OMA_SUP_004',
-                    callType: 'external',
-                    status: 'ringing',
-                    duration: 0,
-                    startTime: new Date(Date.now() - 8000),
-                    department: 'Parts Diagnostics',
-                    priority: 'high',
-                    issue: 'Urgent tractor diagnostic request',
-                    customerType: 'Agricultural Supplier'
-                },
-                {
-                    id: 'call_005',
-                    phoneNumber: '+1 (402) 555-2468',
-                    callerName: 'Cornhusker Grain Co.',
-                    accountId: 'OMA_GRA_005',
+                    phoneNumber: '+1 (312) 555-1234',
+                    callerName: 'Chicago Metro Contractors',
+                    accountId: 'CHI_COM_001',
+                    location: 'Sundberg Branch 100 - Chicago',
+                    branch: 'chicago',
                     callType: 'external',
                     status: 'active',
                     duration: 67,
                     startTime: new Date(Date.now() - 67000),
-                    department: 'Agricultural Diagnostics',
+                    department: 'Commercial Diagnostics',
                     priority: 'normal',
-                    issue: 'Grain elevator control panel issues',
-                    customerType: 'Grain Operations'
+                    issue: 'HVAC control board analysis'
                 },
                 {
+                    id: 'call_004',
+                    phoneNumber: '+1 (312) 555-5678',
+                    callerName: 'Windy City Appliance',
+                    accountId: 'CHI_APP_002',
+                    location: 'Sundberg Branch 100 - Chicago',
+                    branch: 'chicago',
+                    callType: 'external',
+                    status: 'hold',
+                    duration: 234,
+                    startTime: new Date(Date.now() - 234000),
+                    department: 'Contractor Support',
+                    priority: 'high',
+                    issue: 'Urgent washer control board replacement'
+                },
+                // Minneapolis HQ
+                {
+                    id: 'call_005',
+                    phoneNumber: '+1 (612) 555-0987',
+                    callerName: 'Minnesota Technical Services',
+                    accountId: 'HQ_TECH_001',
+                    location: 'Sundberg HQ - Minneapolis',
+                    branch: 'hq',
+                    callType: 'internal',
+                    status: 'active',
+                    duration: 45,
+                    startTime: new Date(Date.now() - 45000),
+                    department: 'Engineering Support',
+                    priority: 'high',
+                    issue: 'Advanced diagnostic protocol review'
+                },
+                // Denver Service Center
+                {
                     id: 'call_006',
-                    phoneNumber: '+1 (402) 555-1357',
-                    callerName: 'Prairie Wind Farms',
-                    accountId: 'OMA_WIN_006',
+                    phoneNumber: '+1 (303) 555-4567',
+                    callerName: 'Rocky Mountain Appliance',
+                    accountId: 'DEN_APP_001',
+                    location: 'Sundberg Service Center - Denver',
+                    branch: 'denver',
+                    callType: 'external',
+                    status: 'ringing',
+                    duration: 0,
+                    startTime: new Date(Date.now() - 8000),
+                    department: 'HVAC Integration',
+                    priority: 'normal',
+                    issue: 'High-altitude appliance calibration'
+                },
+                // Phoenix Regional
+                {
+                    id: 'call_007',
+                    phoneNumber: '+1 (602) 555-7890',
+                    callerName: 'Desert Appliance Solutions',
+                    accountId: 'PHX_APP_001',
+                    location: 'Sundberg Regional - Phoenix',
+                    branch: 'phoenix',
                     callType: 'external',
                     status: 'active',
-                    duration: 123,
-                    startTime: new Date(Date.now() - 123000),
-                    department: 'Mobile Service',
+                    duration: 112,
+                    startTime: new Date(Date.now() - 112000),
+                    department: 'Desert Climate Diagnostics',
                     priority: 'normal',
-                    issue: 'Wind turbine diagnostic equipment failure',
-                    customerType: 'Energy/Agricultural'
+                    issue: 'Heat-related refrigerator issues'
+                },
+                // Dallas Manufacturing
+                {
+                    id: 'call_008',
+                    phoneNumber: '+1 (214) 555-0123',
+                    callerName: 'Texas Commercial Systems',
+                    accountId: 'DAL_COM_001',
+                    location: 'Sundberg Manufacturing - Dallas',
+                    branch: 'dallas',
+                    callType: 'external',
+                    status: 'active',
+                    duration: 89,
+                    startTime: new Date(Date.now() - 89000),
+                    department: 'Manufacturing Support',
+                    priority: 'high',
+                    issue: 'Quality control diagnostic procedures'
                 }
             ]);
 
-            // Omaha 300 Staff Directory
-            const staffDirectory = [
-                { name: 'Robert Johnson', role: 'Branch Manager', branch: 'Branch 300 - Omaha', ext: '401', specialties: ['Agricultural Equipment', 'Mobile Service'], phone: '(402) 555-0400' },
-                { name: 'Janet Williams', role: 'Parts Specialist', branch: 'Branch 300 - Omaha', ext: '402', specialties: ['Agricultural Diagnostics', 'Parts Lookup'], phone: '(402) 555-0401' },
-                { name: 'Mike Thompson', role: 'Mobile Diagnostic Tech', branch: 'Branch 300 - Omaha', ext: '403', specialties: ['On-Site Diagnostics', 'Tractor Systems'], phone: '(402) 555-0402' },
-                { name: 'Sarah Chen', role: 'Irrigation Specialist', branch: 'Branch 300 - Omaha', ext: '404', specialties: ['Irrigation Systems', 'Water Management'], phone: '(402) 555-0403' },
-                { name: 'Tom Rodriguez', role: 'Dairy Equipment Tech', branch: 'Branch 300 - Omaha', ext: '405', specialties: ['Dairy Systems', 'Milking Equipment'], phone: '(402) 555-0404' },
-                { name: 'Lisa Peterson', role: 'Agricultural Electronics Tech', branch: 'Branch 300 - Omaha', ext: '406', specialties: ['Control Systems', 'GPS Equipment'], phone: '(402) 555-0405' }
+            // Location filter options
+            const locationOptions = [
+                { value: 'all', label: 'All Locations' },
+                { value: 'omaha', label: 'Branch 300 - Omaha' },
+                { value: 'chicago', label: 'Branch 100 - Chicago' },
+                { value: 'hq', label: 'HQ - Minneapolis' },
+                { value: 'denver', label: 'Service Center - Denver' },
+                { value: 'phoenix', label: 'Regional - Phoenix' },
+                { value: 'dallas', label: 'Manufacturing - Dallas' }
             ];
 
-            // Branch locations - Omaha primary, others reference
-            const branchLocations = [
-                {
-                    id: 'omaha',
-                    name: 'Sundberg Branch 300 - Omaha',
-                    address: '4680 Agricultural Way, Omaha, NE 68102',
-                    phone: '(402) 555-0400',
-                    hours: '6:00 AM - 7:00 PM (Mon-Fri), 7:00 AM - 3:00 PM (Sat)',
-                    specialties: ['Agricultural Equipment', 'Rural Diagnostics', 'Mobile Service', 'Dairy Systems', 'Irrigation Control'],
-                    manager: 'Robert Johnson',
-                    technicalSupport: '200-mile mobile diagnostic radius',
-                    status: 'primary',
-                    customerBase: 'Active - 300+ agricultural accounts'
-                },
-                {
-                    id: 'hq',
-                    name: 'Sundberg HQ - Minneapolis',
-                    address: '1234 Industrial Blvd, Minneapolis, MN 55404',
-                    phone: '(612) 555-0100',
-                    hours: '7:00 AM - 6:00 PM (Mon-Fri), 8:00 AM - 3:00 PM (Sat)',
-                    specialties: ['Corporate Support', 'Technical Training', 'Advanced Diagnostics'],
-                    manager: 'Jennifer Anderson',
-                    technicalSupport: 'Available 24/7 for field support',
-                    status: 'reference',
-                    customerBase: 'Corporate headquarters - reference only'
-                }
-            ];
-
-            // Agricultural diagnostic database
+            // Comprehensive appliance database
             const applianceDatabase = [
+                // Standard Appliances
                 {
                     id: 1,
+                    brand: 'Whirlpool',
+                    type: 'Washer',
+                    model: 'WTW4816FW',
+                    partNumber: 'WPW10340443',
+                    partName: 'Main Control Board',
+                    commonSymptoms: ['No power', 'Cycle not starting', 'Display blank', 'Buttons not responding'],
+                    diagnosticSteps: [
+                        'Check power supply to unit',
+                        'Verify door is properly closed and latched',
+                        'Test control board connections',
+                        'Check for error codes on display',
+                        'Inspect wiring harness for damage'
+                    ],
+                    errorCodes: ['F5E2', 'F7E1', 'F8E1', 'F1E1'],
+                    testProcedures: [
+                        'Power cycle test: Unplug 5 minutes, reconnect',
+                        'Button test: Press and hold Start for 3 seconds',
+                        'Diagnostic mode: Press Wash Temp + Soil Level simultaneously'
+                    ]
+                },
+                {
+                    id: 2,
+                    brand: 'GE',
+                    type: 'Dishwasher',
+                    model: 'GDT695SSJSS',
+                    partNumber: 'WD21X24901',
+                    partName: 'Main Control Board',
+                    commonSymptoms: ['Not starting', 'Mid-cycle stop', 'No water fill', 'Lights flashing'],
+                    diagnosticSteps: [
+                        'Check water supply and shut-off valve',
+                        'Verify door latch and strike alignment',
+                        'Test door switch operation',
+                        'Inspect control panel connections',
+                        'Check for kinked drain hose'
+                    ],
+                    errorCodes: ['C1', 'C2', 'C6', 'C7'],
+                    testProcedures: [
+                        'Service mode: Press Normal + Heated Dry for 5 seconds',
+                        'Water fill test: Check fill time (should be 2-4 minutes)',
+                        'Drain test: Run rinse cycle, observe drain action'
+                    ]
+                },
+                {
+                    id: 3,
+                    brand: 'Frigidaire',
+                    type: 'Refrigerator',
+                    model: 'FFSS2615TS',
+                    partNumber: '5304505086',
+                    partName: 'Main PCB Assembly',
+                    commonSymptoms: ['Temperature issues', 'Ice maker not working', 'Display blank', 'Compressor not running'],
+                    diagnosticSteps: [
+                        'Check temperature settings and ambient conditions',
+                        'Verify proper door closure and gasket seal',
+                        'Test compressor start relay and overload',
+                        'Check condenser coils for blockage',
+                        'Inspect evaporator fan motor operation'
+                    ],
+                    errorCodes: ['H1', 'SY EF', 'SY CE', 'SY CF'],
+                    testProcedures: [
+                        'Forced defrost: Hold Alarm + Temp for 5 seconds',
+                        'Diagnostic mode: Press Ice Type + Child Lock',
+                        'Temperature test: Monitor for 24 hours after adjustment'
+                    ]
+                },
+                // Agricultural Equipment
+                {
+                    id: 4,
                     brand: 'John Deere',
                     type: 'Combine',
                     model: 'S780',
@@ -194,7 +278,7 @@
                     ]
                 },
                 {
-                    id: 2,
+                    id: 5,
                     brand: 'Case IH',
                     type: 'Tractor',
                     model: 'Magnum 340',
@@ -216,97 +300,176 @@
                     ]
                 },
                 {
-                    id: 3,
-                    brand: 'New Holland',
-                    type: 'Baler',
-                    model: 'BigBaler 1290',
-                    partNumber: 'NH-BB-1290-003',
-                    partName: 'Baler Control Module',
-                    commonSymptoms: ['Bale density issues', 'Twine system errors', 'Monitor blank', 'Chamber not cycling'],
-                    diagnosticSteps: [
-                        'Check hydraulic fluid level',
-                        'Verify twine supply and routing',
-                        'Test density sensors',
-                        'Check chamber door operation',
-                        'Inspect control valve operation'
-                    ],
-                    errorCodes: ['B001', 'B015', 'B023', 'B067'],
-                    testProcedures: [
-                        'Density test: Manual bale formation',
-                        'Twine test: Check tensioning system',
-                        'Chamber test: Manual door cycle'
-                    ]
-                },
-                {
-                    id: 4,
-                    brand: 'Claas',
-                    type: 'Forage Harvester',
-                    model: 'Jaguar 980',
-                    partNumber: 'CLS-JAG-980-004',
-                    partName: 'Crop Flow Control',
-                    commonSymptoms: ['Poor cut quality', 'Uneven chop length', 'Blockages', 'Speed control issues'],
-                    diagnosticSteps: [
-                        'Check knife sharpness and adjustment',
-                        'Verify feed roll synchronization',
-                        'Test speed sensors',
-                        'Check hydraulic pressure',
-                        'Inspect chopping cylinder'
-                    ],
-                    errorCodes: ['CF01', 'CF12', 'CF28', 'CF45'],
-                    testProcedures: [
-                        'Cut test: Check sample quality',
-                        'Speed test: Verify RPM accuracy',
-                        'Flow test: Check material throughput'
-                    ]
-                },
-                {
-                    id: 5,
-                    brand: 'Kubota',
-                    type: 'Irrigation Controller',
-                    model: 'KIC-2000',
-                    partNumber: 'KUB-IRR-2000-005',
-                    partName: 'Central Control Board',
-                    commonSymptoms: ['No zone activation', 'Timer malfunction', 'Pressure sensor errors', 'Communication loss'],
-                    diagnosticSteps: [
-                        'Check power supply to controller',
-                        'Verify zone valve connections',
-                        'Test pressure sensor calibration',
-                        'Check communication network',
-                        'Inspect weather station link'
-                    ],
-                    errorCodes: ['IRR01', 'IRR15', 'IRR33', 'IRR44'],
-                    testProcedures: [
-                        'Zone test: Manual valve activation',
-                        'Pressure test: Verify system pressure',
-                        'Communication test: Check network status'
-                    ]
-                },
-                {
                     id: 6,
-                    brand: 'DeLaval',
-                    type: 'Milking System',
-                    model: 'VMS V310',
-                    partNumber: 'DLV-VMS-310-006',
-                    partName: 'Milking Control Unit',
-                    commonSymptoms: ['Robot not attaching', 'Milk quality issues', 'Cleaning cycle errors', 'Cow identification problems'],
+                    brand: 'LG',
+                    type: 'Washer',
+                    model: 'WM3700HWA',
+                    partNumber: 'EBR83592506',
+                    partName: 'Main PCB Assembly',
+                    commonSymptoms: ['OE error', 'UE error', 'No spin', 'Excessive noise'],
                     diagnosticSteps: [
-                        'Check vacuum system pressure',
-                        'Verify milk line cleanliness',
-                        'Test robotic arm movement',
-                        'Check RFID reader operation',
-                        'Inspect milk quality sensors'
+                        'Check drain hose for clogs or kinks',
+                        'Verify load balance and distribution',
+                        'Test door lock mechanism',
+                        'Inspect suspension rods and springs',
+                        'Check motor and drive belt condition'
                     ],
-                    errorCodes: ['MK01', 'MK18', 'MK25', 'MK39'],
+                    errorCodes: ['OE', 'UE', 'IE', 'LE', 'dE'],
                     testProcedures: [
-                        'Attachment test: Manual robot cycle',
-                        'Quality test: Check milk analysis',
-                        'Clean test: Verify CIP system'
+                        'Smart diagnosis: Download LG app, run diagnostic',
+                        'Manual test: Press Soil + Spin Speed for 3 seconds',
+                        'Balance test: Run spin cycle with single towel'
                     ]
                 }
             ];
 
-            // Troubleshooting guides for agricultural equipment
+            // Complete branch locations
+            const branchLocations = [
+                {
+                    id: 'hq',
+                    name: 'Sundberg HQ - Minneapolis',
+                    address: '1234 Industrial Blvd, Minneapolis, MN 55404',
+                    phone: '(612) 555-0100',
+                    hours: '7:00 AM - 6:00 PM (Mon-Fri), 8:00 AM - 3:00 PM (Sat)',
+                    specialties: ['Corporate Support', 'Technical Training', 'Advanced Diagnostics'],
+                    manager: 'Jennifer Anderson',
+                    technicalSupport: 'Available 24/7 for field support'
+                },
+                {
+                    id: 'chicago',
+                    name: 'Sundberg Branch 100 - Chicago',
+                    address: '2468 Commercial Ave, Chicago, IL 60608',
+                    phone: '(312) 555-0200',
+                    hours: '7:00 AM - 6:00 PM (Mon-Fri), 8:00 AM - 2:00 PM (Sat)',
+                    specialties: ['High-Volume Diagnostics', 'Contractor Support', 'Expedited Service'],
+                    manager: 'Carlos Mendoza',
+                    technicalSupport: 'Extended diagnostic hours during weekdays'
+                },
+                {
+                    id: 'denver',
+                    name: 'Sundberg Service Center - Denver',
+                    address: '3579 Mountain View Dr, Denver, CO 80203',
+                    phone: '(303) 555-0300',
+                    hours: '8:00 AM - 5:00 PM (Mon-Fri), 9:00 AM - 1:00 PM (Sat)',
+                    specialties: ['High-Altitude Diagnostics', 'Mountain Region Service', 'HVAC Integration'],
+                    manager: 'Sarah Mitchell',
+                    technicalSupport: 'Specialized in altitude-related appliance issues'
+                },
+                {
+                    id: 'omaha',
+                    name: 'Sundberg Branch 300 - Omaha',
+                    address: '4680 Agricultural Way, Omaha, NE 68102',
+                    phone: '(402) 555-0400',
+                    hours: '6:00 AM - 7:00 PM (Mon-Fri), 7:00 AM - 3:00 PM (Sat)',
+                    specialties: ['Agricultural Equipment', 'Rural Diagnostics', 'Mobile Service'],
+                    manager: 'Robert Johnson',
+                    technicalSupport: '200-mile mobile diagnostic radius'
+                },
+                {
+                    id: 'phoenix',
+                    name: 'Sundberg Regional - Phoenix',
+                    address: '5791 Desert Ridge Pkwy, Phoenix, AZ 85054',
+                    phone: '(602) 555-0500',
+                    hours: '6:00 AM - 6:00 PM (Mon-Fri), 8:00 AM - 2:00 PM (Sat)',
+                    specialties: ['Desert Climate Diagnostics', 'Heat-Related Issues', 'Energy Efficiency'],
+                    manager: 'David Rodriguez',
+                    technicalSupport: 'Extreme temperature diagnostic expertise'
+                },
+                {
+                    id: 'dallas',
+                    name: 'Sundberg Manufacturing - Dallas',
+                    address: '6802 Industrial Complex, Dallas, TX 75201',
+                    phone: '(214) 555-0600',
+                    hours: '24/7 Operations',
+                    specialties: ['Manufacturing Support', 'Quality Control', 'Technical Engineering'],
+                    manager: 'Lisa Wang',
+                    technicalSupport: 'Engineering-level diagnostic support'
+                }
+            ];
+
+            // Complete staff directory - all locations
+            const staffDirectory = [
+                // Minneapolis HQ
+                { name: 'Jennifer Anderson', role: 'General Manager', branch: 'HQ - Minneapolis', ext: '101', location: 'hq', specialties: ['Leadership', 'Technical Training'] },
+                { name: 'Mark Peterson', role: 'Technical Director', branch: 'HQ - Minneapolis', ext: '102', location: 'hq', specialties: ['Advanced Diagnostics', 'Training Programs'] },
+                
+                // Chicago Branch 100
+                { name: 'Carlos Mendoza', role: 'Branch Manager', branch: 'Branch 100 - Chicago', ext: '201', location: 'chicago', specialties: ['High-Volume Diagnostics', 'Team Leadership'] },
+                { name: 'Maria Rodriguez', role: 'Contractor Specialist', branch: 'Branch 100 - Chicago', ext: '202', location: 'chicago', specialties: ['Commercial Accounts', 'Expedited Service'] },
+                
+                // Denver Service Center
+                { name: 'Sarah Mitchell', role: 'Service Manager', branch: 'Service Center - Denver', ext: '301', location: 'denver', specialties: ['HVAC Integration', 'Technical Support'] },
+                { name: 'James Wilson', role: 'Altitude Specialist', branch: 'Service Center - Denver', ext: '302', location: 'denver', specialties: ['High-Altitude Calibration', 'Mountain Climate'] },
+                
+                // Omaha Branch 300
+                { name: 'Robert Johnson', role: 'Branch Manager', branch: 'Branch 300 - Omaha', ext: '401', location: 'omaha', specialties: ['Agricultural Equipment', 'Mobile Service'] },
+                { name: 'Janet Williams', role: 'Agricultural Specialist', branch: 'Branch 300 - Omaha', ext: '402', location: 'omaha', specialties: ['Farm Equipment', 'Rural Diagnostics'] },
+                
+                // Phoenix Regional
+                { name: 'David Rodriguez', role: 'Regional Manager', branch: 'Regional - Phoenix', ext: '501', location: 'phoenix', specialties: ['Desert Climate Issues', 'Energy Systems'] },
+                { name: 'Amanda Chen', role: 'Energy Specialist', branch: 'Regional - Phoenix', ext: '502', location: 'phoenix', specialties: ['Energy Efficiency', 'Heat Management'] },
+                
+                // Dallas Manufacturing
+                { name: 'Lisa Wang', role: 'Manufacturing Manager', branch: 'Manufacturing - Dallas', ext: '601', location: 'dallas', specialties: ['Quality Control', 'Engineering Support'] },
+                { name: 'Michael Torres', role: 'QC Engineer', branch: 'Manufacturing - Dallas', ext: '602', location: 'dallas', specialties: ['Technical Engineering', 'Process Improvement'] }
+            ];
+
+            // Comprehensive troubleshooting guides
             const troubleshootingGuides = [
+                {
+                    id: 'washer_no_power',
+                    title: 'Washer - No Power',
+                    symptoms: ['Display completely blank', 'No lights', 'No response to buttons'],
+                    quickChecks: [
+                        'Verify power cord is plugged in securely',
+                        'Check circuit breaker/fuse',
+                        'Test outlet with another device',
+                        'Ensure door is completely closed and latched'
+                    ],
+                    advancedDiagnostics: [
+                        'Test voltage at outlet (should be 110-120V)',
+                        'Check door lock switch continuity',
+                        'Inspect main control board for visible damage',
+                        'Test power cord continuity'
+                    ],
+                    commonCauses: ['Faulty control board', 'Door lock failure', 'Power supply issues', 'Wiring damage']
+                },
+                {
+                    id: 'dishwasher_not_cleaning',
+                    title: 'Dishwasher - Poor Cleaning',
+                    symptoms: ['Dishes still dirty', 'Spots on glassware', 'Food particles remain'],
+                    quickChecks: [
+                        'Check water temperature (should be 120°F)',
+                        'Inspect spray arms for clogs',
+                        'Verify proper dish loading',
+                        'Check detergent type and amount'
+                    ],
+                    advancedDiagnostics: [
+                        'Test wash pump motor operation',
+                        'Check water pressure and flow rate',
+                        'Inspect wash arm bearings',
+                        'Test soil sensor calibration'
+                    ],
+                    commonCauses: ['Clogged spray arms', 'Low water temperature', 'Worn wash pump', 'Improper loading']
+                },
+                {
+                    id: 'refrigerator_temp_issues',
+                    title: 'Refrigerator - Temperature Problems',
+                    symptoms: ['Too warm', 'Too cold', 'Inconsistent temperatures', 'Freezing in fresh food'],
+                    quickChecks: [
+                        'Check temperature settings',
+                        'Verify door seals for air leaks',
+                        'Clean condenser coils',
+                        'Check for blocked air vents'
+                    ],
+                    advancedDiagnostics: [
+                        'Test temperature sensor resistance',
+                        'Check evaporator fan motor operation',
+                        'Test defrost system components',
+                        'Verify refrigerant levels'
+                    ],
+                    commonCauses: ['Faulty temperature sensor', 'Defrost system failure', 'Evaporator fan issues', 'Control board problems']
+                },
                 {
                     id: 'combine_no_power',
                     title: 'Combine - No Power to Display',
@@ -324,78 +487,33 @@
                         'Test wiring harness continuity'
                     ],
                     commonCauses: ['Battery failure', 'Alternator issues', 'Control module failure', 'Wiring damage']
-                },
-                {
-                    id: 'tractor_hydraulic',
-                    title: 'Tractor - Hydraulic System Problems',
-                    symptoms: ['Slow operation', 'No lift capability', 'Jerky movement', 'Overheating'],
-                    quickChecks: [
-                        'Check hydraulic fluid level',
-                        'Inspect for visible leaks',
-                        'Verify filter condition',
-                        'Check operating temperature'
-                    ],
-                    advancedDiagnostics: [
-                        'Test system pressure (should be 2500-3000 PSI)',
-                        'Check pump flow rate',
-                        'Test relief valve operation',
-                        'Verify control valve function'
-                    ],
-                    commonCauses: ['Low fluid level', 'Clogged filter', 'Pump wear', 'Internal leakage']
-                },
-                {
-                    id: 'irrigation_zones',
-                    title: 'Irrigation - Zone Control Issues',
-                    symptoms: ['Zones not activating', 'Partial zone operation', 'Timer not working', 'Pressure problems'],
-                    quickChecks: [
-                        'Check controller power and programming',
-                        'Verify zone valve operation',
-                        'Test water pressure at source',
-                        'Inspect for broken sprinkler heads'
-                    ],
-                    advancedDiagnostics: [
-                        'Test valve solenoid resistance (20-60 ohms)',
-                        'Check controller output voltage',
-                        'Verify pressure sensor calibration',
-                        'Test communication network'
-                    ],
-                    commonCauses: ['Faulty valve solenoids', 'Controller programming', 'Pressure sensor failure', 'Wiring issues']
-                },
-                {
-                    id: 'milking_robot',
-                    title: 'Milking Robot - Attachment Problems',
-                    symptoms: ['Robot not finding teats', 'Poor attachment', 'Frequent detachment', 'Incomplete milking'],
-                    quickChecks: [
-                        'Check vacuum system pressure (45-50 kPa)',
-                        'Verify robot arm calibration',
-                        'Clean camera and sensors',
-                        'Check cow identification system'
-                    ],
-                    advancedDiagnostics: [
-                        'Test vision system accuracy',
-                        'Check arm positioning sensors',
-                        'Verify milk flow sensors',
-                        'Test cleaning system operation'
-                    ],
-                    commonCauses: ['Vision system dirty', 'Arm calibration off', 'Vacuum issues', 'Sensor malfunction']
                 }
             ];
 
-            // Agricultural error codes
+            // Comprehensive error codes
             const errorCodes = [
+                // Standard Appliances
+                { brand: 'Whirlpool', code: 'F5E2', meaning: 'Door lock error', solution: 'Check door lock mechanism and wiring' },
+                { brand: 'Whirlpool', code: 'F7E1', meaning: 'Motor speed error', solution: 'Inspect motor connections and control board' },
+                { brand: 'GE', code: 'C1', meaning: 'Door latch error', solution: 'Adjust door latch and check switch operation' },
+                { brand: 'GE', code: 'C6', meaning: 'Door switch stuck', solution: 'Clean and lubricate door switch mechanism' },
+                { brand: 'Frigidaire', code: 'H1', meaning: 'High temperature alarm', solution: 'Check condenser coils and airflow' },
+                { brand: 'LG', code: 'OE', meaning: 'Drain error', solution: 'Check drain hose and pump for clogs' },
+                
+                // Agricultural Equipment
                 { brand: 'John Deere', code: 'E001', meaning: 'Power supply failure', solution: 'Check battery and charging system' },
                 { brand: 'John Deere', code: 'E045', meaning: 'CAN communication error', solution: 'Inspect CAN bus wiring and connections' },
                 { brand: 'Case IH', code: 'P0001', meaning: 'Fuel volume regulator', solution: 'Check fuel system pressure and filter' },
-                { brand: 'Case IH', code: 'U0001', meaning: 'High speed CAN error', solution: 'Test CAN network integrity' },
-                { brand: 'New Holland', code: 'B001', meaning: 'Baler chamber error', solution: 'Check chamber door and sensors' },
-                { brand: 'New Holland', code: 'B015', meaning: 'Twine system fault', solution: 'Verify twine supply and routing' },
-                { brand: 'Kubota', code: 'IRR01', meaning: 'Zone valve failure', solution: 'Test valve solenoid and wiring' },
-                { brand: 'DeLaval', code: 'MK01', meaning: 'Vacuum system low', solution: 'Check vacuum pump and lines' }
+                { brand: 'Case IH', code: 'U0001', meaning: 'High speed CAN error', solution: 'Test CAN network integrity' }
             ];
 
             // Filter functions
             const filteredCalls = useMemo(() => {
                 let calls = liveCalls;
+                
+                if (selectedLocation !== 'all') {
+                    calls = calls.filter(call => call.branch === selectedLocation);
+                }
                 
                 if (selectedDepartment !== 'all') {
                     calls = calls.filter(call => call.department === selectedDepartment);
@@ -410,7 +528,7 @@
                 }
                 
                 return calls;
-            }, [selectedDepartment, selectedPriority, selectedStatus, liveCalls]);
+            }, [selectedLocation, selectedDepartment, selectedPriority, selectedStatus, liveCalls]);
 
             const filteredParts = useMemo(() => {
                 return applianceDatabase.filter(part => {
@@ -439,6 +557,7 @@
                 });
             }, [searchTerm, selectedBrand]);
 
+            // Get unique values for dropdowns
             const departments = [...new Set(liveCalls.map(call => call.department))];
             const priorities = [...new Set(liveCalls.map(call => call.priority))];
             const statuses = [...new Set(liveCalls.map(call => call.status))];
@@ -458,19 +577,25 @@
                             <div className="space-y-6">
                                 <div className="bg-white p-4 rounded-lg border">
                                     <div className="flex justify-between items-center mb-4">
-                                        <h2 className="text-xl font-semibold">🌾 Live Caller ID - Omaha 300 Agricultural Customers</h2>
+                                        <h2 className="text-xl font-semibold">📞 Live Caller ID - All Sundberg Locations</h2>
                                         <div className="text-sm text-gray-500">
                                             {currentTime.toLocaleTimeString()}
                                         </div>
                                     </div>
 
-                                    <div className="bg-gradient-to-r from-green-600 to-green-800 text-white p-4 rounded-lg mb-4">
-                                        <h3 className="font-bold text-lg">🌾 Sundberg Branch 300 - Omaha</h3>
-                                        <p className="text-green-100">Agricultural Equipment Specialist • 200-Mile Mobile Service Range</p>
-                                        <p className="text-green-100 text-sm">Manager: Robert Johnson • Ext. 401 • (402) 555-0400</p>
-                                    </div>
+                                    {/* Advanced Search Filters */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                                        <select
+                                            value={selectedLocation}
+                                            onChange={(e) => setSelectedLocation(e.target.value)}
+                                            className="px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 text-sm"
+                                        >
+                                            <option value="all">📍 All Locations</option>
+                                            {locationOptions.filter(loc => loc.value !== 'all').map(option => (
+                                                <option key={option.value} value={option.value}>{option.label}</option>
+                                            ))}
+                                        </select>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                         <select
                                             value={selectedDepartment}
                                             onChange={(e) => setSelectedDepartment(e.target.value)}
@@ -511,6 +636,7 @@
                                         </select>
                                     </div>
 
+                                    {/* Active Calls */}
                                     <div className="space-y-3">
                                         {filteredCalls.length > 0 ? (
                                             filteredCalls.map(call => {
@@ -537,6 +663,18 @@
                                                     }
                                                 };
 
+                                                const getBranchColor = (branch) => {
+                                                    switch(branch) {
+                                                        case 'omaha': return 'text-green-600';
+                                                        case 'chicago': return 'text-blue-600';
+                                                        case 'hq': return 'text-purple-600';
+                                                        case 'denver': return 'text-orange-600';
+                                                        case 'phoenix': return 'text-red-600';
+                                                        case 'dallas': return 'text-yellow-600';
+                                                        default: return 'text-gray-600';
+                                                    }
+                                                };
+
                                                 return (
                                                     <div key={call.id} className={`border-l-4 p-4 rounded-r-lg ${getPriorityColor(call.priority)}`}>
                                                         <div className="flex justify-between items-start">
@@ -557,9 +695,11 @@
                                                                 <div className="grid md:grid-cols-2 gap-4">
                                                                     <div>
                                                                         <p className="font-medium text-gray-900">{call.callerName}</p>
-                                                                        <p className="text-sm text-blue-600">Account: {call.accountId}</p>
-                                                                        <p className="text-sm text-green-600">{call.customerType}</p>
-                                                                        <p className="text-sm text-purple-600">{call.department}</p>
+                                                                        <p className={`text-sm font-medium ${getBranchColor(call.branch)}`}>{call.location}</p>
+                                                                        <p className="text-sm text-blue-600">{call.department}</p>
+                                                                        {call.accountId && (
+                                                                            <p className="text-sm text-gray-500">Account: {call.accountId}</p>
+                                                                        )}
                                                                     </div>
                                                                     
                                                                     <div>
@@ -580,14 +720,15 @@
                                         ) : (
                                             <div className="text-center py-8 text-gray-500">
                                                 <Phone className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                                                <p>No active calls matching filters</p>
-                                                <p className="text-xs mt-1">Adjust filters or check back later</p>
+                                                <p>No active calls matching current filters</p>
+                                                <p className="text-xs mt-1">Adjust filters to view different calls</p>
                                             </div>
                                         )}
                                     </div>
 
+                                    {/* Call Statistics */}
                                     <div className="mt-6 bg-gray-50 p-4 rounded-lg">
-                                        <h3 className="font-medium mb-3">Omaha 300 Call Statistics</h3>
+                                        <h3 className="font-medium mb-3">Call Statistics - {selectedLocation === 'all' ? 'All Locations' : locationOptions.find(l => l.value === selectedLocation)?.label}</h3>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                                             <div>
                                                 <div className="text-2xl font-bold text-green-600">
@@ -614,9 +755,6 @@
                                                 <div className="text-sm text-gray-600">Priority</div>
                                             </div>
                                         </div>
-                                        <div className="mt-2 text-center text-xs text-gray-500">
-                                            Agricultural customer calls - Omaha 300 branch only
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -626,9 +764,9 @@
                         return (
                             <div className="space-y-6">
                                 <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-lg">
-                                    <h2 className="text-2xl font-bold mb-2">🌾 Sundberg Omaha 300 Branch</h2>
-                                    <p className="text-blue-100">Agricultural Equipment Diagnostic System • Serving Nebraska & Surrounding Areas</p>
-                                    <p className="text-blue-100 text-sm mt-1">Primary Location: 4680 Agricultural Way, Omaha, NE • (402) 555-0400</p>
+                                    <h2 className="text-2xl font-bold mb-2">📞 Sundberg Knowledge Base & Live Caller ID</h2>
+                                    <p className="text-blue-100">Comprehensive diagnostic system serving all Sundberg locations</p>
+                                    <p className="text-blue-100 text-sm mt-1">Multi-location support: Agricultural • Commercial • Residential • Industrial</p>
                                 </div>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -637,7 +775,7 @@
                                             <Phone className="h-5 w-5 text-green-600 mr-2" />
                                             <h3 className="font-semibold">Live Caller ID</h3>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-3">Monitor live calls from Omaha 300 agricultural customers</p>
+                                        <p className="text-gray-600 text-sm mb-3">Monitor active calls across all Sundberg locations in real-time</p>
                                         <button 
                                             onClick={() => setActiveSection('callerid')}
                                             className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
@@ -649,9 +787,9 @@
                                     <div className="bg-white p-4 rounded-lg border shadow-sm">
                                         <div className="flex items-center mb-3">
                                             <Wrench className="h-5 w-5 text-blue-600 mr-2" />
-                                            <h3 className="font-semibold">Agricultural Diagnostics</h3>
+                                            <h3 className="font-semibold">Diagnostic Database</h3>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-3">Diagnostic procedures for agricultural equipment</p>
+                                        <p className="text-gray-600 text-sm mb-3">Comprehensive diagnostic procedures for appliances and agricultural equipment</p>
                                         <button 
                                             onClick={() => setActiveSection('diagnostics')}
                                             className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
@@ -665,7 +803,7 @@
                                             <AlertCircle className="h-5 w-5 text-orange-600 mr-2" />
                                             <h3 className="font-semibold">Troubleshooting</h3>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-3">Field troubleshooting guides for agricultural equipment</p>
+                                        <p className="text-gray-600 text-sm mb-3">Step-by-step troubleshooting guides for common issues</p>
                                         <button 
                                             onClick={() => setActiveSection('troubleshooting')}
                                             className="bg-orange-600 text-white px-3 py-1 rounded text-sm hover:bg-orange-700"
@@ -677,40 +815,51 @@
                                     <div className="bg-white p-4 rounded-lg border shadow-sm">
                                         <div className="flex items-center mb-3">
                                             <Building className="h-5 w-5 text-purple-600 mr-2" />
-                                            <h3 className="font-semibold">Branch Network</h3>
+                                            <h3 className="font-semibold">Branch Locations</h3>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-3">Omaha 300 primary location and corporate references</p>
+                                        <p className="text-gray-600 text-sm mb-3">Contact information and specialties for all Sundberg locations</p>
                                         <button 
                                             onClick={() => setActiveSection('locations')}
                                             className="bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700"
                                         >
-                                            View Network
+                                            View Locations
+                                        </button>
+                                    </div>
+
+                                    <div className="bg-white p-4 rounded-lg border shadow-sm">
+                                        <div className="flex items-center mb-3">
+                                            <Users className="h-5 w-5 text-indigo-600 mr-2" />
+                                            <h3 className="font-semibold">Staff Directory</h3>
+                                        </div>
+                                        <p className="text-gray-600 text-sm mb-3">Complete directory of technical specialists across all branches</p>
+                                        <button 
+                                            onClick={() => setActiveSection('directory')}
+                                            className="bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700"
+                                        >
+                                            View Directory
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="bg-white p-6 rounded-lg border">
-                                    <h3 className="text-lg font-semibold mb-4">🌾 Omaha 300 Branch Statistics</h3>
+                                    <h3 className="text-lg font-semibold mb-4">Network Overview</h3>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div className="text-center">
-                                            <div className="text-2xl font-bold text-blue-600">{applianceDatabase.length}</div>
-                                            <div className="text-sm text-gray-600">Diagnostic Entries</div>
+                                            <div className="text-2xl font-bold text-blue-600">{liveCalls.length}</div>
+                                            <div className="text-sm text-gray-600">Active Calls</div>
                                         </div>
                                         <div className="text-center">
-                                            <div className="text-2xl font-bold text-green-600">{liveCalls.length}</div>
-                                            <div className="text-sm text-gray-600">Active Calls</div>
+                                            <div className="text-2xl font-bold text-green-600">{branchLocations.length}</div>
+                                            <div className="text-sm text-gray-600">Branch Locations</div>
                                         </div>
                                         <div className="text-center">
                                             <div className="text-2xl font-bold text-orange-600">{staffDirectory.length}</div>
                                             <div className="text-sm text-gray-600">Staff Members</div>
                                         </div>
                                         <div className="text-center">
-                                            <div className="text-2xl font-bold text-purple-600">300+</div>
-                                            <div className="text-sm text-gray-600">Ag Accounts</div>
+                                            <div className="text-2xl font-bold text-purple-600">{applianceDatabase.length}</div>
+                                            <div className="text-sm text-gray-600">Diagnostic Entries</div>
                                         </div>
-                                    </div>
-                                    <div className="mt-2 text-center text-xs text-gray-500">
-                                        Serving Nebraska agricultural community with 200-mile service radius
                                     </div>
                                 </div>
                             </div>
@@ -720,7 +869,7 @@
                         return (
                             <div className="space-y-6">
                                 <div className="bg-white p-4 rounded-lg border">
-                                    <h2 className="text-xl font-semibold mb-4">Agricultural Equipment Diagnostics</h2>
+                                    <h2 className="text-xl font-semibold mb-4">Diagnostic Database</h2>
                                     
                                     <div className="space-y-4 mb-6">
                                         <div className="relative">
@@ -753,7 +902,7 @@
                                                 onChange={(e) => setSelectedType(e.target.value)}
                                                 className="px-3 py-2 border rounded focus:ring-2 focus:ring-green-500"
                                             >
-                                                <option value="all">⚙️ All Equipment ({types.length} types)</option>
+                                                <option value="all">⚙️ All Types ({types.length} types)</option>
                                                 {types.map(type => (
                                                     <option key={type} value={type}>
                                                         {type} ({applianceDatabase.filter(p => p.type === type).length} items)
@@ -771,13 +920,12 @@
                                                     }
                                                 }}
                                             >
-                                                <option value="all">🔍 Quick Symptom Search</option>
+                                                <option value="all">🔍 Quick Search</option>
                                                 <option value="no power">No Power Issues</option>
-                                                <option value="control">Control System Problems</option>
-                                                <option value="hydraulic">Hydraulic Issues</option>
+                                                <option value="control">Control Problems</option>
+                                                <option value="temperature">Temperature Issues</option>
                                                 <option value="communication">Communication Errors</option>
-                                                <option value="sensor">Sensor Problems</option>
-                                                <option value="engine">Engine Issues</option>
+                                                <option value="error">Error Codes</option>
                                             </select>
                                         </div>
 
@@ -867,7 +1015,7 @@
                         return (
                             <div className="space-y-6">
                                 <div className="bg-white p-4 rounded-lg border">
-                                    <h2 className="text-xl font-semibold mb-4">Agricultural Troubleshooting Guides</h2>
+                                    <h2 className="text-xl font-semibold mb-4">Troubleshooting Guides</h2>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                                         <select 
@@ -900,9 +1048,9 @@
                                         >
                                             <option value="">🔍 Find by Symptom</option>
                                             <option value="no power">No Power</option>
+                                            <option value="not cleaning">Poor Cleaning</option>
+                                            <option value="temperature">Temperature Issues</option>
                                             <option value="hydraulic">Hydraulic Issues</option>
-                                            <option value="control">Control Problems</option>
-                                            <option value="attachment">Attachment Issues</option>
                                             <option value="communication">Communication Errors</option>
                                         </select>
 
@@ -920,10 +1068,10 @@
                                             }}
                                         >
                                             <option value="">⚙️ By Equipment Type</option>
+                                            <option value="washer">Washer Issues</option>
+                                            <option value="dishwasher">Dishwasher Issues</option>
+                                            <option value="refrigerator">Refrigerator Issues</option>
                                             <option value="combine">Combine Issues</option>
-                                            <option value="tractor">Tractor Issues</option>
-                                            <option value="irrigation">Irrigation Issues</option>
-                                            <option value="milking">Milking System Issues</option>
                                         </select>
                                     </div>
                                     
@@ -976,8 +1124,9 @@
                                     </div>
                                 </div>
 
+                                {/* Error Codes Section */}
                                 <div className="bg-white p-4 rounded-lg border">
-                                    <h2 className="text-xl font-semibold mb-4">Agricultural Error Code Reference</h2>
+                                    <h2 className="text-xl font-semibold mb-4">Error Code Reference</h2>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                         <select
@@ -1004,11 +1153,11 @@
                                             }}
                                         >
                                             <option value="">🔍 Quick Error Search</option>
-                                            <option value="power">Power Related</option>
+                                            <option value="door">Door Related</option>
                                             <option value="communication">Communication</option>
-                                            <option value="sensor">Sensor Issues</option>
-                                            <option value="hydraulic">Hydraulic</option>
-                                            <option value="engine">Engine Related</option>
+                                            <option value="power">Power Issues</option>
+                                            <option value="temperature">Temperature</option>
+                                            <option value="system">System Errors</option>
                                         </select>
 
                                         <div className="relative">
@@ -1069,73 +1218,14 @@
                         return (
                             <div className="space-y-6">
                                 <div className="bg-white p-4 rounded-lg border">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h2 className="text-xl font-semibold">Branch Network</h2>
-                                        
-                                        <div className="flex gap-4">
-                                            <select 
-                                                className="px-3 py-2 border rounded focus:ring-2 focus:ring-green-500 text-sm"
-                                                onChange={(e) => {
-                                                    if (e.target.value) {
-                                                        document.getElementById(`location-${e.target.value}`)?.scrollIntoView({ behavior: 'smooth' });
-                                                    }
-                                                }}
-                                            >
-                                                <option value="">📍 Jump to Location</option>
-                                                <option value="omaha">🌾 Omaha 300 (PRIMARY)</option>
-                                                {branchLocations.filter(loc => loc.id !== 'omaha').map(location => (
-                                                    <option key={location.id} value={location.id}>
-                                                        📋 {location.name.replace('Sundberg ', '')} (Reference)
-                                                    </option>
-                                                ))}
-                                            </select>
-
-                                            <select 
-                                                className="px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 text-sm"
-                                                onChange={(e) => {
-                                                    if (e.target.value) {
-                                                        const matchingLocation = branchLocations.find(loc => 
-                                                            loc.specialties.some(specialty => 
-                                                                specialty.toLowerCase().includes(e.target.value.toLowerCase())
-                                                            )
-                                                        );
-                                                        if (matchingLocation) {
-                                                            document.getElementById(`location-${matchingLocation.id}`)?.scrollIntoView({ behavior: 'smooth' });
-                                                        }
-                                                    }
-                                                }}
-                                            >
-                                                <option value="">🔧 Find by Specialty</option>
-                                                <option value="agricultural">🌾 Agricultural Equipment</option>
-                                                <option value="mobile">🚚 Mobile Service</option>
-                                                <option value="technical">📞 Technical Training</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-6">
-                                        <h3 className="font-semibold text-green-800 mb-2">🎯 Active Customer Base</h3>
-                                        <p className="text-green-700 text-sm">
-                                            This system serves <strong>Sundberg Omaha 300 Branch customers only</strong>. 
-                                            Other locations shown below are for reference and corporate contact purposes.
-                                        </p>
-                                    </div>
+                                    <h2 className="text-xl font-semibold mb-4">Sundberg Branch Locations</h2>
                                     
                                     <div className="grid gap-4">
                                         {branchLocations.map(location => (
-                                            <div key={location.id} id={`location-${location.id}`} className={`border rounded-lg p-4 
-                                                ${location.status === 'primary' ? 'border-green-500 bg-green-50' : 'border-gray-300 bg-gray-50'}`}>
+                                            <div key={location.id} className="border rounded-lg p-4 hover:bg-gray-50">
                                                 <div className="flex justify-between items-start mb-3">
                                                     <div>
-                                                        <h3 className="font-semibold text-lg text-blue-600 flex items-center">
-                                                            {location.name}
-                                                            {location.status === 'primary' && (
-                                                                <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded">PRIMARY</span>
-                                                            )}
-                                                            {location.status === 'reference' && (
-                                                                <span className="ml-2 bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">REFERENCE</span>
-                                                            )}
-                                                        </h3>
+                                                        <h3 className="font-semibold text-lg text-blue-600">{location.name}</h3>
                                                         <div className="flex items-center text-gray-600 mt-1">
                                                             <MapPin className="h-4 w-4 mr-1" />
                                                             <span className="text-sm">{location.address}</span>
@@ -1143,9 +1233,6 @@
                                                         <div className="flex items-center text-gray-600 mt-1">
                                                             <Phone className="h-4 w-4 mr-1" />
                                                             <span className="text-sm">{location.phone}</span>
-                                                        </div>
-                                                        <div className="text-xs text-gray-500 mt-1">
-                                                            <strong>Customer Base:</strong> {location.customerBase}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1184,82 +1271,39 @@
                         return (
                             <div className="space-y-6">
                                 <div className="bg-white p-4 rounded-lg border">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h2 className="text-xl font-semibold">🌾 Omaha 300 Staff Directory</h2>
-                                        
-                                        <div className="flex gap-4">
-                                            <select 
-                                                className="px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 text-sm"
-                                                onChange={(e) => {
-                                                    if (e.target.value) {
-                                                        const staffMember = staffDirectory.find(staff => staff.name === e.target.value);
-                                                        if (staffMember) {
-                                                            document.getElementById(`staff-${staffMember.name.replace(' ', '-').toLowerCase()}`)?.scrollIntoView({ behavior: 'smooth' });
-                                                        }
-                                                    }
-                                                }}
-                                            >
-                                                <option value="">👤 Find Staff Member</option>
-                                                {staffDirectory.map(staff => (
-                                                    <option key={staff.name} value={staff.name}>
-                                                        {staff.name} - {staff.role}
-                                                    </option>
-                                                ))}
-                                            </select>
-
-                                            <select 
-                                                className="px-3 py-2 border rounded focus:ring-2 focus:ring-green-500 text-sm"
-                                                onChange={(e) => {
-                                                    if (e.target.value) {
-                                                        const staffMember = staffDirectory.find(staff => 
-                                                            staff.specialties.some(specialty => 
-                                                                specialty.toLowerCase().includes(e.target.value.toLowerCase())
-                                                            )
-                                                        );
-                                                        if (staffMember) {
-                                                            document.getElementById(`staff-${staffMember.name.replace(' ', '-').toLowerCase()}`)?.scrollIntoView({ behavior: 'smooth' });
-                                                        }
-                                                    }
-                                                }}
-                                            >
-                                                <option value="">🔧 Find by Specialty</option>
-                                                <option value="agricultural">🌾 Agricultural Equipment</option>
-                                                <option value="diagnostics">🔧 Diagnostics</option>
-                                                <option value="mobile">🚚 Mobile Service</option>
-                                                <option value="irrigation">💧 Irrigation Systems</option>
-                                                <option value="dairy">🥛 Dairy Equipment</option>
-                                                <option value="parts">📦 Parts Lookup</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-4">
-                                        <h3 className="font-semibold text-green-800 mb-2">🎯 Omaha 300 Branch Team</h3>
-                                        <p className="text-green-700 text-sm">
-                                            Complete staff directory for Sundberg Branch 300 - Omaha. All team members specialize in agricultural equipment and serve the 200-mile service radius.
-                                        </p>
-                                    </div>
+                                    <h2 className="text-xl font-semibold mb-4">Staff Directory</h2>
                                     
-                                    <div className="grid gap-3">
-                                        {staffDirectory.map((staff, idx) => (
-                                            <div key={idx} id={`staff-${staff.name.replace(' ', '-').toLowerCase()}`} className="flex items-center justify-between p-3 border rounded hover:bg-gray-50 border-green-200">
-                                                <div className="flex items-center space-x-3">
-                                                    <User className="h-5 w-5 text-gray-500" />
-                                                    <div>
-                                                        <div className="font-medium">{staff.name}</div>
-                                                        <div className="text-sm text-gray-600">{staff.role}</div>
-                                                        <div className="text-sm text-green-600">{staff.branch}</div>
-                                                        <div className="text-xs text-gray-500">{staff.phone}</div>
+                                    <div className="space-y-6">
+                                        {locationOptions.filter(loc => loc.value !== 'all').map(locationOption => {
+                                            const locationStaff = staffDirectory.filter(staff => staff.location === locationOption.value);
+                                            if (locationStaff.length === 0) return null;
+                                            
+                                            return (
+                                                <div key={locationOption.value} className="border rounded-lg p-4">
+                                                    <h3 className="font-semibold text-lg mb-4 text-blue-600">{locationOption.label}</h3>
+                                                    <div className="grid gap-3">
+                                                        {locationStaff.map((staff, idx) => (
+                                                            <div key={idx} className="flex items-center justify-between p-3 border rounded hover:bg-gray-50">
+                                                                <div className="flex items-center space-x-3">
+                                                                    <User className="h-5 w-5 text-gray-500" />
+                                                                    <div>
+                                                                        <div className="font-medium">{staff.name}</div>
+                                                                        <div className="text-sm text-gray-600">{staff.role}</div>
+                                                                        <div className="text-sm text-gray-500">{staff.branch}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="text-right">
+                                                                    <div className="text-sm font-medium">Ext. {staff.ext}</div>
+                                                                    <div className="text-xs text-gray-500">
+                                                                        {staff.specialties.join(', ')}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))}
                                                     </div>
                                                 </div>
-                                                <div className="text-right">
-                                                    <div className="text-sm font-medium">Ext. {staff.ext}</div>
-                                                    <div className="text-xs text-gray-500">
-                                                        {staff.specialties.join(', ')}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             </div>
@@ -1280,7 +1324,7 @@
                                     <Building className="h-6 w-6 text-blue-600" />
                                     <div>
                                         <div className="font-bold text-gray-800">Sundberg</div>
-                                        <div className="text-xs text-gray-500">Omaha 300</div>
+                                        <div className="text-xs text-gray-500">Knowledge Base</div>
                                     </div>
                                 </div>
                                 <button
@@ -1331,11 +1375,11 @@
                                     </button>
                                 )}
                                 <h1 className="text-xl font-semibold text-gray-800">
-                                    {sections.find(s => s.id === activeSection)?.name || 'Sundberg Omaha 300'}
+                                    {sections.find(s => s.id === activeSection)?.name || 'Sundberg Knowledge Base'}
                                 </h1>
                             </div>
                             <div className="text-sm text-gray-500">
-                                Omaha 300 Branch System v2.1 • Agricultural Equipment Specialists
+                                Knowledge Base & Live Caller ID System v3.0
                             </div>
                         </header>
 
@@ -1347,7 +1391,7 @@
             );
         };
 
-        ReactDOM.render(<SundbergOmaha300System />, document.getElementById('root'));
+        ReactDOM.render(<SundbergKnowledgeBase />, document.getElementById('root'));
     </script>
 </body>
 </html>
