@@ -1,1598 +1,390 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stevens Parts - Professional Appliance Parts Database</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 18px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #764ba2;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .search-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .search-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .search-input, select {
-            padding: 10px 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .search-input:focus, select:focus {
-            outline: none;
-            border-color: #764ba2;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
-        }
-
-        .results-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .results-count {
-            font-size: 1rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .parts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 18px;
-        }
-
-        .part-card {
-            border: 1px solid #e1e5e9;
-            border-radius: 12px;
-            padding: 18px;
-            background: white;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .part-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-            border-color: #764ba2;
-        }
-
-        .part-number {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #764ba2;
-            margin-bottom: 6px;
-        }
-
-        .part-brand {
-            display: inline-block;
-            padding: 3px 8px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .part-description {
-            font-size: 0.95rem;
-            color: #333;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .part-details {
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-        }
-
-        .part-detail {
-            margin-bottom: 4px;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: #555;
-            display: inline-block;
-            min-width: 70px;
-        }
-
-        .part-models {
-            background: #f8f9fa;
-            padding: 8px;
-            border-radius: 6px;
-            margin: 8px 0;
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .symptoms-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 6px;
-        }
-
-        .symptom-tag {
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-
-        .part-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .part-price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #2e7d32;
-        }
-
-        .stock-indicator {
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .in-stock {
-            background: #e8f5e8;
-            color: #2e7d32;
-        }
-
-        .out-of-stock {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .part-notes {
-            margin-top: 8px;
-            padding: 6px;
-            background: #fff3e0;
-            border-left: 3px solid #ff9800;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            color: #e65100;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 10px; }
-            .header h1 { font-size: 2rem; }
-            .search-grid { grid-template-columns: 1fr; }
-            .parts-grid { grid-template-columns: 1fr; }
-        }
-
-        .appliance-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .appliance-icon {
-            color: white;
-            text-align: center;
-            opacity: 0.8;
-            font-size: 0.8rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Stevens Parts</h1>
-            <p>Professional Appliance Parts Database - Complete Service Solutions</p>
-        </div>
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number" id="totalParts">2847</div>
-                <div class="stat-label">Total Parts</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">15</div>
-                <div class="stat-label">Major Brands</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">42</div>
-                <div class="stat-label">Categories</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Appliance Types</div>
-            </div>
-        </div>
-
-        <div class="appliance-icons">
-            <div class="appliance-icon">🔧 Washers</div>
-            <div class="appliance-icon">🌪️ Dryers</div>
-            <div class="appliance-icon">❄️ Refrigerators</div>
-            <div class="appliance-icon">🍽️ Dishwashers</div>
-            <div class="appliance-icon">🔥 Ranges</div>
-            <div class="appliance-icon">📡 Microwaves</div>
-            <div class="appliance-icon">🏠 HVAC</div>
-            <div class="appliance-icon">⚙️ Universal</div>
-        </div>
-
-        <div class="search-section">
-            <div class="search-grid">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search parts by number, brand, or model...">
-                
-                <select id="brandFilter">
-                    <option value="">All Brands (2847 parts)</option>
-                    <option value="whirlpool">Whirlpool (895 parts)</option>
-                    <option value="ge">GE (247 parts)</option>
-                    <option value="samsung">Samsung (298 parts)</option>
-                    <option value="lg">LG (186 parts)</option>
-                    <option value="frigidaire">Frigidaire (165 parts)</option>
-                    <option value="bosch">Bosch (124 parts)</option>
-                    <option value="maytag">Maytag (187 parts)</option>
-                    <option value="kenmore">Kenmore (156 parts)</option>
-                    <option value="kitchenaid">KitchenAid (98 parts)</option>
-                    <option value="electrolux">Electrolux (85 parts)</option>
-                    <option value="hotpoint">Hotpoint (76 parts)</option>
-                    <option value="mars">Mars (65 parts)</option>
-                    <option value="supco">Supco (47 parts)</option>
-                    <option value="universal">Universal (218 parts)</option>
-                </select>
-
-                <select id="applianceFilter">
-                    <option value="">All Appliances</option>
-                    <option value="washer">Washers (847 parts)</option>
-                    <option value="dryer">Dryers (652 parts)</option>
-                    <option value="refrigerator">Refrigerators (489 parts)</option>
-                    <option value="dishwasher">Dishwashers (325 parts)</option>
-                    <option value="range">Ranges/Ovens (287 parts)</option>
-                    <option value="microwave">Microwaves (125 parts)</option>
-                    <option value="garbage_disposal">Garbage Disposals (45 parts)</option>
-                    <option value="universal">Universal/HVAC (77 parts)</option>
-                </select>
-
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                    <option value="control_board">Control Boards (385)</option>
-                    <option value="motor">Motors (298)</option>
-                    <option value="pump">Pumps (187)</option>
-                    <option value="heating_element">Heating Elements (156)</option>
-                    <option value="door_lock">Door Locks (145)</option>
-                    <option value="sensor">Sensors (198)</option>
-                    <option value="valve">Valves (167)</option>
-                    <option value="belt">Belts (89)</option>
-                    <option value="filter">Filters (134)</option>
-                    <option value="repair_kit">Repair Kits (178)</option>
-                    <option value="seal">Seals/Gaskets (287)</option>
-                    <option value="capacitor">Capacitors (95)</option>
-                    <option value="igniter">Igniters (76)</option>
-                    <option value="thermostat">Thermostats (98)</option>
-                    <option value="ice_maker">Ice Makers (67)</option>
-                    <option value="dispenser">Dispensers (54)</option>
-                    <option value="hardware">Hardware (123)</option>
-                    <option value="vintage">Vintage Parts (87)</option>
-                    <option value="commercial">Commercial (45)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="results-section">
-            <div class="results-header">
-                <div class="results-count" id="resultsCount">Loading comprehensive parts database...</div>
-            </div>
-            <div class="parts-grid" id="partsGrid">
-                <!-- Parts will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Stevens Parts - Comprehensive Database (2847+ Parts)
-        const partsDatabase = [
-            // WHIRLPOOL WASHERS - CONTROL BOARDS (Comprehensive Coverage)
-            {
-                partNumber: 'W11608056',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Electronic Control Board - Smart Series 2024',
-                price: 289.99,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW', 'WTW5105HC', 'WTW6120HC', 'WTW7500GC'],
-                symptoms: ['Display not working', 'Cycles not completing', 'Error codes F01-F11', 'Smart features disabled', 'WiFi connection issues'],
-                notes: 'Latest generation with Load&Go technology and WiFi connectivity'
-            },
-            {
-                partNumber: 'W11656043',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Cabrio Smart Control Board - Advanced',
-                price: 325.50,
-                inStock: true,
-                models: ['WTW8700EC', 'WTW8500DC', 'WTW8040DW', 'WTW7500GC', 'WTW8500BW'],
-                symptoms: ['Cabrio not agitating', 'Load sensing failure', 'Error UL', 'Adaptive wash issues'],
-                notes: 'Premium Cabrio series with advanced soil sensing'
-            },
-            {
-                partNumber: 'W11035674',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Duet Front Load Control Board',
-                price: 245.75,
-                inStock: true,
-                models: ['WFW5620HW', 'WFW6620HC', 'WFW7620HW', 'WFW8620HC', 'WFW9151YW'],
-                symptoms: ['Door lock error dL', 'Drain error F02', 'Spin cycle failure F07', 'Temperature control issues'],
-                notes: 'Front load washer main control with steam options'
-            },
-            {
-                partNumber: 'W10906409',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Duet Sport Control Board',
-                price: 198.99,
-                inStock: true,
-                models: ['WFW70HEBW', 'WFW72HEDW', 'WFW75HEFW', 'WFW8300SW'],
-                symptoms: ['Sport cycles not working', 'Water temperature issues', 'Error F06'],
-                notes: 'Mid-range Duet control board with sport wash cycles'
-            },
-            {
-                partNumber: 'W11027055',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Oasis HE Control Board',
-                price: 265.25,
-                inStock: true,
-                models: ['WTW6600SW', 'WTW6800WW', 'WTW7000DW', 'WTW7300DW'],
-                symptoms: ['Oasis wash action failure', 'Error LF', 'Wash basket not moving', 'HE efficiency issues'],
-                notes: 'Oasis series horizontal axis wash technology'
-            },
-
-            // WHIRLPOOL WASHERS - MOTORS & DRIVE SYSTEMS
-            {
-                partNumber: 'W11259272',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'motor',
-                description: 'Direct Drive Motor Assembly - Premium',
-                price: 425.99,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW', 'WTW5105HC', 'WTW6120HC'],
-                symptoms: ['No agitation', 'Motor noise', 'Burning smell', 'Error F1E1', 'Spin basket loose'],
-                notes: 'Direct drive with rotor position sensor and stator assembly'
-            },
-            {
-                partNumber: 'W10006346',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'motor',
-                description: 'Belt Drive Motor - Traditional',
-                price: 185.50,
-                inStock: true,
-                models: ['LTW4516FW', 'LTW4516MW', 'CAW9629EW', 'LSR7233EQ'],
-                symptoms: ['Motor won\'t start', 'Belt slipping', 'No wash action', 'Motor humming'],
-                notes: '1/2 HP motor for traditional belt-drive washers'
-            },
-            {
-                partNumber: 'W10171019',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'Drain Pump Assembly - Heavy Duty',
-                price: 125.99,
-                inStock: true,
-                models: ['WFW75HEFW', 'WFW70HEBW', 'WFW72HEDW', 'WFW8300SW'],
-                symptoms: ['Won\'t drain', 'F02 error', 'Water in tub', 'Pump grinding noise'],
-                notes: 'Self-priming drain pump with debris filter'
-            },
-            {
-                partNumber: 'W10130913',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'Recirculation Pump - Premium',
-                price: 165.75,
-                inStock: true,
-                models: ['WTW8700EC', 'WTW8500DC', 'WTW8040DW', 'WTW7500GC'],
-                symptoms: ['Poor wash performance', 'Water not circulating', 'Clothes not getting clean'],
-                notes: 'High-pressure wash system circulation pump'
-            },
-            {
-                partNumber: 'W11086756',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'motor',
-                description: 'Transmission Motor Assembly',
-                price: 385.99,
-                inStock: false,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW'],
-                symptoms: ['Agitator not moving', 'Transmission failure', 'No spin', 'Loud grinding noise'],
-                notes: 'Complete transmission with drive motor - Major repair component'
-            },
-
-            // WHIRLPOOL WASHERS - WATER SYSTEM
-            {
-                partNumber: 'W11096164',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'valve',
-                description: 'Water Inlet Valve - Dual Port Standard',
-                price: 85.50,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW', 'WTW5105HC'],
-                symptoms: ['No water fill', 'Slow fill', 'Won\'t stop filling', 'Cold water only'],
-                notes: 'Hot and cold water inlet with 120V solenoids'
-            },
-            {
-                partNumber: 'W10158389',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'valve',
-                description: 'Load&Go Dispenser Valve - Triple Port',
-                price: 125.99,
-                inStock: true,
-                models: ['WTW8700EC', 'WTW8500DC', 'WTW8040DW', 'WTW7500GC'],
-                symptoms: ['Load&Go not dispensing', 'Detergent buildup', 'Poor wash performance'],
-                notes: 'Three-way valve for automatic detergent dispensing system'
-            },
-            {
-                partNumber: 'W10316760',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'sensor',
-                description: 'Water Level Sensor - Analog',
-                price: 65.75,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW'],
-                symptoms: ['Overfilling', 'Underfilling', 'F20 error', 'Water level issues'],
-                notes: 'Precision analog sensor for optimal water levels'
-            },
-            {
-                partNumber: 'W10482725',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'sensor',
-                description: 'Advanced Load Size Sensor',
-                price: 95.99,
-                inStock: true,
-                models: ['WTW8700EC', 'WTW8500DC', 'WTW7500GC'],
-                symptoms: ['Incorrect water level', 'Load sensing failure', 'Adaptive wash not working'],
-                notes: 'Smart load detection for optimal water and energy usage'
-            },
-
-            // WHIRLPOOL DRYERS - CONTROL BOARDS
-            {
-                partNumber: 'W11396033',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'Smart Dryer Control Board - AccuDry',
-                price: 285.50,
-                inStock: true,
-                models: ['WED8620HC', 'WED7500GC', 'WED6620HC', 'WED5620HW'],
-                symptoms: ['No heat', 'Display blank', 'AccuDry not working', 'WiFi connection issues'],
-                notes: 'Premium control with moisture sensing and WiFi connectivity'
-            },
-            {
-                partNumber: 'W11035821',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'Gas Dryer Control Board - Advanced',
-                price: 245.75,
-                inStock: true,
-                models: ['WGD8620HC', 'WGD7500GC', 'WGD6620HC', 'WGD5620HW'],
-                symptoms: ['No ignition', 'Gas valve failure', 'Temperature control issues', 'Cycle interruption'],
-                notes: 'Gas-specific control with ignition sequence management'
-            },
-            {
-                partNumber: 'W10906369',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'Cabrio Dryer Control Board',
-                price: 195.99,
-                inStock: true,
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW'],
-                symptoms: ['Cabrio cycles not working', 'Wrinkle Shield failure', 'Control not responding'],
-                notes: 'Mid-range Cabrio dryer control with wrinkle prevention'
-            },
-
-            // WHIRLPOOL DRYERS - HEATING SYSTEMS
-            {
-                partNumber: 'W10724237',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'heating_element',
-                description: 'Electric Heating Element - 5400W Heavy Duty',
-                price: 125.99,
-                inStock: true,
-                models: ['WED8620HC', 'WED7500GC', 'WED6620HC'],
-                symptoms: ['No heat', 'Takes too long to dry', 'Clothes still damp', 'Element glowing partially'],
-                notes: 'High-wattage element with built-in thermal protection'
-            },
-            {
-                partNumber: 'W10893125',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'heating_element',
-                description: 'Heating Element Kit with Thermostats',
-                price: 165.50,
-                inStock: true,
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW'],
-                symptoms: ['Inconsistent heating', 'Overheating', 'Thermal cutoff tripping'],
-                notes: 'Complete kit with element, high-limit and cycling thermostats'
-            },
-            {
-                partNumber: 'W10613606',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'igniter',
-                description: 'Gas Igniter - Hot Surface Type',
-                price: 75.99,
-                inStock: true,
-                models: ['WGD8620HC', 'WGD7500GC', 'WGD6620HC'],
-                symptoms: ['No ignition', 'Gas smell without flame', 'Long ignition delay', 'Igniter glowing but no gas'],
-                notes: 'Silicon carbide hot surface igniter with bracket'
-            },
-            {
-                partNumber: 'W10116794',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'igniter',
-                description: 'Gas Valve Coil Kit',
-                price: 95.75,
-                inStock: true,
-                models: ['WGD8620HC', 'WGD7500GC', 'WGD6620HC'],
-                symptoms: ['Gas valve clicking but not opening', 'Intermittent ignition', 'Gas flow issues'],
-                notes: 'Dual coil gas valve assembly with mounting hardware'
-            },
-
-            // WHIRLPOOL DRYERS - DRUM & BELT SYSTEM
-            {
-                partNumber: 'W10127457',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'belt',
-                description: 'Multi-Rib Drive Belt - Premium',
-                price: 35.99,
-                inStock: true,
-                models: ['WED8620HC', 'WED7500GC', 'WED6620HC', 'WED5620HW'],
-                symptoms: ['Drum not turning', 'Belt noise', 'Belt slipping', 'Squealing sound'],
-                notes: '92-1/4 inch multi-rib belt for smooth operation'
-            },
-            {
-                partNumber: 'W10178074',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'belt',
-                description: 'Standard Drum Belt',
-                price: 25.50,
-                inStock: true,
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW'],
-                symptoms: ['Drum won\'t rotate', 'Belt broken', 'Motor running but no drum movement'],
-                notes: '92-1/4 inch flat belt for standard models'
-            },
-            {
-                partNumber: 'W10314173',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'repair_kit',
-                description: 'Drum Support Roller Kit - 4 Roller',
-                price: 65.99,
-                inStock: true,
-                models: ['WED8620HC', 'WED7500GC', 'WED4815EW'],
-                symptoms: ['Drum noise', 'Squealing', 'Thumping', 'Drum wobble'],
-                notes: 'Complete 4-roller maintenance kit with brackets and tri-rings'
-            },
-            {
-                partNumber: 'W10547290',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'roller',
-                description: 'Individual Drum Support Roller',
-                price: 18.99,
-                inStock: true,
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW'],
-                symptoms: ['Single roller failure', 'Localized drum noise', 'Uneven drum support'],
-                notes: 'Individual replacement roller with tri-ring and shaft'
-            },
-
-            // GE WASHERS - COMPREHENSIVE COVERAGE
-            {
-                partNumber: 'WH12X10355',
-                brand: 'ge',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'GE Front Load Control Board - Smart',
-                price: 285.50,
-                inStock: true,
-                models: ['GFW148SSLWW', 'GFW450SPKDG', 'GFW850SPNRS', 'GFW650SPNSRS'],
-                symptoms: ['Display not working', 'Error E20 E23', 'Smart features disabled', 'Won\'t start cycle'],
-                notes: 'SmartDispense compatible control board with WiFi'
-            },
-            {
-                partNumber: 'WH12X10384',
-                brand: 'ge',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'GE Top Load Impeller Control',
-                price: 225.75,
-                inStock: true,
-                models: ['GTWN4250D0WS', 'GTWN4250M0WS', 'GTWP4300D0WW'],
-                symptoms: ['Impeller not working', 'Deep wash cycle failure', 'Error E32'],
-                notes: 'Control board for GE impeller top load washers'
-            },
-            {
-                partNumber: 'WH42X10656',
-                brand: 'ge',
-                appliance: 'washer',
-                category: 'motor',
-                description: 'GE Direct Drive Motor',
-                price: 365.99,
-                inStock: true,
-                models: ['GFW148SSLWW', 'GFW450SPKDG', 'GFW850SPNRS'],
-                symptoms: ['Motor not running', 'Loud motor noise', 'E24 error', 'No agitation or spin'],
-                notes: 'Brushless DC motor with integrated inverter'
-            },
-            {
-                partNumber: 'WH23X24178',
-                brand: 'ge',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'GE Drain Pump Assembly',
-                price: 145.50,
-                inStock: true,
-                models: ['GFW148SSLWW', 'GFW450SPKDG', 'GFW850SPNRS'],
-                symptoms: ['Won\'t drain', 'E21 error', 'Water remaining', 'Pump noise'],
-                notes: 'Self-cleaning drain pump with removable filter'
-            },
-
-            // GE DRYERS
-            {
-                partNumber: 'WE04X25200',
-                brand: 'ge',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'GE Smart Dryer Control Board',
-                price: 275.99,
-                inStock: true,
-                models: ['GFD148ESSMWW', 'GFD148ESLWW', 'GFD450ESKMWW'],
-                symptoms: ['No heat', 'Display issues', 'E64 error', 'Smart features not working'],
-                notes: 'WiFi-enabled control with sensor dry technology'
-            },
-            {
-                partNumber: 'WE04X20074',
-                brand: 'ge',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'GE Standard Dryer Control',
-                price: 195.75,
-                inStock: true,
-                models: ['GTD33EASKWW', 'GTD42EASJWW', 'GTD65EBSJDM'],
-                symptoms: ['Basic control failure', 'Timer not advancing', 'No heat control'],
-                notes: 'Standard electronic control for mid-range dryers'
-            },
-            {
-                partNumber: 'WE11M0031',
-                brand: 'ge',
-                appliance: 'dryer',
-                category: 'heating_element',
-                description: 'GE Heating Element - 5000W',
-                price: 115.99,
-                inStock: true,
-                models: ['GFD148ESSMWW', 'GFD148ESLWW', 'GFD450ESKMWW'],
-                symptoms: ['No heat', 'Insufficient heat', 'Long dry times', 'Element not glowing'],
-                notes: 'Complete heating assembly with housing and terminals'
-            },
-
-            // SAMSUNG WASHERS - EXTENSIVE COVERAGE
-            {
-                partNumber: 'DC92-01021A',
-                brand: 'samsung',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Samsung Main Control PCB - Smart',
-                price: 295.99,
-                inStock: true,
-                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW', 'WF45R6100AW'],
-                symptoms: ['4C error', '5C error', 'Water not filling', 'Display flickering', 'Smart features disabled'],
-                notes: 'Main control board with SmartThings compatibility'
-            },
-            {
-                partNumber: 'DC92-02200A',
-                brand: 'samsung',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Samsung AddWash Control Board',
-                price: 345.50,
-                inStock: true,
-                models: ['WF45K6500AV', 'WF50K7500AV', 'WF56H9100AW'],
-                symptoms: ['AddWash door not working', 'VRT issues', 'Smart control failure'],
-                notes: 'Premium control with AddWash technology and VRT Plus'
-            },
-            {
-                partNumber: 'DC97-16782A',
-                brand: 'samsung',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'Samsung Drain Pump - Self-Cleaning',
-                price: 125.75,
-                inStock: true,
-                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW'],
-                symptoms: ['5E error', 'Won\'t drain', 'Pump noise', 'Water remaining in tub'],
-                notes: 'Self-cleaning drain pump with debris filter system'
-            },
-            {
-                partNumber: 'DC64-01570A',
-                brand: 'samsung',
-                appliance: 'washer',
-                category: 'door_lock',
-                description: 'Samsung Door Lock - AddWash Compatible',
-                price: 95.99,
-                inStock: true,
-                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW'],
-                symptoms: ['dE error', 'Door lock failure', 'AddWash door issues', 'Safety interlock problems'],
-                notes: 'Advanced door lock with AddWash door compatibility'
-            },
-
-            // SAMSUNG DRYERS
-            {
-                partNumber: 'DV42H5000EW/A3',
-                brand: 'samsung',
-                appliance: 'dryer',
-                category: 'control_board',
-                description: 'Samsung Smart Dryer Control',
-                price: 285.99,
-                inStock: true,
-                models: ['DV42H5000EW', 'DV45H7000EW', 'DV48H7400EW', 'DV50K7500EV'],
-                symptoms: ['Smart features not working', 'Sensor dry failure', 'Display errors', 'WiFi connectivity issues'],
-                notes: 'Smart control with moisture sensors and app connectivity'
-            },
-            {
-                partNumber: 'DC47-00019A',
-                brand: 'samsung',
-                appliance: 'dryer',
-                category: 'belt',
-                description: 'Samsung Multi-Rib Drive Belt',
-                price: 32.50,
-                inStock: true,
-                models: ['DV42H5000EW', 'DV45H7000EW', 'DV48H7400EW'],
-                symptoms: ['Drum not turning', 'Belt broken', 'Squealing noise', 'Motor running but no drum'],
-                notes: '93-3/4 inch multi-rib belt for smooth operation'
-            },
-            {
-                partNumber: 'DC97-07509B',
-                brand: 'samsung',
-                appliance: 'dryer',
-                category: 'repair_kit',
-                description: 'Samsung Dryer Roller Kit - 2 Roller',
-                price: 55.99,
-                inStock: true,
-                models: ['DV42H5000EW', 'DV45H7000EW', 'DV48H7400EW'],
-                symptoms: ['Drum noise', 'Squealing', 'Thumping', 'Uneven drum support'],
-                notes: '2-roller maintenance kit with brackets and hardware'
-            },
-
-            // LG WASHERS - COMPREHENSIVE
-            {
-                partNumber: '6871EC1073D',
-                brand: 'lg',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'LG Main Control Board - ThinQ',
-                price: 275.50,
-                inStock: true,
-                models: ['WM3700HWA', 'WM4000HWA', 'WM3900HWA', 'WM9000HVA'],
-                symptoms: ['OE error', 'FE error', 'Display not responding', 'ThinQ app not connecting'],
-                notes: 'ThinQ-enabled main control with smart diagnosis'
-            },
-            {
-                partNumber: 'EBR83363901',
-                brand: 'lg',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'LG TurboWash Control Board',
-                price: 315.75,
-                inStock: true,
-                models: ['WM9000HVA', 'WM8100HVA', 'WM5000HVA'],
-                symptoms: ['TurboWash not working', 'Water pressure issues', 'Wash time problems'],
-                notes: 'Advanced control for TurboWash technology with multiple spray nozzles'
-            },
-            {
-                partNumber: 'AEQ36756912',
-                brand: 'lg',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'LG Circulation Pump - TurboWash',
-                price: 145.99,
-                inStock: true,
-                models: ['WM3700HWA', 'WM4000HWA', 'WM3900HWA'],
-                symptoms: ['Poor wash performance', 'TurboWash not spraying', 'Water circulation issues'],
-                notes: 'High-pressure circulation pump for TurboWash system'
-            },
-            {
-                partNumber: '6601ER1006E',
-                brand: 'lg',
-                appliance: 'washer',
-                category: 'door_lock',
-                description: 'LG Door Lock - Smart Diagnosis',
-                price: 85.50,
-                inStock: true,
-                models: ['WM3700HWA', 'WM4000HWA', 'WM3900HWA'],
-                symptoms: ['dE error', 'Door not locking', 'Smart diagnosis failure', 'Safety interlock issues'],
-                notes: 'Advanced door lock with smart diagnosis capability'
-            },
-
-            // LG DRYERS
-            {
-                partNumber: '5221FR1249E',
-                brand: 'lg',
-                appliance: 'dryer',
-                category: 'filter',
-                description: 'LG Lint Filter - Easy Clean',
-                price: 45.99,
-                inStock: true,
-                models: ['DLE3500W', 'DLG3401W', 'DLEX3900W', 'DLEX4500W'],
-                symptoms: ['Poor airflow', 'Long dry times', 'Overheating', 'Lint buildup'],
-                notes: 'Large-capacity lint filter with easy-grip handle'
-            },
-            {
-                partNumber: 'EAD73013002',
-                brand: 'lg',
-                appliance: 'dryer',
-                category: 'sensor',
-                description: 'LG Moisture Sensor Bar',
-                price: 65.75,
-                inStock: true,
-                models: ['DLEX3900W', 'DLEX4500W', 'DLEX7800WE'],
-                symptoms: ['Sensor dry not working', 'Overdrying', 'Underdrying', 'Moisture detection failure'],
-                notes: 'Precision moisture sensing system with multiple contact points'
-            },
-            {
-                partNumber: 'EAD60661401',
-                brand: 'lg',
-                appliance: 'dryer',
-                category: 'repair_kit',
-                description: 'LG Belt & Idler Kit',
-                price: 48.99,
-                inStock: true,
-                models: ['DLE3500W', 'DLG3401W', 'DLEX3900W'],
-                symptoms: ['Belt broken', 'Idler pulley noise', 'Drum not turning', 'Belt tension issues'],
-                notes: 'Complete belt and idler pulley service kit'
-            },
-
-            // FRIGIDAIRE - COMPREHENSIVE
-            {
-                partNumber: '137006000',
-                brand: 'frigidaire',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Frigidaire Electronic Control',
-                price: 195.99,
-                inStock: true,
-                models: ['FFTW4120SW', 'FFTW1011MW', 'FFFW5000QW', 'FFTW4516FW'],
-                symptoms: ['Control not responding', 'Cycle interruption', 'Display blank', 'Timer issues'],
-                notes: 'Electronic control for top and front load washers'
-            },
-            {
-                partNumber: '134743500',
-                brand: 'frigidaire',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Frigidaire Front Load Control',
-                price: 225.75,
-                inStock: true,
-                models: ['FFFW5000QW', 'FFGF3054TS', 'FFCD2418US'],
-                symptoms: ['Front load cycles not working', 'Door lock error', 'Spin failure'],
-                notes: 'Advanced front load control with multiple wash options'
-            },
-            {
-                partNumber: '134550800',
-                brand: 'frigidaire',
-                appliance: 'washer',
-                category: 'door_lock',
-                description: 'Frigidaire Door Lock Assembly',
-                price: 75.99,
-                inStock: true,
-                models: ['FFTW4120SW', 'FFFW5000QW', 'FFGF3054TS'],
-                symptoms: ['Door lock error', 'E20 error', 'Door won\'t lock', 'Safety switch failure'],
-                notes: 'Complete door lock mechanism with wiring harness'
-            },
-
-            // BOSCH - PREMIUM COMPONENTS
-            {
-                partNumber: '00754869',
-                brand: 'bosch',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Bosch Control Module - German Engineering',
-                price: 385.99,
-                inStock: true,
-                models: ['WAT28400UC', 'WAW285H2UC', 'WAN24100UC', 'WAX20440US'],
-                symptoms: ['Program selection failure', 'Display errors', 'European cycles not working'],
-                notes: 'Precision German-engineered control module'
-            },
-            {
-                partNumber: '00642239',
-                brand: 'bosch',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Bosch Compact Control Board',
-                price: 245.50,
-                inStock: true,
-                models: ['WAP24200UC', 'WAN24100UC', 'WAT28400UC'],
-                symptoms: ['Compact unit not responding', 'European wash cycles failing', 'Timer issues'],
-                notes: 'Control board for Bosch compact and stackable models'
-            },
-            {
-                partNumber: '00754203',
-                brand: 'bosch',
-                appliance: 'washer',
-                category: 'pump',
-                description: 'Bosch Drain Pump - Self-Cleaning',
-                price: 165.75,
-                inStock: true,
-                models: ['WAT28400UC', 'WAW285H2UC', 'WAN24100UC'],
-                symptoms: ['Won\'t drain', 'E18 error', 'Pump blockage', 'Drainage issues'],
-                notes: 'Self-cleaning drain pump with integrated filter system'
-            },
-            {
-                partNumber: '00658259',
-                brand: 'bosch',
-                appliance: 'dishwasher',
-                category: 'control_board',
-                description: 'Bosch Dishwasher Control - Precision',
-                price: 295.99,
-                inStock: true,
-                models: ['SHPM88Z75N', 'SHXM88Z75N', 'SHPM78W55N'],
-                symptoms: ['Control panel failure', 'Cycle not starting', 'Display issues'],
-                notes: 'Precision dishwasher control module with multiple programs'
-            },
-
-            // MAYTAG - COMMERCIAL GRADE
-            {
-                partNumber: 'W11035891',
-                brand: 'maytag',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Maytag Commercial Control - PowerWash',
-                price: 325.99,
-                inStock: true,
-                models: ['MVW7232HW', 'MVW6230HW', 'MVW5430MW', 'MVW4505MW'],
-                symptoms: ['PowerWash not working', 'Heavy-duty cycles failing', 'Agitator issues'],
-                notes: 'Commercial-grade control board for heavy-duty washing'
-            },
-            {
-                partNumber: 'W11459369',
-                brand: 'maytag',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Maytag Coin-Op Commercial Control',
-                price: 485.99,
-                inStock: true,
-                models: ['CEM2760TQ', 'CEM2760KQ', 'CHW8990BW'],
-                symptoms: ['Coin operation failure', 'Commercial timer issues', 'Heavy-duty cycle problems'],
-                notes: 'Industrial coin-operated control for laundromat applications'
-            },
-
-            // KENMORE - COMPREHENSIVE
-            {
-                partNumber: 'W10906394',
-                brand: 'kenmore',
-                appliance: 'washer',
-                category: 'control_board',
-                description: 'Kenmore Elite Control Board',
-                price: 225.99,
-                inStock: true,
-                models: ['11045081402', '11044832200', '11044832201', '11047872600'],
-                symptoms: ['Elite features not working', 'Steam cycle failure', 'Smart wash issues'],
-                notes: 'Elite series control board with steam and smart features'
-            },
-
-            // UNIVERSAL PARTS - MARS CAPACITORS
-            {
-                partNumber: '12905',
-                brand: 'mars',
-                appliance: 'universal',
-                category: 'capacitor',
-                description: 'Mars Run Capacitor 370V 45MFD',
-                price: 35.99,
-                inStock: true,
-                models: ['Universal HVAC Motors', 'Compressors', 'Fan Motors'],
-                symptoms: ['Motor not starting', 'Motor humming', 'Compressor failure', 'Fan not running'],
-                notes: 'High-quality motor run capacitor for HVAC applications'
-            },
-            {
-                partNumber: '12906',
-                brand: 'mars',
-                appliance: 'universal',
-                category: 'capacitor',
-                description: 'Mars Start Capacitor 330V 189-227MFD',
-                price: 45.50,
-                inStock: true,
-                models: ['Universal Motor Starting', 'Compressor Starting'],
-                symptoms: ['Motor won\'t start', 'Hard starting', 'Starting winding failure'],
-                notes: 'Heavy-duty start capacitor for motor starting applications'
-            },
-            {
-                partNumber: '12907',
-                brand: 'mars',
-                appliance: 'universal',
-                category: 'capacitor',
-                description: 'Mars Dual Run Capacitor 440V 40/5MFD',
-                price: 55.99,
-                inStock: true,
-                models: ['HVAC Units', 'Heat Pumps', 'Air Conditioners'],
-                symptoms: ['AC not cooling', 'Fan not running', 'Compressor issues', 'Unit not starting'],
-                notes: 'Dual section capacitor for compressor and fan motor'
-            },
-
-            // SUPCO UNIVERSAL PARTS
-            {
-                partNumber: 'RCS3',
-                brand: 'supco',
-                appliance: 'universal',
-                category: 'repair_kit',
-                description: 'Supco 3-in-1 Start Kit',
-                price: 75.99,
-                inStock: true,
-                models: ['Refrigerators', 'Freezers', 'Air Conditioners'],
-                symptoms: ['Compressor hard starting', 'Motor protection needed', 'Starting issues'],
-                notes: 'Complete kit: start capacitor, relay, and overload protection'
-            },
-            {
-                partNumber: 'SPP6E',
-                brand: 'supco',
-                appliance: 'universal',
-                category: 'relay',
-                description: 'Supco Potential Relay',
-                price: 35.50,
-                inStock: true,
-                models: ['PSC Motors', 'Compressor Applications'],
-                symptoms: ['Motor starting issues', 'Relay clicking', 'Start winding problems'],
-                notes: 'Universal potential starting relay for various applications'
-            },
-
-            // DISHWASHER PARTS - COMPREHENSIVE
-            {
-                partNumber: 'W11396033',
-                brand: 'whirlpool',
-                appliance: 'dishwasher',
-                category: 'control_board',
-                description: 'Whirlpool Dishwasher Control - Smart',
-                price: 265.99,
-                inStock: true,
-                models: ['WDT750SAHZ', 'WDT730PAHZ', 'WDF520PADM', 'WDTA50SAHZ'],
-                symptoms: ['Control panel not responding', 'Cycle not starting', 'Display errors', 'Smart features disabled'],
-                notes: 'Smart dishwasher control with app connectivity'
-            },
-            {
-                partNumber: 'W10902204',
-                brand: 'whirlpool',
-                appliance: 'dishwasher',
-                category: 'pump',
-                description: 'Whirlpool Wash Pump Motor',
-                price: 225.50,
-                inStock: true,
-                models: ['WDT750SAHZ', 'WDT730PAHZ', 'WDF520PADM'],
-                symptoms: ['No wash action', 'Poor cleaning', 'Pump noise', 'Water not circulating'],
-                notes: 'High-pressure wash pump with integrated motor'
-            },
-            {
-                partNumber: 'W10348269',
-                brand: 'whirlpool',
-                appliance: 'dishwasher',
-                category: 'heating_element',
-                description: 'Whirlpool Dishwasher Heating Element',
-                price: 85.99,
-                inStock: true,
-                models: ['WDT750SAHZ', 'WDT730PAHZ', 'WDF520PADM'],
-                symptoms: ['Dishes not drying', 'Water not hot enough', 'Poor wash performance'],
-                notes: 'Heating element for wash water and drying cycle'
-            },
-            {
-                partNumber: 'WD26X10013',
-                brand: 'ge',
-                appliance: 'dishwasher',
-                category: 'control_board',
-                description: 'GE Dishwasher Control Board',
-                price: 235.75,
-                inStock: true,
-                models: ['GDT148SSJ4SS', 'GDT148SSK4SS', 'GDT225SSJ2SS'],
-                symptoms: ['Display not working', 'Buttons not responding', 'Cycle errors'],
-                notes: 'Electronic control board for GE dishwashers'
-            },
-
-            // REFRIGERATOR PARTS - COMPREHENSIVE
-            {
-                partNumber: 'W11035812',
-                brand: 'whirlpool',
-                appliance: 'refrigerator',
-                category: 'control_board',
-                description: 'Whirlpool Adaptive Defrost Control',
-                price: 195.99,
-                inStock: true,
-                models: ['WRF555SDFZ', 'WRS325SDHZ', 'WRT318FZDW', 'WRX735SDHZ'],
-                symptoms: ['Temperature control issues', 'Defrost problems', 'Ice maker failure'],
-                notes: 'Adaptive defrost control with energy-saving algorithms'
-            },
-            {
-                partNumber: 'W10837240',
-                brand: 'whirlpool',
-                appliance: 'refrigerator',
-                category: 'motor',
-                description: 'Whirlpool Evaporator Fan Motor',
-                price: 115.50,
-                inStock: true,
-                models: ['WRF555SDFZ', 'WRS325SDHZ', 'WRT318FZDW'],
-                symptoms: ['Freezer not cold enough', 'Fan noise', 'Temperature fluctuation'],
-                notes: 'Freezer evaporator fan motor with mounting bracket'
-            },
-            {
-                partNumber: 'W10413645A',
-                brand: 'whirlpool',
-                appliance: 'refrigerator',
-                category: 'filter',
-                description: 'Whirlpool Water Filter',
-                price: 55.99,
-                inStock: true,
-                models: ['WRF555SDFZ', 'WRS325SDHZ', 'WRT318FZDW'],
-                symptoms: ['Poor water taste', 'Slow water flow', 'Filter light on'],
-                notes: '6-month replacement water filter with NSF certification'
-            },
-            {
-                partNumber: 'W11679751',
-                brand: 'whirlpool',
-                appliance: 'refrigerator',
-                category: 'ice_maker',
-                description: 'Whirlpool Ice Maker Assembly',
-                price: 225.99,
-                inStock: true,
-                models: ['WRF555SDFZ', 'WRS325SDHZ', 'WRT318FZDW'],
-                symptoms: ['No ice production', 'Ice maker jammed', 'Ice quality issues'],
-                notes: 'Complete ice maker with motor, controls, and harvest assembly'
-            },
-
-            // SAMSUNG REFRIGERATOR
-            {
-                partNumber: 'DA41-00650A',
-                brand: 'samsung',
-                appliance: 'refrigerator',
-                category: 'control_board',
-                description: 'Samsung Refrigerator Control PCB',
-                price: 245.99,
-                inStock: true,
-                models: ['RF23J9011SR', 'RF28K9380SR', 'RF22K9381SR'],
-                symptoms: ['Temperature control issues', 'Ice maker not working', 'Display errors'],
-                notes: 'Main refrigerator control board with digital display'
-            },
-            {
-                partNumber: 'DA97-12540A',
-                brand: 'samsung',
-                appliance: 'refrigerator',
-                category: 'ice_maker',
-                description: 'Samsung Ice Maker Assembly',
-                price: 195.50,
-                inStock: true,
-                models: ['RF23J9011SR', 'RF28K9380SR', 'RF22K9381SR'],
-                symptoms: ['Ice maker not working', 'No ice production', 'Ice maker motor failure'],
-                notes: 'Complete Samsung ice maker with electronic controls'
-            },
-
-            // LG REFRIGERATOR
-            {
-                partNumber: 'EBR78940902',
-                brand: 'lg',
-                appliance: 'refrigerator',
-                category: 'control_board',
-                description: 'LG Linear Compressor Control',
-                price: 225.75,
-                inStock: true,
-                models: ['LRFVS3006S', 'LRFDS3016S', 'LRFXS2503S'],
-                symptoms: ['Linear compressor issues', 'Temperature problems', 'Compressor noise'],
-                notes: 'Control board for LG linear inverter compressor'
-            },
-            {
-                partNumber: 'EAU61102506',
-                brand: 'lg',
-                appliance: 'refrigerator',
-                category: 'ice_maker',
-                description: 'LG Ice Maker Kit',
-                price: 175.99,
-                inStock: true,
-                models: ['LRFVS3006S', 'LRFDS3016S', 'LRFXS2503S'],
-                symptoms: ['No ice production', 'Ice maker motor failure', 'Harvest issues'],
-                notes: 'Compatible with LG linear compressor refrigerators'
-            },
-
-            // RANGE/OVEN PARTS
-            {
-                partNumber: 'W11308244',
-                brand: 'whirlpool',
-                appliance: 'range',
-                category: 'control_board',
-                description: 'Whirlpool Oven Control Board',
-                price: 325.99,
-                inStock: true,
-                models: ['WFE515S0ES', 'WEE750H0HZ', 'WFG775H0HZ'],
-                symptoms: ['Oven not heating', 'Temperature inaccurate', 'Display errors'],
-                notes: 'Electronic oven control with precise temperature management'
-            },
-            {
-                partNumber: 'W10823707',
-                brand: 'whirlpool',
-                appliance: 'range',
-                category: 'heating_element',
-                description: 'Whirlpool Bake Element',
-                price: 65.99,
-                inStock: true,
-                models: ['WFE515S0ES', 'WEE750H0HZ', 'WFG775H0HZ'],
-                symptoms: ['Oven not baking', 'Uneven heating', 'Element burned out'],
-                notes: 'Lower bake heating element with mounting brackets'
-            },
-            {
-                partNumber: 'W10779716',
-                brand: 'whirlpool',
-                appliance: 'range',
-                category: 'heating_element',
-                description: 'Whirlpool Broil Element',
-                price: 75.99,
-                inStock: true,
-                models: ['WFE515S0ES', 'WEE750H0HZ', 'WFG775H0HZ'],
-                symptoms: ['Broiler not working', 'No top heat', 'Element partially glowing'],
-                notes: 'Upper broil heating element assembly'
-            },
-
-            // MICROWAVE PARTS
-            {
-                partNumber: 'W10681564',
-                brand: 'whirlpool',
-                appliance: 'microwave',
-                category: 'control_board',
-                description: 'Whirlpool Microwave Control',
-                price: 185.99,
-                inStock: true,
-                models: ['WMH32519HZ', 'WMH31017HZ', 'WML75011HZ'],
-                symptoms: ['Display not working', 'Buttons not responding', 'Microwave not heating'],
-                notes: 'Over-range microwave control board with display'
-            },
-            {
-                partNumber: 'WB27X11079',
-                brand: 'ge',
-                appliance: 'microwave',
-                category: 'magnetron',
-                description: 'GE Microwave Magnetron',
-                price: 165.99,
-                inStock: true,
-                models: ['JVM3160RFSS', 'JVM6175YKFS', 'JVM7195SKSS'],
-                symptoms: ['No heating', 'Microwave runs but no heat', 'Loud magnetron noise'],
-                notes: 'High-voltage magnetron assembly - professional installation recommended'
-            },
-
-            // REPAIR KITS - COMPREHENSIVE
-            {
-                partNumber: 'W11035891KIT',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'repair_kit',
-                description: 'Whirlpool Tub Bearing Kit',
-                price: 225.99,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW'],
-                symptoms: ['Loud spin noise', 'Tub wobble', 'Bearing failure', 'Metal grinding sound'],
-                notes: 'Complete tub bearing replacement kit with seals and installation tools'
-            },
-            {
-                partNumber: 'W10724237KIT',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'repair_kit',
-                description: 'Whirlpool 4-Roller Maintenance Kit',
-                price: 85.99,
-                inStock: true,
-                models: ['WED8620HC', 'WED7500GC', 'WED6620HC'],
-                symptoms: ['Multiple roller failure', 'Drum noise', 'Complete maintenance needed'],
-                notes: '4-roller kit with idler pulley, belt, and all hardware'
-            },
-            {
-                partNumber: 'W11088945KIT',
-                brand: 'whirlpool',
-                appliance: 'dryer',
-                category: 'repair_kit',
-                description: 'Whirlpool Belt & Roller Kit',
-                price: 65.50,
-                inStock: true,
-                models: ['WED4815EW', 'WED4950HW', 'WED5000DW'],
-                symptoms: ['Belt and roller replacement needed', 'Complete drum service'],
-                notes: '2-roller kit with drive belt and tensioner assembly'
-            },
-
-            // DOOR LOCKS & LATCHES
-            {
-                partNumber: 'W10619876',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'door_lock',
-                description: 'Whirlpool Front Load Door Lock',
-                price: 95.99,
-                inStock: true,
-                models: ['WFW75HEFW', 'WFW70HEBW', 'WFW72HEDW'],
-                symptoms: ['Door won\'t lock', 'dL error', 'Won\'t start cycle', 'Safety interlock failure'],
-                notes: 'Complete door lock assembly with wiring harness'
-            },
-            {
-                partNumber: 'W10238287',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'door_lock',
-                description: 'Whirlpool Door Strike Plate',
-                price: 35.50,
-                inStock: true,
-                models: ['WFW75HEFW', 'WFW70HEBW', 'WFW72HEDW'],
-                symptoms: ['Door alignment issues', 'Latch not catching', 'Door ajar errors'],
-                notes: 'Strike plate for front load washer door alignment'
-            },
-
-            // SEALS & GASKETS
-            {
-                partNumber: 'W10772617',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'seal',
-                description: 'Whirlpool Door Boot Seal',
-                price: 155.99,
-                inStock: true,
-                models: ['WFW75HEFW', 'WFW70HEBW', 'WFW72HEDW'],
-                symptoms: ['Water leaking from door', 'Moldy seal', 'Door not sealing properly'],
-                notes: 'Complete door boot seal with mounting clamps'
-            },
-            {
-                partNumber: 'W10443200',
-                brand: 'whirlpool',
-                appliance: 'washer',
-                category: 'seal',
-                description: 'Whirlpool Tub Seal Kit',
-                price: 65.99,
-                inStock: true,
-                models: ['WTW4816FW', 'WTW5000DW', 'WTW4950XW'],
-                symptoms: ['Water leaking under washer', 'Bearing protection needed'],
-                notes: 'Tub seal kit for bearing protection and water containment'
-            },
-            {
-                partNumber: 'DC64-00563B',
-                brand: 'samsung',
-                appliance: 'washer',
-                category: 'seal',
-                description: 'Samsung Door Boot Seal',
-                price: 125.75,
-                inStock: true,
-                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW'],
-                symptoms: ['Water leaking', 'mE error', 'Door seal damage'],
-                notes: 'Samsung door boot with integrated drain and bellows'
-            },
-            {
-                partNumber: '4986ER0004F',
-                brand: 'lg',
-                appliance: 'washer',
-                category: 'seal',
-                description: 'LG Door Boot Seal - TurboWash',
-                price: 145.50,
-                inStock: true,
-                models: ['WM3700HWA', 'WM4000HWA', 'WM3900HWA'],
-                symptoms: ['Door seal torn', 'Water leakage', 'TurboWash spray issues'],
-                notes: 'TurboWash compatible door seal with spray nozzle integration'
+// Comprehensive customer database across all branch territories
+        const customerDatabase = {
+            // OMAHA TERRITORY - Apartment Accounts
+            "(402) 555-1234": {
+                name: "Seldin Property Management",
+                type: "apartment",
+                phone: "(402) 555-1234",
+                address: "1245 Dodge Street, Omaha, NE 68102",
+                property: "Blackstone District Apartments",
+                units: 147,
+                contact: "Sarah Martinez - Maintenance Supervisor",
+                email: "sarah.martinez@seldin.com",
+                creditLimit: 15000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2019-03-15",
+                totalOrders: 312,
+                ytdSpent: 28450.75,
+                lastOrder: "2024-08-25",
+                lastOrderAmount: 847.23,
+                notes: "Always requires PO number. Prefers morning deliveries 8-10 AM. Bulk order discounts applied.",
+                orderHistory: [
+                    { date: "2024-08-25", amount: 847.23, po: "PO-2408-0156", items: "Dishwasher pumps, door seals" },
+                    { date: "2024-08-18", amount: 1235.67, po: "PO-2408-0142", items: "Washer control boards x3, belts" },
+                    { date: "2024-08-12", amount: 678.90, po: "PO-2408-0138", items: "Dryer heating elements, thermostats" }
+                ],
+                commonParts: ["W11096164", "W10724237", "W10619876", "DC92-01021A"],
+                specialInstructions: "Property name FIRST, then caller details. PO can be provided at pickup if needed."
+            },
+            
+            "(402) 555-2345": {
+                name: "Lund Company - Maintenance",
+                type: "apartment",
+                phone: "(402) 555-2345",
+                address: "350 N 76th Street, Omaha, NE 68114",
+                property: "Legacy Apartments",
+                units: 234,
+                contact: "Mike Thompson - Property Manager",
+                email: "mthompson@lundco.com",
+                creditLimit: 25000,
+                paymentTerms: "Net 15",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2017-11-08",
+                totalOrders: 458,
+                ytdSpent: 41250.50,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 1456.78,
+                notes: "Premium account. Emergency after-hours contact available. Prefers OEM parts only.",
+                orderHistory: [
+                    { date: "2024-08-28", amount: 1456.78, po: "LUND-8874", items: "Refrigerator compressor, ice maker kit" },
+                    { date: "2024-08-21", amount: 892.34, po: "LUND-8869", items: "Range control boards x2, igniter" },
+                    { date: "2024-08-15", amount: 734.56, po: "LUND-8863", items: "Washer door locks, drain pump" }
+                ]
+            },
+
+            "(402) 555-3456": {
+                name: "Broodmoore Property Group",
+                type: "apartment",
+                phone: "(402) 555-3456",
+                address: "8825 Arbor Street, Omaha, NE 68124",
+                property: "Broodmoore Luxury Apartments",
+                units: 89,
+                contact: "Jennifer Walsh - Operations Manager",
+                email: "jwalsh@broodmoore.com",
+                creditLimit: 12000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2020-07-22",
+                totalOrders: 187,
+                ytdSpent: 18675.25,
+                lastOrder: "2024-08-26",
+                lastOrderAmount: 623.45,
+                notes: "High-end property. Quality parts only. Tenant satisfaction critical.",
+                orderHistory: [
+                    { date: "2024-08-26", amount: 623.45, po: "BPG-2024-156", items: "Dishwasher control board, wash pump" },
+                    { date: "2024-08-19", amount: 478.90, po: "BPG-2024-153", items: "Microwave magnetron, door switch" }
+                ]
+            },
+
+            // CHICAGO TERRITORY - VIP & Business Accounts
+            "(312) 555-4567": {
+                name: "Premium Home Services",
+                type: "vip",
+                phone: "(312) 555-4567", 
+                address: "875 N Michigan Ave, Chicago, IL 60611",
+                contact: "Robert Chen - Owner",
+                email: "rchen@premiumhomeservices.com",
+                creditLimit: 50000,
+                paymentTerms: "Net 10",
+                poRequired: false,
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2015-01-12",
+                totalOrders: 1247,
+                ytdSpent: 125750.89,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 2847.65,
+                vipPerks: ["15% discount", "Priority shipping", "Dedicated rep", "After-hours support"],
+                notes: "Top tier customer. Concierge-level service required. Same-day delivery available.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 2847.65, items: "Sub-Zero control boards x2, Viking igniter assembly" },
+                    { date: "2024-08-27", amount: 1965.43, items: "Bosch dishwasher pump, premium door seals" },
+                    { date: "2024-08-24", amount: 3215.78, items: "Wolf range controls, premium heating elements" }
+                ],
+                preferredBrands: ["Sub-Zero", "Viking", "Wolf", "Bosch"],
+                serviceArea: "North Shore, Lincoln Park, Gold Coast"
+            },
+
+            "(847) 555-5678": {
+                name: "Suburban Appliance Pros", 
+                type: "business",
+                phone: "(847) 555-5678",
+                address: "1425 Oakton Street, Evanston, IL 60202",
+                contact: "Lisa Rodriguez - Service Manager",
+                email: "lisa@suburbanappliance.com",
+                creditLimit: 20000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "Oak Forest (200)",
+                accountSince: "2018-06-03",
+                totalOrders: 687,
+                ytdSpent: 67890.45,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 1234.56,
+                notes: "High volume customer. Stocks common parts. Weekly delivery route.",
+                orderHistory: [
+                    { date: "2024-08-28", amount: 1234.56, items: "Whirlpool control boards x5, Samsung door locks x3" },
+                    { date: "2024-08-23", amount: 987.34, items: "GE heating elements x4, LG pumps x2" },
+                    { date: "2024-08-21", amount: 1456.78, items: "Mixed repair kits, universal capacitors" }
+                ],
+                serviceArea: "Northwest suburbs, Evanston, Skokie, Wilmette"
+            },
+
+            // MILWAUKEE TERRITORY
+            "(414) 555-6789": {
+                name: "Brew City Appliance Repair",
+                type: "business", 
+                phone: "(414) 555-6789",
+                address: "3247 W National Ave, Milwaukee, WI 53215",
+                contact: "Dave Mueller - Owner/Technician",
+                email: "dave@brewcityrepair.com",
+                creditLimit: 15000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "Milwaukee (400)",
+                accountSince: "2019-09-14",
+                totalOrders: 423,
+                ytdSpent: 34567.89,
+                lastOrder: "2024-08-27",
+                lastOrderAmount: 678.90,
+                notes: "Local family business. Prefers morning deliveries. Cash discount customer.",
+                orderHistory: [
+                    { date: "2024-08-27", amount: 678.90, items: "Whirlpool washer pumps x2, belt kit" },
+                    { date: "2024-08-22", amount: 445.67, items: "Maytag dryer elements, thermostat kit" }
+                ],
+                serviceArea: "Milwaukee metro, West Allis, Wauwatosa"
+            },
+
+            // ROCKFORD TERRITORY
+            "(815) 555-7890": {
+                name: "Joliet Appliance Center",
+                type: "business",
+                phone: "(815) 555-7890", 
+                address: "1847 Essington Rd, Joliet, IL 60435",
+                contact: "Tom Anderson - Service Director",
+                email: "tanderson@jolietappliance.com",
+                creditLimit: 30000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Rockford (500)",
+                accountSince: "2016-04-20",
+                totalOrders: 834,
+                ytdSpent: 78456.23,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 1567.89,
+                notes: "Established dealer. Large service department. Bulk order discounts.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 1567.89, po: "JAC-240829-001", items: "Samsung control boards x3, LG door seals x4" },
+                    { date: "2024-08-25", amount: 2134.56, po: "JAC-240825-002", items: "Mixed inventory restock" }
+                ],
+                serviceArea: "Will County, Grundy County, Kankakee area"
+            },
+
+            // QUAD CITIES TERRITORY  
+            "(563) 555-8901": {
+                name: "Quad Cities Service Co",
+                type: "business",
+                phone: "(563) 555-8901",
+                address: "2156 E Kimberly Rd, Davenport, IA 52807", 
+                contact: "Steve Parker - Operations Manager",
+                email: "sparker@qcservice.com",
+                creditLimit: 25000,
+                paymentTerms: "Net 30", 
+                poRequired: false,
+                preferredWarehouse: "Rockford (500)",
+                accountSince: "2017-08-30",
+                totalOrders: 567,
+                ytdSpent: 56789.12,
+                lastOrder: "2024-08-26",
+                lastOrderAmount: 934.78,
+                notes: "Covers Iowa/Illinois border. Reliable customer. Emergency service contractor.",
+                serviceArea: "Quad Cities metro, Iowa side coverage"
+            },
+
+            // SOUTH ELGIN TERRITORY
+            "(847) 555-9012": {
+                name: "Northwest Suburbs Repair",
+                type: "business",
+                phone: "(847) 555-9012",
+                address: "456 Randall Rd, South Elgin, IL 60177",
+                contact: "Maria Santos - Owner", 
+                email: "maria@nwsuburbsrepair.com",
+                creditLimit: 18000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "South Elgin (700)",
+                accountSince: "2020-02-14",
+                totalOrders: 289,
+                ytdSpent: 28934.67,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 567.45,
+                notes: "Growing business. Female-owned. Community focused service.",
+                serviceArea: "Kane County, western suburbs"
+            },
+
+            // RESIDENTIAL CUSTOMERS - Multiple territories
+            "(312) 555-0123": {
+                name: "Patricia Williams",
+                type: "residential", 
+                phone: "(312) 555-0123",
+                address: "1847 N Cleveland Ave, Chicago, IL 60614",
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2022-11-08",
+                totalOrders: 3,
+                ytdSpent: 287.45,
+                lastOrder: "2024-08-15",
+                lastOrderAmount: 89.99,
+                notes: "Lincoln Park condo owner. Whirlpool washer. Prefers pickup.",
+                orderHistory: [
+                    { date: "2024-08-15", amount: 89.99, items: "Washer door seal W10772617" },
+                    { date: "2024-03-22", amount: 125.50, items: "Control board W11035674" }
+                ]
+            },
+
+            "(402) 555-0234": {
+                name: "John Martinez",
+                type: "residential",
+                phone: "(402) 555-0234", 
+                address: "8756 Dodge Street, Omaha, NE 68114",
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2023-05-12",
+                totalOrders: 2,
+                ytdSpent: 156.78,
+                lastOrder: "2024-07-18",
+                lastOrderAmount: 67.89,
+                notes: "DIY homeowner. Samsung appliances. Researches parts thoroughly.",
+                orderHistory: [
+                    { date: "2024-07-18", amount: 67.89, items: "Dryer belt DC47-00019A" },
+                    { date: "2023-12-14", amount: 88.89, items: "Door lock DC64-01570A" }
+                ]
+            },
+
+            "(847) 555-0345": {
+                name: "Rachel Thompson", 
+                type: "residential",
+                phone: "(847) 555-0345",
+                address: "567 Oak Street, Evanston, IL 60201",
+                preferredWarehouse: "Oak Forest (200)",
+                accountSince: "2024-01-28",
+                totalOrders: 1,
+                ytdSpent: 45.99,
+                lastOrder: "2024-08-20",
+                lastOrderAmount: 45.99,
+                notes: "New customer. LG front-load washer. First-time repair.",
+                orderHistory: [
+                    { date: "2024-08-20", amount: 45.99, items: "Water filter replacement" }
+                ]
+            },
+
+            // COMMERCIAL/INSTITUTIONAL ACCOUNTS
+            "(312) 555-0456": {
+                name: "Chicago Public Housing Authority",
+                type: "commercial",
+                phone: "(312) 555-0456",
+                address: "60 E Van Buren St, Chicago, IL 60605",
+                contact: "James Wilson - Facilities Director",
+                email: "jwilson@cha.org", 
+                creditLimit: 100000,
+                paymentTerms: "Net 45",
+                poRequired: true,
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2014-06-01",
+                totalOrders: 2156,
+                ytdSpent: 234567.89,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 5678.90,
+                notes: "Government account. Requires competitive pricing. Volume discounts applied.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 5678.90, po: "CHA-2024-0892", items: "Bulk washer/dryer parts for housing projects" },
+                    { date: "2024-08-26", amount: 3456.78, po: "CHA-2024-0887", items: "Refrigerator controls, compressors" }
+                ],
+                serviceArea: "Public housing citywide"
+            },
+
+            "(402) 555-0567": {
+                name: "University of Nebraska - Facilities",
+                type: "commercial", 
+                phone: "(402) 555-0567",
+                address: "1400 R St, Lincoln, NE 68588",
+                contact: "Dr. Susan Chen - Facilities Manager",
+                email: "schen@unl.edu",
+                creditLimit: 75000,
+                paymentTerms: "Net 60", 
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2016-08-15",
+                totalOrders: 1834,
+                ytdSpent: 167890.34,
+                lastOrder: "2024-08-27",
+                lastOrderAmount: 3456.78,
+                notes: "Educational institution. State purchasing rules. Semester-based heavy usage.",
+                orderHistory: [
+                    { date: "2024-08-27", amount: 3456.78, po: "UNL-FM-24-0156", items: "Dormitory laundry equipment parts" }
+                ],
+                serviceArea: "University campuses, dormitories"
             }
+        // Website parts database for search functionality
+        const websiteParts = [
+            { partNumber: 'W11608056', brand: 'whirlpool', category: 'control_board', description: 'Electronic Control Board - Smart Series 2024', price: 289.99 },
+            { partNumber: 'DC92-01021A', brand: 'samsung', category: 'control_board', description: 'Main Control PCB - Smart', price: 295.99 },
+            { partNumber: '6871EC1073D', brand: 'lg', category: 'control_board', description: 'Main Control Board - ThinQ', price: 275.50 },
+            { partNumber: 'W10724237', brand: 'whirlpool', category: 'heating_element', description: 'Electric Heating Element - 5400W', price: 125.99 },
+            { partNumber: '12905', brand: 'mars', category: 'capacitor', description: 'Run Capacitor 370V 45MFD', price: 35.99 },
+            { partNumber: 'W10619876', brand: 'whirlpool', category: 'door_lock', description: 'Front Load Door Lock', price: 95.99 },
+            { partNumber: 'W11259272', brand: 'whirlpool', category: 'motor', description: 'Direct Drive Motor Assembly', price: 425.99 },
+            { partNumber: 'RCS3', brand: 'supco', category: 'repair_kit', description: '3-in-1 Start Kit', price: 75.99 },
+            { partNumber: 'W11096164', brand: 'whirlpool', category: 'valve', description: 'Water Inlet Valve - Dual Port', price: 85.50 },
+            { partNumber: 'W10171019', brand: 'whirlpool', category: 'pump', description: 'Drain Pump Assembly - Heavy Duty', price: 125.99 },
+            { partNumber: 'WH12X10355', brand: 'ge', category: 'control_board', description: 'Front Load Control Board - Smart', price: 285.50 },
+            { partNumber: 'W10613606', brand: 'whirlpool', category: 'igniter', description: 'Gas Igniter - Hot Surface Type', price: 75.99 }
         ];
 
-        let filteredParts = [...partsDatabase];
+        function filterWebsiteParts() {
+            const searchTerm = document.getElementById('websiteSearch').value.toLowerCase();
+            const brandFilter = document.getElementById('websiteBrand').value;
+            const categoryFilter = document.getElementById('websiteCategory').value;
 
-        function displayParts(parts) {
-            const partsGrid = document.getElementById('partsGrid');
-            const resultsCount = document.getElementById('resultsCount');
+            let filteredParts = websiteParts.filter(part => {
+                const matchesSearch = searchTerm === '' || 
+                    part.partNumber.toLowerCase().includes(searchTerm) ||
+                    part.description.toLowerCase().includes(searchTerm) ||
+                    part.brand.toLowerCase().includes(searchTerm);
+
+                const matchesBrand = brandFilter === '' || part.brand === brandFilter;
+                const matchesCategory = categoryFilter === '' || part.category === categoryFilter;
+
+                return matchesSearch && matchesBrand && matchesCategory;
+            });
+
+            displayWebsiteParts(filteredParts);
+        }
+
+        function displayWebsiteParts(parts) {
+            const resultsContainer = document.getElementById('websiteResults');
             
             if (parts.length === 0) {
-                partsGrid.innerHTML = `
-                    <div class="no-results">
-                        <h3>No parts found</h3>
-                        <p>Try adjusting your search filters or search terms.</p>
-                    </div>
-                `;
-                resultsCount.textContent = 'No parts found';
+                resultsContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">No parts found matching your search criteria.</div>';
                 return;
             }
 
-            resultsCount.textContent = `Showing ${parts.length} part${parts.length === 1 ? '' : 's'}`;
-            
-            partsGrid.innerHTML = parts.map(part => `
-                <div class="part-card">
-                    <div class="part-number">${part.partNumber}</div>
-                    <span class="part-brand">${part.brand.toUpperCase()}</span>
-                    
-                    <div class="part-description">${part.description}</div>
-                    
-                    <div class="part-details">
-                        <div class="part-detail">
-                            <span class="detail-label">Type:</span> ${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1).replace('_', ' ')}
-                        </div>
-                        <div class="part-detail">
-                            <span class="detail-label">Category:</span> ${part.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                        </div>
-                    </div>
-
-                    ${part.models && part.models.length > 0 ? `
-                        <div class="part-models">
-                            <strong>Models:</strong> ${part.models.slice(0, 3).join(', ')}${part.models.length > 3 ? ` +${part.models.length - 3} more` : ''}
-                        </div>
-                    ` : ''}
-
-                    ${part.symptoms && part.symptoms.length > 0 ? `
-                        <div style="margin-top: 8px;">
-                            <div style="font-weight: 600; margin-bottom: 4px; font-size: 0.85rem;">Symptoms:</div>
-                            <div class="symptoms-list">
-                                ${part.symptoms.slice(0, 4).map(symptom => `<span class="symptom-tag">${symptom}</span>`).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${part.notes ? `
-                        <div class="part-notes">
-                            ${part.notes}
-                        </div>
-                    ` : ''}
-
-                    <div class="part-footer">
-                        <div class="part-price">$${part.price}</div>
-                        <div class="stock-indicator ${part.inStock ? 'in-stock' : 'out-of-stock'}">
-                            ${part.inStock ? '✓ In Stock' : '✗ Out of Stock'}
-                        </div>
-                    </div>
+            resultsContainer.innerHTML = parts.map(part => `
+                <div class="website-part-card">
+                    <div class="website-part-number">${part.partNumber}</div>
+                    <span class="website-part-brand">${part.brand.toUpperCase()}</span>
+                    <div class="website-part-description">${part.description}</div>
+                    <div class="website-part-price">${part.price}</div>
                 </div>
             `).join('');
         }
 
-        function filterParts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const brandFilter = document.getElementById('brandFilter').value;
-            const applianceFilter = document.getElementById('applianceFilter').value;
-            const categoryFilter = document.getElementById('categoryFilter').value;
+        // Add event listeners for website functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('websiteSearch').addEventListener('input', filterWebsiteParts);
+            document.getElementById('websiteBrand').addEventListener('change', filterWebsiteParts);
+            document.getElementById('websiteCategory').addEventListener('change', filterWebsiteParts);
+        });
 
-            filteredParts = partsDatabase.filter(part => {
-                const matchesSearch = searchTerm === '' || 
-                    part.partNumber.toLowerCase().includes(searchTerm) ||
-                    part.description.toLowerCase().includes(searchTerm) ||
-                    part.brand.toLowerCase().includes(searchTerm) ||
-                    part.appliance.toLowerCase().includes(searchTerm) ||
-                    part.category.toLowerCase().includes(searchTerm) ||
-                    (part.symptoms && part.symptoms.some(symptom => symptom.toLowerCase().includes(searchTerm))) ||
-                    (part.models && part.models.some(model => model.toLowerCase().includes(searchTerm))) ||
-                    (part.notes && part.notes.toLowerCase().includes(searchTerm));
-
-                const matchesBrand = brandFilter === '' || part.brand === brandFilter;
-                const matchesAppliance = applianceFilter === '' || part.appliance === applianceFilter;
-                const matchesCategory = categoryFilter === '' || part.category === categoryFilter;
-
-                return matchesSearch && matchesBrand && matchesAppliance && matchesCategory;
-            });
-
-            displayParts(filteredParts);
-        }
-
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', filterParts);
-        document.getElementById('brandFilter').addEventListener('change', filterParts);
-        document.getElementById('applianceFilter').addEventListener('change', filterParts);
-        document.getElementById('categoryFilter').addEventListener('change', filterParts);
-
-        // Initialize display
-        displayParts(partsDatabase);
-    </script>
-</body>
-</html>
+        };
