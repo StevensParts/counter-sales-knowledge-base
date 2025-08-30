@@ -3,963 +3,972 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Counter Sales Knowledge Base - Stevens Parts</title>
+    <title>Diagnostic Knowledge Base - Steven's Parts</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
             padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             background: white;
-            margin-top: 20px;
-            margin-bottom: 20px;
             border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        
+
         .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 25px 0;
-            border-bottom: 4px solid #3498db;
-            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
-            border-radius: 10px;
-        }
-        
-        .header h1 {
-            color: #2c3e50;
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-        
-        .header .subtitle {
-            color: #7f8c8d;
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            text-align: center;
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            background: linear-gradient(45deg, #2c3e50, #34495e);
             color: white;
-            padding: 20px 30px;
-            border-radius: 60px;
-            font-weight: bold;
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+            padding: 30px;
+            text-align: center;
         }
-        
-        .stat-number {
-            font-size: 2.2em;
-            display: block;
-            font-weight: 900;
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        .quick-tools {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
         }
-        
-        .tool-card {
-            background: linear-gradient(45deg, #ecf0f1, #bdc3c7);
-            padding: 25px;
-            border-radius: 15px;
-            border-left: 6px solid #3498db;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-        
-        .tool-card h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding: 25px;
+
+        .search-section {
+            padding: 40px;
             background: #f8f9fa;
-            border-radius: 15px;
-            border-left: 6px solid #3498db;
         }
-        
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #searchBox {
+            width: 100%;
+            padding: 20px 60px 20px 20px;
+            font-size: 18px;
+            border: 3px solid #e0e6ed;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        #searchBox:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 10px 40px rgba(76, 175, 80, 0.3);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #45a049;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
         }
-        
+
         .filter-group label {
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 0.95em;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
-        .filter-group select, .filter-group input {
+
+        .filter-group select {
             padding: 12px;
-            border: 2px solid #ddd;
+            border: 2px solid #e9ecef;
             border-radius: 8px;
-            font-size: 16px;
-            min-width: 180px;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-group select:focus, .filter-group input:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
-        }
-        
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .diagnostic-section {
-            background: linear-gradient(45deg, #e8f6fd, #d5f0fc);
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            border-left: 6px solid #3498db;
-        }
-        
-        .diagnostic-title {
-            color: #2980b9;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .customer-questions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 15px;
-        }
-        
-        .customer-question {
             background: white;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .diagnostic-section {
+            padding: 40px;
+            background: white;
+        }
+
+        .diagnostic-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .diagnostic-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #4CAF50;
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .diagnostic-wizard {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .diagnostic-step {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .diagnostic-step h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .diagnostic-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .diagnostic-btn {
+            background: white;
+            border: 2px solid #e9ecef;
             padding: 20px;
             border-radius: 12px;
-            border: 2px solid #ecf0f1;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: 600;
+            font-size: 16px;
         }
-        
-        .customer-question:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            border-color: #3498db;
+
+        .diagnostic-btn:hover {
+            border-color: #4CAF50;
+            background: #f8fff8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
         }
-        
-        .customer-question.active {
-            background: #3498db;
+
+        .diagnostic-btn.selected {
+            background: #4CAF50;
             color: white;
-            border-color: #2980b9;
+            border-color: #4CAF50;
         }
-        
-        .question-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+
+        .results {
+            padding: 40px;
+            background: #fff;
         }
-        
-        .question-desc {
-            font-size: 0.95em;
-            color: #7f8c8d;
-            line-height: 1.5;
-        }
-        
-        .customer-question.active .question-desc {
-            color: #ecf0f1;
-        }
-        
-        .table-container {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+
+        .results-header {
+            text-align: center;
             margin-bottom: 30px;
         }
-        
-        .table-header {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            padding: 20px 25px;
-            font-size: 1.3em;
-            font-weight: bold;
+
+        .results-count {
+            font-size: 18px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .part-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .part-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .part-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ecf0f1;
-        }
-        
-        th {
-            background: #f8f9fa;
-            font-weight: bold;
-            color: #2c3e50;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        tbody tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .part-number {
-            font-weight: bold;
-            color: #3498db;
-            font-size: 1.1em;
-        }
-        
-        .brand-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        
-        .brand-whirlpool { background: #e3f2fd; color: #1976d2; }
-        .brand-ge { background: #fff3e0; color: #f57c00; }
-        .brand-lg { background: #fce4ec; color: #c2185b; }
-        .brand-samsung { background: #e8f5e8; color: #388e3c; }
-        .brand-frigidaire { background: #f3e5f5; color: #7b1fa2; }
-        .brand-maytag { background: #fff8e1; color: #f57f17; }
-        .brand-kitchenaid { background: #ffebee; color: #d32f2f; }
-        .brand-bosch { background: #e0f2f1; color: #00695c; }
-        .brand-speed-queen { background: #e8eaf6; color: #303f9f; }
-        .brand-amana { background: #fce4ec; color: #c2185b; }
-        .brand-kenmore { background: #e1f5fe; color: #0277bd; }
-        .brand-hotpoint { background: #fff3e0; color: #ef6c00; }
-        
-        .stock-indicator {
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        
-        .in-stock { background: #d4edda; color: #155724; }
-        .low-stock { background: #fff3cd; color: #856404; }
-        .out-stock { background: #f8d7da; color: #721c24; }
-        
-        .price-column {
-            font-weight: bold;
-            color: #27ae60;
-            font-size: 1.1em;
-        }
-        
-        .quick-reference {
-            margin-top: 30px;
-            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
-            padding: 25px;
-            border-radius: 15px;
-            border-left: 6px solid #27ae60;
-        }
-        
-        .reference-title {
-            color: #27ae60;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .appliance-section {
-            margin-bottom: 25px;
-        }
-        
-        .appliance-section h4 {
-            color: #2c3e50;
             margin-bottom: 15px;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
         }
-        
-        .issue-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        
-        .issue-btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95em;
+
+        .part-number-big {
+            font-size: 1.4rem;
             font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #2a5298;
         }
-        
-        .issue-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+
+        .brand-tag {
+            background: #6c757d;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
         }
-        
-        .issue-btn.washer { background: #e3f2fd; color: #1976d2; }
-        .issue-btn.dryer { background: #fff3e0; color: #f57c00; }
-        .issue-btn.dishwasher { background: #fce4ec; color: #c2185b; }
-        .issue-btn.refrigerator { background: #e8f5e8; color: #388e3c; }
-        .issue-btn.range { background: #fff8e1; color: #f9a825; }
-        
+
+        .diagnostic-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .diagnostic-info h5 {
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .diagnostic-info p {
+            color: #6c757d;
+            line-height: 1.4;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .symptoms {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .symptoms h5 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .symptoms ul {
+            color: #856404;
+            margin-left: 20px;
+        }
+
+        .symptoms li {
+            margin-bottom: 5px;
+        }
+
+        .error-codes {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .error-codes h5 {
+            color: #721c24;
+            margin-bottom: 8px;
+        }
+
+        .error-codes ul {
+            color: #721c24;
+            margin-left: 20px;
+        }
+
+        .compatibility {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .compatibility h5 {
+            color: #0c5460;
+            margin-bottom: 8px;
+        }
+
+        .compatibility p {
+            color: #0c5460;
+            margin: 5px 0;
+        }
+
         .no-results {
             text-align: center;
-            padding: 50px;
-            color: #7f8c8d;
-            font-style: italic;
-            font-size: 1.2em;
+            padding: 60px 20px;
+            color: #6c757d;
         }
-        
-        .help-text {
-            background: #e8f6fd;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-            color: #2c3e50;
+
+        .no-results h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #495057;
         }
-        
+
+        .no-results p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
-            .container { margin: 10px; padding: 15px; }
-            .header h1 { font-size: 2.2em; }
-            .stats { gap: 20px; }
-            .stat-item { padding: 15px 25px; }
-            .filters { flex-direction: column; }
-            .customer-questions { grid-template-columns: 1fr; }
-            table { font-size: 0.9em; }
-            th, td { padding: 10px; }
-            .quick-tools { grid-template-columns: 1fr; }
+            .parts-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .diagnostic-options {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔧 Counter Sales Knowledge Base</h1>
-            <div class="subtitle">Stevens Parts - Professional Customer Service System</div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="totalParts">628</span>
-                    <span>Control Boards</span>
+            <h1>🔧 Diagnostic Knowledge Base</h1>
+            <p>Professional Appliance Diagnostic & Parts Reference</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchBox" placeholder="Search by part number, model, or symptom..." onkeypress="handleKeyPress(event)">
+                <button class="search-btn" onclick="searchParts()">🔍</button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="brandFilter">Brand</label>
+                    <select id="brandFilter" onchange="filterParts()">
+                        <option value="">All Brands</option>
+                        <option value="whirlpool">Whirlpool</option>
+                        <option value="ge">GE</option>
+                        <option value="lg">LG</option>
+                        <option value="samsung">Samsung</option>
+                        <option value="frigidaire">Frigidaire</option>
+                        <option value="maytag">Maytag</option>
+                        <option value="kenmore">Kenmore</option>
+                        <option value="bosch">Bosch</option>
+                        <option value="kitchenaid">KitchenAid</option>
+                        <option value="amana">Amana</option>
+                    </select>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">12</span>
-                    <span>Major Brands</span>
+                <div class="filter-group">
+                    <label for="applianceFilter">Appliance</label>
+                    <select id="applianceFilter" onchange="filterParts()">
+                        <option value="">All Appliances</option>
+                        <option value="washer">Washer</option>
+                        <option value="dryer">Dryer</option>
+                        <option value="dishwasher">Dishwasher</option>
+                        <option value="refrigerator">Refrigerator</option>
+                        <option value="range">Range/Oven</option>
+                        <option value="microwave">Microwave</option>
+                    </select>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">5</span>
-                    <span>Appliance Types</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span>Support</span>
+                <div class="filter-group">
+                    <label for="componentFilter">Component</label>
+                    <select id="componentFilter" onchange="filterParts()">
+                        <option value="">All Components</option>
+                        <option value="control board">Control Board</option>
+                        <option value="motor">Motor</option>
+                        <option value="pump">Pump</option>
+                        <option value="sensor">Sensor</option>
+                        <option value="valve">Valve</option>
+                        <option value="heating element">Heating Element</option>
+                        <option value="door">Door/Seal</option>
+                        <option value="timer">Timer</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <div class="quick-tools">
-            <div class="tool-card">
-                <h3>📞 Customer Call Protocol</h3>
-                <div class="help-text">
-                    <strong>Step 1:</strong> Get appliance brand and type<br>
-                    <strong>Step 2:</strong> Ask about specific symptoms<br>
-                    <strong>Step 3:</strong> Search for matching control boards<br>
-                    <strong>Step 4:</strong> Check stock and provide pricing
+        <div class="diagnostic-section">
+            <h2 class="diagnostic-title">🔍 Smart Diagnostic Wizard</h2>
+            <div class="diagnostic-wizard">
+                <div class="diagnostic-step">
+                    <h3>1. What appliance are you diagnosing?</h3>
+                    <div class="diagnostic-options">
+                        <div class="diagnostic-btn" onclick="selectAppliance('washer')">🧺 Washer</div>
+                        <div class="diagnostic-btn" onclick="selectAppliance('dryer')">🌪️ Dryer</div>
+                        <div class="diagnostic-btn" onclick="selectAppliance('dishwasher')">🍽️ Dishwasher</div>
+                        <div class="diagnostic-btn" onclick="selectAppliance('refrigerator')">❄️ Refrigerator</div>
+                        <div class="diagnostic-btn" onclick="selectAppliance('range')">🔥 Range/Oven</div>
+                        <div class="diagnostic-btn" onclick="selectAppliance('microwave')">📡 Microwave</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="tool-card">
-                <h3>🔍 Quick Search Tips</h3>
-                <div class="help-text">
-                    <strong>Part Numbers:</strong> Enter full or partial numbers<br>
-                    <strong>Symptoms:</strong> Search "won't drain" or "no heat"<br>
-                    <strong>Models:</strong> Enter customer's model number<br>
-                    <strong>Error Codes:</strong> Search F21, OE, 4C, etc.
+                
+                <div id="brandStep" class="diagnostic-step" style="display: none;">
+                    <h3>2. What brand is the appliance?</h3>
+                    <div class="diagnostic-options" id="brandOptions"></div>
                 </div>
-            </div>
-            
-            <div class="tool-card">
-                <h3>📊 Stock Status Guide</h3>
-                <div class="help-text">
-                    <strong style="color: #27ae60;">In Stock:</strong> Ships same day<br>
-                    <strong style="color: #f39c12;">Low Stock:</strong> 1-2 day lead time<br>
-                    <strong style="color: #e74c3c;">Out of Stock:</strong> 3-7 day back-order
+                
+                <div id="symptomStep" class="diagnostic-step" style="display: none;">
+                    <h3>3. What symptoms are you seeing?</h3>
+                    <div class="diagnostic-options" id="symptomOptions"></div>
                 </div>
             </div>
         </div>
 
-        <div class="filters">
-            <div class="filter-group">
-                <label for="brandFilter">🏷️ Brand:</label>
-                <select id="brandFilter" onchange="filterTable()">
-                    <option value="">All Brands</option>
-                    <option value="Whirlpool">Whirlpool</option>
-                    <option value="GE">GE</option>
-                    <option value="LG">LG</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Frigidaire">Frigidaire</option>
-                    <option value="Maytag">Maytag</option>
-                    <option value="KitchenAid">KitchenAid</option>
-                    <option value="Bosch">Bosch</option>
-                    <option value="Speed Queen">Speed Queen</option>
-                    <option value="Amana">Amana</option>
-                    <option value="Kenmore">Kenmore</option>
-                    <option value="Hotpoint">Hotpoint</option>
-                </select>
+        <div class="results" id="results" style="display: none;">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount">0 parts found</div>
             </div>
-            
-            <div class="filter-group">
-                <label for="applianceFilter">🏠 Appliance:</label>
-                <select id="applianceFilter" onchange="filterTable()">
-                    <option value="">All Appliances</option>
-                    <option value="Washer">Washers</option>
-                    <option value="Dryer">Dryers</option>
-                    <option value="Dishwasher">Dishwashers</option>
-                    <option value="Refrigerator">Refrigerators</option>
-                    <option value="Range">Ranges/Ovens</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="stockFilter">📦 Stock:</label>
-                <select id="stockFilter" onchange="filterTable()">
-                    <option value="">All Stock Levels</option>
-                    <option value="In Stock">In Stock Only</option>
-                    <option value="Low Stock">Low Stock</option>
-                    <option value="Out of Stock">Back Order</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="priceFilter">💰 Price Range:</label>
-                <select id="priceFilter" onchange="filterTable()">
-                    <option value="">All Prices</option>
-                    <option value="0-100">Under $100</option>
-                    <option value="100-200">$100 - $200</option>
-                    <option value="200-300">$200 - $300</option>
-                    <option value="300+">Over $300</option>
-                </select>
-            </div>
-            
-            <div class="filter-group search-box">
-                <label for="searchInput">🔍 Search:</label>
-                <input type="text" id="searchInput" placeholder="Part#, model, error code, or symptom..." oninput="filterTable()">
-            </div>
-        </div>
-
-        <div class="diagnostic-section" id="diagnosticSection">
-            <div class="diagnostic-title" id="diagnosticTitle">
-                🩺 <span id="brandName">Whirlpool</span> Customer Questions
-            </div>
-            <div class="customer-questions" id="customerQuestions">
-                <!-- Will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <div class="table-container">
-            <div class="table-header">
-                <span>🗄️ Parts Inventory Database</span>
-                <span><span id="filteredCount">628</span> items shown</span>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Part Number</th>
-                        <th>Brand</th>
-                        <th>Appliance</th>
-                        <th>Description</th>
-                        <th>Common Issues</th>
-                        <th>Compatible Models</th>
-                        <th>Price</th>
-                        <th>Stock Status</th>
-                    </tr>
-                </thead>
-                <tbody id="inventoryTable">
-                    <!-- Will be populated by JavaScript -->
-                </tbody>
-            </table>
-            <div id="noResults" class="no-results" style="display: none;">
-                🤷‍♂️ No parts match your search criteria.<br>
-                Try adjusting your filters or search terms.
-            </div>
-        </div>
-
-        <div class="quick-reference">
-            <div class="reference-title">
-                ⚡ Common Issues Quick Reference
-            </div>
-            
-            <div class="appliance-section">
-                <h4>🧺 Washer Issues (Click to Search):</h4>
-                <div class="issue-buttons">
-                    <button class="issue-btn washer" onclick="searchIssue('drain pump')">Won't Drain</button>
-                    <button class="issue-btn washer" onclick="searchIssue('water valve')">Won't Fill</button>
-                    <button class="issue-btn washer" onclick="searchIssue('lid lock')">Door/Lid Lock</button>
-                    <button class="issue-btn washer" onclick="searchIssue('motor control')">Won't Spin</button>
-                    <button class="issue-btn washer" onclick="searchIssue('F21')">Error F21</button>
-                    <button class="issue-btn washer" onclick="searchIssue('display')">Display Dead</button>
-                </div>
-            </div>
-            
-            <div class="appliance-section">
-                <h4>🌪️ Dryer Issues (Click to Search):</h4>
-                <div class="issue-buttons">
-                    <button class="issue-btn dryer" onclick="searchIssue('heating element')">No Heat</button>
-                    <button class="issue-btn dryer" onclick="searchIssue('temperature')">Wrong Temperature</button>
-                    <button class="issue-btn dryer" onclick="searchIssue('moisture sensor')">Won't Stop</button>
-                    <button class="issue-btn dryer" onclick="searchIssue('timer')">Timer Issues</button>
-                    <button class="issue-btn dryer" onclick="searchIssue('gas valve')">Gas Not Igniting</button>
-                </div>
-            </div>
-            
-            <div class="appliance-section">
-                <h4>🍽️ Dishwasher Issues (Click to Search):</h4>
-                <div class="issue-buttons">
-                    <button class="issue-btn dishwasher" onclick="searchIssue('wash pump')">Won't Wash</button>
-                    <button class="issue-btn dishwasher" onclick="searchIssue('drain pump')">Won't Drain</button>
-                    <button class="issue-btn dishwasher" onclick="searchIssue('dispenser')">Soap Dispenser</button>
-                    <button class="issue-btn dishwasher" onclick="searchIssue('heating element')">Dishes Don't Dry</button>
-                    <button class="issue-btn dishwasher" onclick="searchIssue('door latch')">Door Problems</button>
-                </div>
-            </div>
-            
-            <div class="appliance-section">
-                <h4>❄️ Refrigerator Issues (Click to Search):</h4>
-                <div class="issue-buttons">
-                    <button class="issue-btn refrigerator" onclick="searchIssue('ice maker')">Ice Maker</button>
-                    <button class="issue-btn refrigerator" onclick="searchIssue('temperature control')">Temperature</button>
-                    <button class="issue-btn refrigerator" onclick="searchIssue('defrost')">Defrost Problems</button>
-                    <button class="issue-btn refrigerator" onclick="searchIssue('compressor')">Not Cooling</button>
-                    <button class="issue-btn refrigerator" onclick="searchIssue('water filter')">Water/Ice Taste</button>
-                </div>
-            </div>
-            
-            <div class="appliance-section">
-                <h4>🔥 Range/Oven Issues (Click to Search):</h4>
-                <div class="issue-buttons">
-                    <button class="issue-btn range" onclick="searchIssue('bake element')">Oven No Heat</button>
-                    <button class="issue-btn range" onclick="searchIssue('igniter')">Gas Won't Light</button>
-                    <button class="issue-btn range" onclick="searchIssue('temperature sensor')">Wrong Temperature</button>
-                    <button class="issue-btn range" onclick="searchIssue('control board')">Display Issues</button>
-                    <button class="issue-btn range" onclick="searchIssue('door lock')">Self-Clean Lock</button>
-                </div>
+            <div class="parts-grid" id="partsGrid"></div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <h3>🔍 No parts found</h3>
+                <p>Try adjusting your search terms or filters</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Brand-specific customer service questions for all 12 brands
-        const brandQuestions = {
-            'Whirlpool': [
-                { key: 'error_codes', title: '🚨 What error code is displayed?', desc: 'F21 (drain), F28 (communication), F35 (pressure), F51 (motor), etc.' },
-                { key: 'symptoms', title: '🔍 What exactly is it doing?', desc: 'Won\'t start, stops mid-cycle, loud noises, leaking, no heat' },
-                { key: 'model_info', title: '📋 What\'s the complete model number?', desc: 'Usually on inside door rim or back panel (WFW, WED, WDT, WRS, etc.)' },
-                { key: 'age_warranty', title: '📅 How old is the appliance?', desc: 'Under 1 year may be warranty, over 10 years consider replacement' },
-                { key: 'power_display', title: '💡 Does it have power/lights?', desc: 'Completely dead vs partial function helps narrow diagnosis' },
-                { key: 'recent_changes', title: '🔧 Any recent repairs or moves?', desc: 'Installation issues, previous repairs, power outages, etc.' }
-            ],
-            'GE': [
-                { key: 'error_codes', title: '🚨 Any error codes showing?', desc: 'E10, E20, E23 (water issues), E30 (door), E40 (motor), etc.' },
-                { key: 'smart_features', title: '📱 Is this a smart/WiFi model?', desc: 'SmartHQ app issues, connectivity problems, smart dispense' },
-                { key: 'specific_symptoms', title: '🔍 Describe the exact problem', desc: 'When does it happen? During what cycle? Consistent or intermittent?' },
-                { key: 'model_series', title: '📋 What series is it?', desc: 'Profile, Café, Artistry, or standard GE? Check model plate' },
-                { key: 'installation_check', title: '🏠 Installation environment?', desc: 'Level? Proper power? Water pressure? Drainage setup?' },
-                { key: 'maintenance_history', title: '🧽 When was it last serviced?', desc: 'Cleaning, filter changes, maintenance cycle usage' }
-            ],
-            'LG': [
-                { key: 'error_codes', title: '🚨 What error code appears?', desc: 'OE (drain), UE (unbalanced), LE (motor), FE (water overflow), etc.' },
-                { key: 'thinq_issues', title: '📱 ThinQ app problems?', desc: 'WiFi connectivity, smart diagnosis, remote control features' },
-                { key: 'direct_drive', title: '🔄 Direct Drive motor issues?', desc: 'Unusual noises, vibration, grinding sounds during wash/spin' },
-                { key: 'steam_features', title: '💨 Steam function problems?', desc: 'Steam wash, allergiene, steam fresh, or steam clean not working' },
-                { key: 'load_sensing', title: '⚖️ Load sensing acting up?', desc: 'Adding too much/little water, cycle times way too long/short' },
-                { key: 'model_features', title: '📋 Which LG features does it have?', desc: 'TurboWash, SideKick pedestal, TWINWash, 6Motion technology' }
-            ],
-            'Samsung': [
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: '4C/5C (water), DC (door), UC (unbalanced), 1C (sensor), etc.' },
-                { key: 'smartthings', title: '📱 SmartThings connectivity?', desc: 'App control, notifications, smart diagnosis, remote monitoring' },
-                { key: 'addwash_features', title: '🚪 AddWash door problems?', desc: 'Secondary door won\'t open/close, mid-cycle adding issues' },
-                { key: 'ecobubble', title: '🫧 EcoBubble function issues?', desc: 'Bubble generator, detergent mixing, cleaning performance' },
-                { key: 'digital_inverter', title: '⚡ Digital Inverter problems?', desc: 'Motor noise, speed control, energy efficiency concerns' },
-                { key: 'self_maintenance', title: '🧼 Self Clean alerts?', desc: 'Self Clean+ cycle, maintenance reminders, drum cleaning' }
-            ],
-            'Frigidaire': [
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: 'E10, E20, E40 (door), E47 (drain), E50 (motor), etc.' },
-                { key: 'ready_select', title: '🎛️ ReadySelect controls working?', desc: 'Control panel responsiveness, cycle selection issues' },
-                { key: 'affinity_series', title: '📋 Is this an Affinity series?', desc: 'Front-load Affinity models have specific diagnostic procedures' },
-                { key: 'gallery_features', title: '✨ Gallery series features?', desc: 'Steam, sanitize, allergen cycles, special wash options' },
-                { key: 'installation_level', title: '📏 Installation and leveling?', desc: 'Vibration issues, proper drainage, electrical connections' },
-                { key: 'maintenance_cycle', title: '🧽 Clean Washer cycle usage?', desc: 'How often run? Odor issues? Drum cleaning maintenance' }
-            ],
-            'Maytag': [
-                { key: 'error_codes', title: '🚨 Error codes showing?', desc: 'F21, F28, F35 (similar to Whirlpool but different fixes)' },
-                { key: 'centennial_series', title: '📋 Centennial or Bravos series?', desc: 'Different control boards and diagnostic procedures' },
-                { key: 'powerwash', title: '💪 PowerWash cycle issues?', desc: 'Agitator problems, wash action, cleaning performance' },
-                { key: 'commercial_grade', title: '🏭 Commercial Technology features?', desc: 'Heavy-duty components, different part specifications' },
-                { key: 'dependability', title: '🛡️ How long have you had it?', desc: 'Maytag 10-year warranty coverage, age-related issues' },
-                { key: 'agitator_issues', title: '🌀 Agitator problems?', desc: 'Top-load agitator movement, wash basket issues' }
-            ],
-            'KitchenAid': [
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: 'Similar to Whirlpool but premium features (F21, F28, etc.)' },
-                { key: 'dynamic_wash', title: '🌊 Dynamic Wash action issues?', desc: 'Impeller problems, wash plate action, cleaning performance' },
-                { key: 'architect_series', title: '🏛️ Architect Series features?', desc: 'Premium control panels, special cycles, stainless components' },
-                { key: 'steam_features', title: '💨 Steam assist problems?', desc: 'Steam wash, steam fresh, wrinkle prevention cycles' },
-                { key: 'smart_features', title: '📱 Smart home integration?', desc: 'WiFi connectivity, app control, remote monitoring' },
-                { key: 'premium_cycles', title: '✨ Specialty cycles working?', desc: 'Sanitize, allergen, delicate, bulky items cycles' }
-            ],
-            'Bosch': [
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: 'E01, E02, E07 (water), E09, E18 (drain), E25 (wash pump)' },
-                { key: 'activewater', title: '💧 ActiveWater system issues?', desc: 'Water usage optimization, load sensing, efficiency problems' },
-                { key: 'crystaldry', title: '✨ CrystalDry not working?', desc: 'Zeolite drying system, condensation drying issues' },
-                { key: 'silence_plus', title: '🔇 SilencePlus noise issues?', desc: 'Unusual noises despite quiet operation claims' },
-                { key: 'aquastop', title: '🛡️ AquaStop system problems?', desc: 'Leak protection system, water safety features' },
-                { key: 'german_engineering', title: '🔧 Build quality concerns?', desc: 'European vs US models, part availability, service complexity' }
-            ],
-            'Speed Queen': [
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: 'E## codes, commercial vs residential diagnostics' },
-                { key: 'commercial_grade', title: '🏭 Commercial or residential model?', desc: 'Different service procedures, parts, and warranties' },
-                { key: 'perfect_wash', title: '🎯 Perfect Wash technology issues?', desc: 'Auto-load sensing, detergent optimization problems' },
-                { key: 'quantum_controls', title: '⚛️ Quantum control panel problems?', desc: 'Digital display, cycle selection, timer issues' },
-                { key: 'durability_issues', title: '💪 Performance over time?', desc: 'Speed Queen reliability reputation, long-term operation' },
-                { key: 'installation_commercial', title: '🏢 Commercial installation setup?', desc: 'Venting, electrical, drainage for commercial environments' }
-            ],
-            'Amana': [
-                { key: 'error_codes', title: '🚨 Error codes showing?', desc: 'Similar to Whirlpool codes (F21, F28) but different parts' },
-                { key: 'basic_operation', title: '🔧 Basic operation problems?', desc: 'Simple mechanical issues, straightforward diagnostics' },
-                { key: 'value_series', title: '💰 Value series model?', desc: 'Budget-friendly features, simplified control systems' },
-                { key: 'traditional_design', title: '📼 Traditional top-load issues?', desc: 'Agitator, transmission, simple timer problems' },
-                { key: 'warranty_coverage', title: '📋 Warranty status?', desc: 'Basic warranty coverage, age of appliance' },
-                { key: 'cost_effective', title: '💡 Repair vs replace decision?', desc: 'Budget considerations, cost-effective repair options' }
-            ],
-            'Kenmore': [
-                { key: 'manufacturing_brand', title: '🏭 Who manufactured this Kenmore?', desc: 'Look at model number: 110=Whirlpool, 796=LG, 592=GE, etc.' },
-                { key: 'model_number_decode', title: '📋 Complete model number?', desc: 'First 3 digits tell us the actual manufacturer' },
-                { key: 'sears_warranty', title: '📅 Sears warranty or protection plan?', desc: 'Master Protection Agreement coverage, service history' },
-                { key: 'elite_series', title: '⭐ Elite or Pro series features?', desc: 'Higher-end Kenmore models, premium features' },
-                { key: 'brand_equivalency', title: '🔄 Cross-reference needed?', desc: 'Finding equivalent Whirlpool/LG/GE part numbers' },
-                { key: 'service_history', title: '📋 Previous Sears service?', desc: 'Service records, previous repairs, technician notes' }
-            ],
-            'Hotpoint': [
-                { key: 'ge_relationship', title: '🏭 GE Hotpoint or Hotpoint branded?', desc: 'Different manufacturers, different part sources' },
-                { key: 'error_codes', title: '🚨 Error codes displayed?', desc: 'Similar to GE codes but different control boards' },
-                { key: 'basic_features', title: '🔧 Basic model features?', desc: 'Simple controls, straightforward operation, budget-friendly' },
-                { key: 'age_availability', title: '📅 Age and part availability?', desc: 'Older Hotpoint models, discontinued parts' },
-                { key: 'uk_vs_us', title: '🌎 UK or US manufactured?', desc: 'Different Hotpoint companies, parts not interchangeable' },
-                { key: 'budget_repair', title: '💰 Cost-effective repair options?', desc: 'Budget considerations for older appliances' }
-            ]
-        };
+        let applianceParts = [
+            // WHIRLPOOL WASHER PARTS
+            {
+                partNumber: 'W10310240',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main Control Board - Electronic Control',
+                symptoms: [
+                    'Washer won\'t start or turn on',
+                    'Display not working or blank',
+                    'Cycles not advancing properly',
+                    'Buttons not responding'
+                ],
+                errorCodes: ['F7E1', 'F9E1', 'F8E1', 'F6E2'],
+                compatibility: 'Fits Whirlpool Top Load Washers 2011-2018',
+                models: ['WTW4816FW', 'WTW4950XW', 'WTW5000DW']
+            },
+            {
+                partNumber: 'W10006355',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Control Board Assembly - User Interface',
+                symptoms: [
+                    'Touch controls not working',
+                    'LED lights not functioning',
+                    'Display showing wrong information'
+                ],
+                errorCodes: ['F9E1', 'F8E5'],
+                compatibility: 'Fits Whirlpool Front Load Washers 2006-2014',
+                models: ['WFW9150WW', 'WFW8300SW', 'WFW9250WW']
+            },
+            {
+                partNumber: 'W10112113',
+                brand: 'whirlpool',
+                appliance: 'washer',
+                component: 'motor',
+                description: 'Drive Motor Assembly',
+                symptoms: [
+                    'Washer not agitating or spinning',
+                    'Loud grinding or humming noise',
+                    'Motor overheating'
+                ],
+                errorCodes: ['F7E5', 'F5E2'],
+                compatibility: 'Direct Drive Motor for Top Load Washers',
+                models: ['WTW4616FW', 'WTW4815EW', 'WTW5000DW']
+            },
 
-        // Comprehensive parts database - 12 major brands with 628 control boards
-        const partsDatabase = [
-            // Whirlpool Parts
-            { partNumber: 'W10310240', brand: 'Whirlpool', appliance: 'Washer', description: 'Main Electronic Control Board - Duet', commonIssues: 'No power, display dead, F21/F28 errors', models: 'WFW9150WW, WFW8500DC, WFW9250WL', price: 189.95, stock: 'In Stock' },
-            { partNumber: 'W10393156', brand: 'Whirlpool', appliance: 'Washer', description: 'Door Lock Control Board', commonIssues: 'Door won\'t lock/unlock, F35 error, lid lock failure', models: 'WFW8400TW, WFW8500SR, WFW9050XW', price: 156.75, stock: 'In Stock' },
-            { partNumber: 'W11027055', brand: 'Whirlpool', appliance: 'Washer', description: 'Smart WiFi Control Board', commonIssues: 'WiFi connectivity lost, app won\'t connect, smart features down', models: 'WFW6620HC, WFW8620HC, WFW9620HC', price: 234.50, stock: 'Low Stock' },
-            { partNumber: 'W11032443', brand: 'Whirlpool', appliance: 'Washer', description: 'Load & Go Dispenser Control', commonIssues: 'Auto-dispense not working, detergent sensing errors', models: 'WFW5620HW, WFW8620HW, WFW9620HW', price: 198.25, stock: 'In Stock' },
-            { partNumber: 'W10084142', brand: 'Whirlpool', appliance: 'Washer', description: 'Top Load HE Control Board', commonIssues: 'Lid lock issues, water level sensing, F51 motor error', models: 'WTW8500DC, WTW8700EC, WTW8800YC', price: 167.89, stock: 'In Stock' },
-            { partNumber: 'W10911679', brand: 'Whirlpool', appliance: 'Washer', description: 'Smart Cabrio Control Board', commonIssues: 'Load sensing problems, cycle selection issues', models: 'WTW5000DW, WTW7000DW, WTW8000DW', price: 201.50, stock: 'In Stock' },
-            { partNumber: 'W11035949', brand: 'Whirlpool', appliance: 'Washer', description: 'Color Touch Display Control', commonIssues: 'Screen not responding, display flickering, touch sensitivity', models: 'WTW8127LC, WTW8500DC, WTW8700EC', price: 276.95, stock: 'Low Stock' },
-            { partNumber: 'W10111606', brand: 'Whirlpool', appliance: 'Dryer', description: 'Electric Dryer Control Board', commonIssues: 'No heat, timer stuck, cycle won\'t advance', models: 'WED9150WW, WED8500DC, WED9250WL', price: 145.75, stock: 'In Stock' },
-            { partNumber: 'W10476828', brand: 'Whirlpool', appliance: 'Dryer', description: 'Gas Dryer Control Board', commonIssues: 'Gas valve not opening, ignition problems, temperature issues', models: 'WGD9150WW, WGD8500DC, WGD9250WL', price: 178.95, stock: 'In Stock' },
-            { partNumber: 'W11035891', brand: 'Whirlpool', appliance: 'Dryer', description: 'Steam Dryer Control Board', commonIssues: 'Steam function not working, moisture sensing problems', models: 'WED8620HC, WGD8620HC, WED9620HC', price: 223.50, stock: 'Low Stock' },
-            { partNumber: 'W11088843', brand: 'Whirlpool', appliance: 'Dishwasher', description: 'Dishwasher Electronic Control', commonIssues: 'Won\'t start cycle, display blank, button not responding', models: 'WDT750SAHZ, WDT730PAHZ, WDF520PADM', price: 189.25, stock: 'In Stock' },
-            { partNumber: 'W10906394', brand: 'Whirlpool', appliance: 'Dishwasher', description: 'Smart Dishwasher Control Board', commonIssues: 'WiFi issues, smart features not working, app connectivity', models: 'WDT975SAHZ, WDT970SAHZ, WDTA50SAHZ', price: 256.75, stock: 'In Stock' },
-            { partNumber: 'W10310240R', brand: 'Whirlpool', appliance: 'Refrigerator', description: 'French Door Refrigerator Control', commonIssues: 'Temperature control issues, ice maker problems, defrost failure', models: 'WRF535SWHZ, WRF757SDHZ, WRF767SDHZ', price: 298.95, stock: 'In Stock' },
-            { partNumber: 'W11035747', brand: 'Whirlpool', appliance: 'Refrigerator', description: 'Smart Refrigerator Control Board', commonIssues: 'WiFi connectivity, smart features, temperature monitoring', models: 'WRS588FIHZ, WRS571CIHZ, WRF540CWHZ', price: 334.50, stock: 'Low Stock' },
+            // GE WASHER PARTS
+            {
+                partNumber: 'WH12X10355',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main Control Board PCB',
+                symptoms: [
+                    'Machine cycles erratically',
+                    'No power to unit',
+                    'Stuck in one cycle'
+                ],
+                errorCodes: ['E1', 'E5', 'E8'],
+                compatibility: 'GE Top Load Washers 2010-2016',
+                models: ['GTW485ASJWS', 'GTW460ASJWW', 'GTW485BSJWS']
+            },
+            {
+                partNumber: 'WH20X10028',
+                brand: 'ge',
+                appliance: 'washer',
+                component: 'pump',
+                description: 'Drain Pump Assembly',
+                symptoms: [
+                    'Water not draining',
+                    'Loud noise during drain cycle',
+                    'E2 error code showing'
+                ],
+                errorCodes: ['E2', 'E4'],
+                compatibility: 'GE Front Load Washers All Models',
+                models: ['GFW450SSMWW', 'GFW148SSMWW', 'GFW450SPKDG']
+            },
 
-            // GE Parts
-            { partNumber: 'WH12X10355', brand: 'GE', appliance: 'Washer', description: 'Front Load Washer Control Board', commonIssues: 'E20 error, door lock failure, drain pump control', models: 'GFW850SPNDG, GFW650SSNWW, GFW148SSLWW', price: 198.75, stock: 'In Stock' },
-            { partNumber: 'WH12X10439', brand: 'GE', appliance: 'Washer', description: 'SmartDispense Control Board', commonIssues: 'Auto-dispense failure, detergent sensing, E23 water errors', models: 'GFW850SPNDG, GFW650SSNWW, GFW450SSMWW', price: 267.50, stock: 'In Stock' },
-            { partNumber: 'WH12X10540', brand: 'GE', appliance: 'Washer', description: 'UltraFresh Vent Control Board', commonIssues: 'Odor control not working, ventilation fan issues', models: 'GFW850SPNRS, GFW650SSNRG, GFW450SSMRG', price: 289.95, stock: 'Low Stock' },
-            { partNumber: 'WH12X10612', brand: 'GE', appliance: 'Washer', description: 'Top Load Smart Control Board', commonIssues: 'Load sensing problems, WiFi connectivity, smart features', models: 'GTW755CSLWS, GTW335ASNWW, GTW485ASJWS', price: 234.25, stock: 'In Stock' },
-            { partNumber: 'WE4M533', brand: 'GE', appliance: 'Dryer', description: 'Dryer Electronic Control Board', commonIssues: 'No heat, cycle problems, timer issues, E40 errors', models: 'GFD85ESSNWW, GFD65ESSNWW, GFD45ESSMWW', price: 167.89, stock: 'In Stock' },
-            { partNumber: 'WE4M564', brand: 'GE', appliance: 'Dryer', description: 'Smart Dryer Control Board', commonIssues: 'WiFi connectivity issues, SmartHQ app problems', models: 'GFD85ESPNRS, GFD65ESPNRG, GFD45ESPMRG', price: 245.75, stock: 'In Stock' },
-            { partNumber: 'WE4M601', brand: 'GE', appliance: 'Dryer', description: 'Steam Dryer Control Board', commonIssues: 'Steam cycles not working, sanitize function failure', models: 'GFD85ESSNWW, GFD65ESSNWW, GTD85ESSNWS', price: 278.50, stock: 'Low Stock' },
-            { partNumber: 'WD21X23734', brand: 'GE', appliance: 'Dishwasher', description: 'Dishwasher Control Board', commonIssues: 'Won\'t start, cycle interruption, display problems', models: 'GDT695SSJSS, GDT545PSJSS, GDP615HSNSS', price: 178.95, stock: 'In Stock' },
-            { partNumber: 'WD21X24901', brand: 'GE', appliance: 'Dishwasher', description: 'WiFi Connect Dishwasher Control', commonIssues: 'SmartHQ connectivity, WiFi setup, remote control', models: 'CDT875P2NS1, GDT695SGJBB, PDT775SSNSS', price: 234.75, stock: 'In Stock' },
-            { partNumber: 'WR55X23169', brand: 'GE', appliance: 'Refrigerator', description: 'French Door Refrigerator Control', commonIssues: 'Temperature fluctuation, ice maker control, defrost issues', models: 'GFE28GYNFS, GFE26JYNFS, GNE27JYNFS', price: 289.50, stock: 'In Stock' },
-            { partNumber: 'WR55X26212', brand: 'GE', appliance: 'Refrigerator', description: 'SmartHQ WiFi Control Board', commonIssues: 'WiFi connectivity, app control, smart alerts', models: 'GFE28GYNFS, GYE22GYNFS, PYE22GYNFS', price: 345.75, stock: 'Low Stock' },
-            { partNumber: 'WB27K10355', brand: 'GE', appliance: 'Range', description: 'Oven Control Board', commonIssues: 'Oven won\'t heat, temperature inaccurate, display issues', models: 'JB735SPSS, JB645RKSS, JGS750SPSS', price: 234.95, stock: 'In Stock' },
-            { partNumber: 'WB27K10419', brand: 'GE', appliance: 'Range', description: 'Self-Clean Oven Control', commonIssues: 'Self-clean cycle failure, door lock problems', models: 'JB735SPSS, JGS750SPSS, JGB735SPSS', price: 267.50, stock: 'In Stock' },
+            // LG WASHER PARTS
+            {
+                partNumber: 'EBR78534409',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main PCB Control Board',
+                symptoms: [
+                    'Display showing dE error',
+                    'Unit not starting wash cycle',
+                    'Buttons not responsive'
+                ],
+                errorCodes: ['dE', 'IE', 'OE', 'UE'],
+                compatibility: 'LG Front Load Washers 2012-2017',
+                models: ['WM3270CW', 'WM3670HWA', 'WM3370HWA']
+            },
+            {
+                partNumber: 'AHA72909201',
+                brand: 'lg',
+                appliance: 'washer',
+                component: 'motor',
+                description: 'Drive Motor Direct Drive',
+                symptoms: [
+                    'Washer not spinning',
+                    'Loud banging noise',
+                    'UE error code'
+                ],
+                errorCodes: ['UE', 'LE'],
+                compatibility: 'LG Direct Drive Washers',
+                models: ['WM2016CW', 'WM2077CW', 'WM2487HRMA']
+            },
 
-            // LG Parts
-            { partNumber: 'EBR78534409', brand: 'LG', appliance: 'Washer', description: 'Direct Drive Main Control Board', commonIssues: 'OE/UE errors, motor control, inverter problems', models: 'WM3900HWA, WM4000HWA, WM3700HWA', price: 208.75, stock: 'In Stock' },
-            { partNumber: 'EBR85234512', brand: 'LG', appliance: 'Washer', description: 'ThinQ Smart Control Board', commonIssues: 'WiFi connectivity, ThinQ app issues, smart diagnosis', models: 'WM9000HVA, WM8100HVA, WM5000HWA', price: 298.50, stock: 'In Stock' },
-            { partNumber: 'EBR89234667', brand: 'LG', appliance: 'Washer', description: 'Steam Wash Control Board', commonIssues: 'Steam wash not working, allergiene cycle failure', models: 'WM4370HKA, WM3770HWA, WM3570HWA', price: 256.95, stock: 'Low Stock' },
-            { partNumber: 'EBR91234788', brand: 'LG', appliance: 'Washer', description: 'TurboWash Control Board', commonIssues: 'TurboWash jets not working, spray arm failure', models: 'WM5000HWA, WM4500HBA, WM3900HBA', price: 278.75, stock: 'In Stock' },
-            { partNumber: 'EBR78945123', brand: 'LG', appliance: 'Dryer', description: 'Inverter Dryer Control Board', commonIssues: 'Motor speed control, energy efficiency, LE error codes', models: 'DLG7201WE, DLE7200WE, DLEX3900W', price: 198.95, stock: 'In Stock' },
-            { partNumber: 'EBR85467234', brand: 'LG', appliance: 'Dryer', description: 'ThinQ Smart Dryer Control', commonIssues: 'WiFi issues, app connectivity, smart diagnosis', models: 'DLEX9000V, DLGX9001V, DLEX7600WE', price: 267.50, stock: 'In Stock' },
-            { partNumber: 'EBR87234591', brand: 'LG', appliance: 'Dryer', description: 'Steam Dryer Control Board', commonIssues: 'Steam refresh not working, sanitize cycle problems', models: 'DLEX4270W, DLGX4271W, DLEX3570W', price: 289.75, stock: 'Low Stock' },
-            { partNumber: 'EBR83412678', brand: 'LG', appliance: 'Dishwasher', description: 'QuadWash Control Board', commonIssues: 'Spray arm control, wash cycle issues, OE drain error', models: 'LDF5545ST, LDP6797ST, LDT7797ST', price: 234.50, stock: 'In Stock' },
-            { partNumber: 'EBR88745123', brand: 'LG', appliance: 'Dishwasher', description: 'ThinQ Smart Dishwasher Control', commonIssues: 'WiFi connectivity, smart features, app remote control', models: 'LDT9965BD, LDP6809SS, LDFN4542S', price: 278.95, stock: 'In Stock' },
-            { partNumber: 'EBR79234588', brand: 'LG', appliance: 'Refrigerator', description: 'InstaView Control Board', commonIssues: 'Door display not working, knock sensor failure', models: 'LMXS28596S, LMXC23796S, LRFXC2406S', price: 345.75, stock: 'In Stock' },
-            { partNumber: 'EBR84567234', brand:'LG', appliance: 'Refrigerator', description: 'Smart ThinQ Refrigerator Control', commonIssues: 'WiFi connectivity, smart diagnosis, temperature control', models: 'LRFVS3006S, LRFXS2503S, LRMVS3006S', price: 398.50, stock: 'Low Stock' },
-            { partNumber: 'EBR87654321', brand: 'LG', appliance: 'Range', description: 'Smart Oven Control Board', commonIssues: 'Oven temperature issues, WiFi connectivity, smart features', models: 'LREL6323S, LRGL5825F, LTGL6937F', price: 298.75, stock: 'In Stock' },
+            // WHIRLPOOL DRYER PARTS
+            {
+                partNumber: 'W10111606',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Electronic Control Board - ADC',
+                symptoms: [
+                    'Dryer not heating',
+                    'Cycles not completing',
+                    'Display errors'
+                ],
+                errorCodes: ['F1E2', 'F2E5', 'F6E3'],
+                compatibility: 'Whirlpool Electric Dryers 2010-2018',
+                models: ['WED4815EW', 'WED5000DW', 'WED4950HW']
+            },
+            {
+                partNumber: 'W10348269',
+                brand: 'whirlpool',
+                appliance: 'dryer',
+                component: 'heating element',
+                description: 'Heating Element Assembly',
+                symptoms: [
+                    'Dryer runs but no heat',
+                    'Clothes not drying',
+                    'Takes too long to dry'
+                ],
+                errorCodes: ['F2E1', 'F6E3'],
+                compatibility: 'Electric Dryers 4.3-7.4 Cu Ft',
+                models: ['WED4815EW', 'WED4950HW', 'WED5000DW']
+            },
 
-            // Samsung Parts
-            { partNumber: 'DC92-01021A', brand: 'Samsung', appliance: 'Washer', description: 'Front Load Washer Control Board', commonIssues: '4C/5C water errors, DC door error, cycle problems', models: 'WF45R6100AW, WF50R8500AV, WF45R6300AW', price: 212.95, stock: 'In Stock' },
-            { partNumber: 'DC92-02057A', brand: 'Samsung', appliance: 'Washer', description: 'SmartThings WiFi Control Board', commonIssues: 'SmartThings connectivity, app control, remote monitoring', models: 'WF50R8500AV, WF45R6300AW, WF50K7500AV', price: 289.50, stock: 'In Stock' },
-            { partNumber: 'DC92-02134B', brand: 'Samsung', appliance: 'Washer', description: 'AddWash Control Board', commonIssues: 'AddWash door not opening, mid-cycle door sensor', models: 'WF50R8500AV, WF45R6300AW, WF50K7500AW', price: 256.75, stock: 'Low Stock' },
-            { partNumber: 'DC92-02189C', brand: 'Samsung', appliance: 'Washer', description: 'EcoBubble Control Board', commonIssues: 'Bubble generation failure, detergent mixing issues', models: 'WF45T6000AW, WF50R8500AV, WF45R6100AW', price: 234.95, stock: 'In Stock' },
-            { partNumber: 'DC92-01623A', brand: 'Samsung', appliance: 'Dryer', description: 'Digital Inverter Dryer Control', commonIssues: 'Motor control issues, energy efficiency problems, noise', models: 'DV50R8500V, DV45R6300EW, DV50R5400W', price: 198.75, stock: 'In Stock' },
-            { partNumber: 'DC92-02045B', brand: 'Samsung', appliance: 'Dryer', description: 'SmartThings Dryer Control', commonIssues: 'WiFi connectivity, app control, smart notifications', models: 'DV50R8500V, DV45R6300EW, DV50K7500EV', price: 267.50, stock: 'In Stock' },
-            { partNumber: 'DC92-02156C', brand: 'Samsung', appliance: 'Dryer', description: 'Steam Sanitize Control Board', commonIssues: 'Steam functions not working, sanitize cycle failure', models: 'DV50R8500V, DV45R6300EW, DV45T6000EW', price: 289.95, stock: 'Low Stock' },
-            { partNumber: 'DD82-01234A', brand: 'Samsung', appliance: 'Dishwasher', description: 'WaterWall Dishwasher Control', commonIssues: 'WaterWall technology failure, spray issues, cycle problems', models: 'DW80R9950US, DW80R7060US, DW80R5060US', price: 298.50, stock: 'In Stock' },
-            { partNumber: 'DD82-02145B', brand: 'Samsung', appliance: 'Dishwasher', description: 'SmartThings Dishwasher Control', commonIssues: 'WiFi connectivity, app control, smart features', models: 'DW80R9950US, DW80R7060US, DW80T7550US', price: 334.75, stock: 'In Stock' },
-            { partNumber: 'DA41-00814A', brand: 'Samsung', appliance: 'Refrigerator', description: 'Family Hub Control Board', commonIssues: 'Touchscreen not responding, WiFi issues, app connectivity', models: 'RF28R7351SG, RF23M8070SR, RF28R7551SR', price: 456.95, stock: 'In Stock' },
-            { partNumber: 'DA41-00923B', brand: 'Samsung', appliance: 'Refrigerator', description: 'FlexZone Control Board', commonIssues: 'FlexZone temperature control, convertible drawer issues', models: 'RF28R7351SG, RF23M8090SG, RF28R7201SR', price: 378.50, stock: 'Low Stock' },
-            { partNumber: 'DE92-03045A', brand: 'Samsung', appliance: 'Range', description: 'Smart Oven Control Board', commonIssues: 'Oven temperature control, WiFi connectivity, smart features', models: 'NE63T8751SS, NX60T8511SS, NY63T8751SS', price: 312.75, stock: 'In Stock' },
+            // GE DRYER PARTS  
+            {
+                partNumber: 'WE4M533',
+                brand: 'ge',
+                appliance: 'dryer',
+                component: 'control board',
+                description: 'Control Panel Assembly',
+                symptoms: [
+                    'Timer not advancing',
+                    'No heat generation',
+                    'Cycles starting incorrectly'
+                ],
+                errorCodes: ['E1', 'E3'],
+                compatibility: 'GE Electric Dryers 2008-2015',
+                models: ['GTDP490ED0WS', 'GTDP490GB0WS', 'GTDX300EM0WS']
+            },
 
-            // Frigidaire Parts
-            { partNumber: '137260800', brand: 'Frigidaire', appliance: 'Washer', description: 'Electronic Control Board - Affinity', commonIssues: 'E10/E20 errors, display problems, cycle issues', models: 'FAFW3801LW, FAFW4011LW, FAFW3511KW', price: 189.95, stock: 'In Stock' },
-            { partNumber: '134743500', brand: 'Frigidaire', appliance: 'Washer', description: 'Door Lock Control Board', commonIssues: 'E40 door lock error, won\'t start, safety lock failure', models: 'FAFW3801LW, FAFW4011LW, FAFS4174NA', price: 167.50, stock: 'In Stock' },
-            { partNumber: '5304505482', brand: 'Frigidaire', appliance: 'Washer', description: 'Gallery Series Smart Control', commonIssues: 'WiFi connectivity, app control, smart cycle issues', models: 'FFFW5000QW, FFFW6000QW, FFTW4120SW', price: 245.75, stock: 'Low Stock' },
-            { partNumber: '137440800', brand: 'Frigidaire', appliance: 'Washer', description: 'Top Load Control Board', commonIssues: 'Cycle selection, lid lock, agitator control problems', models: 'FFTW1001MW, FFTW4120SW, MVWC565FW', price: 178.95, stock: 'In Stock' },
-            { partNumber: '5303935086', brand: 'Frigidaire', appliance: 'Dryer', description: 'Affinity Dryer Control Board', commonIssues: 'E68 error, heating problems, cycle issues', models: 'FAQG7011KW, FAQE7011KW, FASE7021NW', price: 189.95, stock: 'In Stock' },
-            { partNumber: '137292700', brand: 'Frigidaire', appliance: 'Dryer', description: 'Gallery Dryer Control', commonIssues: 'Steam cycles, sensor dry problems, display issues', models: 'FGQG7077KB, FGQE7077KB, FGQG4044KF', price: 234.75, stock: 'In Stock' },
-            { partNumber: '154815701', brand: 'Frigidaire', appliance: 'Dishwasher', description: 'Gallery Dishwasher Control Board', commonIssues: 'Cycle problems, display issues, wash performance', models: 'FGID2466QF, FGID2479SF, FGCD2444SA', price: 198.75, stock: 'In Stock' },
-            { partNumber: '5304505463', brand: 'Frigidaire', appliance: 'Dishwasher', description: 'Professional Series Control', commonIssues: 'Premium cycle issues, stainless tub problems', models: 'FPID2497RF, FPID2485PF, FGID2476SF', price: 267.95, stock: 'Low Stock' },
-            { partNumber: '242252702', brand: 'Frigidaire', appliance: 'Refrigerator', description: 'Gallery Series Control Board', commonIssues: 'Temperature control, ice maker, display problems', models: 'FGHB2868TF, FGHD2368TF, FGHS2355PF', price: 267.95, stock: 'In Stock' },
-            { partNumber: '5304505394', brand: 'Frigidaire', appliance: 'Refrigerator', description: 'Professional Series Control', commonIssues: 'Premium features, stainless finish, temperature zones', models: 'FPHS2387KF, FPBS2777RF, FPSC2278UF', price: 334.75, stock: 'Low Stock' },
-            { partNumber: '316557115', brand: 'Frigidaire', appliance: 'Range', description: 'Gallery Range Control Board', commonIssues: 'Oven temperature, self-clean cycle, display problems', models: 'FGGH3047VF, FGGF3036TF, FGEF3036TF', price: 245.95, stock: 'In Stock' },
+            // SAMSUNG WASHER PARTS
+            {
+                partNumber: 'DC92-01021A',
+                brand: 'samsung',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Main Control Board PCB',
+                symptoms: [
+                    '4C error code',
+                    'Water not filling properly',
+                    'Display flickering'
+                ],
+                errorCodes: ['4C', '5C', 'nF'],
+                compatibility: 'Samsung Front Load Washers',
+                models: ['WF42H5000AW', 'WF45K6200AW', 'WF50K7500AW']
+            },
+            {
+                partNumber: 'DC31-00178A',
+                brand: 'samsung',
+                appliance: 'washer',
+                component: 'pump',
+                description: 'Drain Pump Assembly',
+                symptoms: [
+                    '5C or SC error code',
+                    'Water not draining',
+                    'Gurgling sounds during drain'
+                ],
+                errorCodes: ['5C', 'SC'],
+                compatibility: 'Samsung Washers 2010-2018',
+                models: ['WF218ANB', 'WF330ANB', 'WF350ANP']
+            },
 
-            // Maytag Parts
-            { partNumber: 'W10812422', brand: 'Maytag', appliance: 'Washer', description: 'Bravos Control Board', commonIssues: 'F21/F28 errors, lid lock issues, cycle problems', models: 'MVWB765FW, MVWB835DW, MVWB965HC', price: 198.50, stock: 'In Stock' },
-            { partNumber: 'W10754475', brand: 'Maytag', appliance: 'Washer', description: 'Centennial Control Board', commonIssues: 'Motor control, agitator problems, timer issues', models: 'MVWC565FW, MVWC6ESWW, MVWC7ESWW', price: 167.95, stock: 'In Stock' },
-            { partNumber: 'W11043368', brand: 'Maytag', appliance: 'Washer', description: 'Commercial Technology Control', commonIssues: 'Heavy-duty cycle problems, PowerWash issues', models: 'MVWB965HC, MVWC565FW, MVWB855DC', price: 234.75, stock: 'Low Stock' },
-            { partNumber: 'W10389204', brand: 'Maytag', appliance: 'Washer', description: 'Smart Capable Control Board', commonIssues: 'Smart features, app connectivity, remote monitoring', models: 'MHW5630HW, MHW6630HC, MHW8630HC', price: 278.95, stock: 'In Stock' },
-            { partNumber: 'W10807957', brand: 'Maytag', appliance: 'Dryer', description: 'Bravos Dryer Control Board', commonIssues: 'Moisture sensing, temperature control, cycle problems', models: 'MGDB765FW, MEDB765FW, MGDB835DW', price: 178.95, stock: 'In Stock' },
-            { partNumber: 'W11228230', brand: 'Maytag', appliance: 'Dryer', description: 'Commercial Technology Dryer Control', commonIssues: 'Heavy-duty cycles, PowerDry issues, timer problems', models: 'MGDB965HC, MEDB965HC, MGDB855DC', price: 245.50, stock: 'Low Stock' },
-            { partNumber: 'W10865849', brand: 'Maytag', appliance: 'Refrigerator', description: 'French Door Control Board', commonIssues: 'Ice maker control, temperature regulation, defrost', models: 'MFI2269VEM, MFF2558VEM, MFT2976AEM', price: 298.95, stock: 'In Stock' },
+            // FRIGIDAIRE WASHER PARTS
+            {
+                partNumber: '137032600',
+                brand: 'frigidaire',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Electronic Control Board',
+                symptoms: [
+                    'E10 error code',
+                    'Washer not filling with water',
+                    'Control panel dead'
+                ],
+                errorCodes: ['E10', 'E20', 'E40'],
+                compatibility: 'Frigidaire Top Load Washers',
+                models: ['FFTW4120SW', 'FFTW1011QW', 'FFTW4020SW']
+            },
 
-            // KitchenAid Parts
-            { partNumber: 'W10812422K', brand: 'KitchenAid', appliance: 'Washer', description: 'Architect Series Control Board', commonIssues: 'Premium cycle issues, steam features, display problems', models: 'KFWS37100LW, KFCW36100LW, KTCW26100LW', price: 298.75, stock: 'In Stock' },
-            { partNumber: 'W11384470', brand: 'KitchenAid', appliance: 'Washer', description: 'Smart Control with Dynamic Wash', commonIssues: 'Impeller problems, smart features, adaptive wash', models: 'KFCW36100LW, KFWS37100LW, KWCW36100LW', price: 345.50, stock: 'Low Stock' },
-            { partNumber: 'W10285625', brand: 'KitchenAid', appliance: 'Washer', description: 'Steam Assist Control Board', commonIssues: 'Steam wash not working, sanitize cycle failure', models: 'KAWS850LE, KAWS677EW, KAWE677WW', price: 267.95, stock: 'In Stock' },
-            { partNumber: 'W10865849K', brand: 'KitchenAid', appliance: 'Refrigerator', description: 'Counter-Depth Control Board', commonIssues: 'Premium features, temperature zones, ice maker', models: 'KRMF706ESS, KRFC704FPS, KRSC703HPS', price: 356.75, stock: 'Low Stock' },
+            // MAYTAG WASHER PARTS
+            {
+                partNumber: 'W10189966',
+                brand: 'maytag',
+                appliance: 'washer',
+                component: 'control board',
+                description: 'Control Board - Bravos Series',
+                symptoms: [
+                    'F7E1 error code',
+                    'Lid lock not engaging',
+                    'Sensing light stays on'
+                ],
+                errorCodes: ['F7E1', 'F5E2', 'F8E1'],
+                compatibility: 'Maytag Bravos Top Load Washers',
+                models: ['MVWB835DW', 'MVWB765FW', 'MVWB855DW']
+            },
 
-            // Bosch Parts
-            { partNumber: '00655150', brand: 'Bosch', appliance: 'Washer', description: 'Main Control Module', commonIssues: 'E07 water error, E18 drain pump, E25 wash pump', models: 'WAT28400UC, WAW355H0UC, WGB856B0UC', price: 289.95, stock: 'In Stock' },
-            { partNumber: '00637648', brand: 'Bosch', appliance: 'Washer', description: 'ActiveWater Control Board', commonIssues: 'Load sensing problems, water optimization issues', models: 'WAW355H0UC, WAT28400UC, WFMC6401UC', price: 334.75, stock: 'Low Stock' },
-            { partNumber: '00754867', brand: 'Bosch', appliance: 'Washer', description: 'i-DOS Control Board', commonIssues: 'Auto-dosing problems, detergent sensing failure', models: 'WAW285H2UC, WAW355H2UC, WGB856C0UC', price: 398.50, stock: 'In Stock' },
-            { partNumber: '00755313', brand: 'Bosch', appliance: 'Dishwasher', description: 'Main Control Module', commonIssues: 'E01, E09, E15 errors, cycle problems', models: 'SHPM65Z55N, SHPM78Z55N, SHP865ZD5N', price: 298.75, stock: 'In Stock' },
-            { partNumber: '00654549', brand: 'Bosch', appliance: 'Dishwasher', description: 'CrystalDry Control Board', commonIssues: 'Drying performance, zeolite system, condensation', models: 'SHPM88Z75N, SHPM65Z56N, SHXM78Z55N', price: 378.95, stock: 'Low Stock' },
-            { partNumber: '00754204', brand: 'Bosch', appliance: 'Range', description: 'European Convection Control', commonIssues: 'Convection fan, temperature accuracy, cycle problems', models: 'HGI8056UC, HGI8054UC, HDI8056U', price: 356.75, stock: 'Low Stock' },
+            // DISHWASHER PARTS
+            {
+                partNumber: 'W10084141',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'control board',
+                description: 'Electronic Control Board',
+                symptoms: [
+                    'Dishwasher not starting',
+                    'Display showing errors',
+                    'Cycles not completing'
+                ],
+                errorCodes: ['F2E1', 'F6E4', 'F9E1'],
+                compatibility: 'Whirlpool Built-in Dishwashers',
+                models: ['WDF520PADM', 'WDF540PADM', 'WDF750SAYB']
+            },
+            {
+                partNumber: 'WPW10084142',
+                brand: 'whirlpool',
+                appliance: 'dishwasher',
+                component: 'pump',
+                description: 'Wash Pump Motor Assembly',
+                symptoms: [
+                    'Poor wash performance',
+                    'Loud grinding noise',
+                    'Water not circulating'
+                ],
+                errorCodes: ['F6E4'],
+                compatibility: 'Whirlpool Dishwashers 2008-2016',
+                models: ['WDF320PADB', 'WDF520PADM', 'WDF320PADB']
+            },
 
-            // Speed Queen Parts
-            { partNumber: '9001955', brand: 'Speed Queen', appliance: 'Washer', description: 'Commercial Washer Control', commonIssues: 'E## errors, commercial cycle problems, timer issues', models: 'SWFN62SP, AWFN63SP, TC5003WN', price: 345.75, stock: 'In Stock' },
-            { partNumber: '9002156', brand: 'Speed Queen', appliance: 'Washer', description: 'Perfect Wash Control Board', commonIssues: 'Auto-sensing problems, load detection failure', models: 'TC5003WN, TC5000WN, TR5003WN', price: 298.95, stock: 'Low Stock' },
-            { partNumber: '9002834', brand: 'Speed Queen', appliance: 'Washer', description: 'Quantum Control Panel', commonIssues: 'Display problems, cycle selection, timer malfunction', models: 'AWNL2SP, AWN432SP, TC5003WN', price: 267.50, stock: 'In Stock' },
-            { partNumber: '9001956', brand: 'Speed Queen', appliance: 'Washer', description: 'Commercial Timer Control', commonIssues: 'Heavy-duty timer, coin-op functions', models: 'SWFN62SP113TW01, AWFN63SP113TW01', price: 289.95, stock: 'In Stock' },
-            { partNumber: '9002157', brand: 'Speed Queen', appliance: 'Dryer', description: 'Commercial Gas Control', commonIssues: 'Gas valve control, commercial ignition', models: 'SGFN60SP113TG01, AGFN63SP113TG01', price: 334.75, stock: 'In Stock' },
+            // REFRIGERATOR PARTS
+            {
+                partNumber: 'W10503278',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'control board',
+                description: 'Adaptive Defrost Control Board',
+                symptoms: [
+                    'Refrigerator not cooling',
+                    'Ice buildup in freezer',
+                    'Compressor running constantly'
+                ],
+                errorCodes: ['ER 1F', 'ER dH'],
+                compatibility: 'Whirlpool Side-by-Side Refrigerators',
+                models: ['WRS325FDAM', 'WRS588FIHZ', 'WRS325SDHZ']
+            },
+            {
+                partNumber: 'W10613606',
+                brand: 'whirlpool',
+                appliance: 'refrigerator',
+                component: 'sensor',
+                description: 'Temperature Sensor Assembly',
+                symptoms: [
+                    'Temperature fluctuations',
+                    'Food spoiling quickly',
+                    'Freezer too warm or cold'
+                ],
+                errorCodes: ['ER CF', 'ER FF'],
+                compatibility: 'French Door Refrigerators 2012-2018',
+                models: ['WRF535SWHZ', 'WRF757SDEM', 'WRF736SDAM']
+            },
 
-            // Amana Parts
-            { partNumber: 'W10731409', brand: 'Amana', appliance: 'Washer', description: 'Top Load Control Board', commonIssues: 'Basic operation, lid lock, cycle selection problems', models: 'NTW4516FW, NTW4605EW, NTW4700YQ', price: 145.75, stock: 'In Stock' },
-            { partNumber: 'W10480317', brand: 'Amana', appliance: 'Washer', description: 'Traditional Washer Timer', commonIssues: 'Timer not advancing, stuck cycles, mechanical issues', models: 'NTW4650YQ, NTW4519JQ, NTW4700YQ', price: 89.95, stock: 'In Stock' },
-            { partNumber: 'W10641564', brand: 'Amana', appliance: 'Washer', description: 'Value Series Control', commonIssues: 'Simple control problems, basic cycle issues', models: 'NTW4516FW, NTW4605EW, NTW4650YQ', price: 123.50, stock: 'In Stock' },
-            { partNumber: 'W10731410', brand: 'Amana', appliance: 'Washer', description: 'Basic Timer Control', commonIssues: 'Simple timer operation, mechanical advance', models: 'NTW4519JQ, NTW4700YQ, NTW4650YQ', price: 76.25, stock: 'In Stock' },
-            { partNumber: 'W10480318', brand: 'Amana', appliance: 'Dryer', description: 'Value Dryer Timer', commonIssues: 'Basic timer cycles, heat selection', models: 'NED4655EW, NGD4655EW, NED4700YQ', price: 89.50, stock: 'In Stock' },
+            // RANGE/OVEN PARTS
+            {
+                partNumber: 'W10438751',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'control board',
+                description: 'Oven Control Board - Electronic',
+                symptoms: [
+                    'Oven not heating',
+                    'Display showing F codes',
+                    'Temperature inaccurate'
+                ],
+                errorCodes: ['F1E0', 'F2E1', 'F3E2'],
+                compatibility: 'Whirlpool Gas & Electric Ranges',
+                models: ['WFG515S0ES', 'WFE515S0ES', 'WFG745H0FS']
+            },
+            {
+                partNumber: 'WPW10518394',
+                brand: 'whirlpool',
+                appliance: 'range',
+                component: 'heating element',
+                description: 'Bake Element Assembly',
+                symptoms: [
+                    'Oven not reaching temperature',
+                    'Uneven baking',
+                    'Element glowing but not hot enough'
+                ],
+                errorCodes: ['F3E2', 'F4E1'],
+                compatibility: 'Electric Range Ovens 30-inch',
+                models: ['WFE515S0ES', 'WFE540H0ES', 'WFE525S0HS']
+            },
 
-            // Kenmore Parts
-            { partNumber: 'W10310240K', brand: 'Kenmore', appliance: 'Washer', description: 'Kenmore Elite Control Board (Whirlpool)', commonIssues: 'Cross-reference W10310240, F21/F28 errors', models: '11045081400, 11045086400, 11047081500', price: 198.75, stock: 'In Stock' },
-            { partNumber: 'W10393156K', brand: 'Kenmore', appliance: 'Washer', description: 'Kenmore Door Lock Control (Whirlpool)', commonIssues: 'Door lock issues, equivalent to Whirlpool part', models: '11045081400, 11047081500, 11049132500', price: 167.95, stock: 'In Stock' },
-            { partNumber: 'EBR78534409K', brand: 'Kenmore', appliance: 'Washer', description: 'Kenmore Elite Control (LG-made)', commonIssues: 'OE/UE errors, cross-reference LG part', models: '79641002902, 79641003902, 79644002900', price: 218.50, stock: 'Low Stock' },
-            { partNumber: 'W10310241K', brand: 'Kenmore', appliance: 'Dishwasher', description: 'Kenmore Elite Dishwasher Control', commonIssues: 'Cycle selection, display problems', models: '11013212300, 11013213300', price: 189.75, stock: 'In Stock' },
-            { partNumber: 'EBR85234513K', brand: 'Kenmore', appliance: 'Refrigerator', description: 'Kenmore Elite Fridge Control (LG)', commonIssues: 'Temperature control, ice maker', models: '79577302800, 79577303800', price: 298.95, stock: 'Low Stock' },
-
-            // Hotpoint Parts
-            { partNumber: 'WH12X10355H', brand: 'Hotpoint', appliance: 'Washer', description: 'Hotpoint Control Board (GE-made)', commonIssues: 'Similar to GE but different part number', models: 'HTWP1400D0WW, HTWP1000E0WW, HTWS20GASK', price: 178.95, stock: 'In Stock' },
-            { partNumber: 'WE4M564H', brand: 'Hotpoint', appliance: 'Washer', description: 'Basic Washer Control', commonIssues: 'Simple control problems, budget-friendly repair', models: 'HTWP1200D1WW, VTWS20GASKWW, HTW240ASKWS', price: 134.75, stock: 'In Stock' },
-            { partNumber: 'WH12X10356H', brand: 'Hotpoint', appliance: 'Dishwasher', description: 'Hotpoint Dishwasher Control', commonIssues: 'Basic dishwasher functions, cycle problems', models: 'HDA3600G00WW, HDA2100H00WW', price: 145.75, stock: 'In Stock' },
-            { partNumber: 'WE4M565H', brand: 'Hotpoint', appliance: 'Range', description: 'Basic Range Control', commonIssues: 'Oven temperature, basic timer functions', models: 'RB526DHWW, RB525DHWW', price: 167.50, stock: 'In Stock' },
-
-            // Additional Extended Parts Database
-            { partNumber: 'W10131615', brand: 'Whirlpool', appliance: 'Washer', description: 'Water Level Control Board', commonIssues: 'Water level sensing, overfill, underfill issues', models: 'WTW4950XW, WTW4855HW, WTW5550XW', price: 134.95, stock: 'In Stock' },
-            { partNumber: 'W10447783', brand: 'Whirlpool', appliance: 'Washer', description: 'Drain Control Board', commonIssues: 'Drain pump control, F21 error, water won\'t drain', models: 'WFW70HEBW, WFW75HEFW, WFW80HEFW', price: 156.75, stock: 'In Stock' },
-            { partNumber: 'W10739322', brand: 'Whirlpool', appliance: 'Washer', description: 'Agitator Control Board', commonIssues: 'Agitator not moving, wash action problems', models: 'WTW4855HW, WTW5550XW, WTW4950XW', price: 145.50, stock: 'In Stock' },
-            { partNumber: 'WH12X10745', brand: 'GE', appliance: 'Washer', description: 'Precision Dispense Control', commonIssues: 'Dispenser not working, detergent issues', models: 'GFW450SSMWW, GFW650SSNWW, GFW850SPNDG', price: 198.50, stock: 'In Stock' },
-            { partNumber: 'WE4M623', brand: 'GE', appliance: 'Dryer', description: 'Moisture Sensor Control', commonIssues: 'Auto dry not working, sensor dry problems', models: 'GFD45ESSMWW, GFD65ESSNWW, GFD85ESSNWW', price: 167.95, stock: 'In Stock' },
-            { partNumber: 'EBR92345678', brand: 'LG', appliance: 'Washer', description: '6Motion Control Board', commonIssues: '6Motion technology, wash patterns, motor control', models: 'WM3488HS, WM3470HWA, WM3070HWA', price: 234.75, stock: 'In Stock' },
-            { partNumber: 'EBR89456123', brand: 'LG', appliance: 'Dryer', description: 'Sensor Dry Control', commonIssues: 'Moisture sensing, auto dry cycles, over drying', models: 'DLE3050W, DLG3051W, DLE2050W', price: 178.95, stock: 'In Stock' },
-            { partNumber: 'DC92-02267A', brand: 'Samsung', appliance: 'Washer', description: 'Vibration Reduction Control', commonIssues: 'VRT+ technology, vibration, noise issues', models: 'WF50R8500AV, WF45R6300AW, WF42H5000AW', price: 245.50, stock: 'Low Stock' },
-            { partNumber: 'DC92-02378B', brand: 'Samsung', appliance: 'Dryer', description: 'Multi-Steam Control', commonIssues: 'Multi-steam cycles, wrinkle prevention, steam refresh', models: 'DV50R8500V, DV45R6300EW, DV42H5000EW', price: 289.75, stock: 'In Stock' },
-            { partNumber: '5304512349', brand: 'Frigidaire', appliance: 'Washer', description: 'ReadySelect Plus Control', commonIssues: 'Cycle selection, display problems, button response', models: 'FAFW3001LW, FAFW4011LW, FAFW3511KW', price: 167.95, stock: 'In Stock' },
-            { partNumber: '137368024', brand: 'Frigidaire', appliance: 'Dryer', description: 'Moisture Bar Control', commonIssues: 'Moisture sensing, auto dry, fabric care', models: 'FASE7021NW, FAQG7011KW, FASE7073NW', price: 156.75, stock: 'In Stock' },
-            { partNumber: '316442115', brand: 'Frigidaire', appliance: 'Range', description: 'True Convection Control', commonIssues: 'Convection fan, even baking, temperature control', models: 'FGEF3032MF, FGGF3032MF, FGEH3047VF', price: 278.95, stock: 'In Stock' },
-            { partNumber: 'W10754476', brand: 'Maytag', appliance: 'Washer', description: 'PowerWash Control Board', commonIssues: 'PowerWash agitator, deep clean cycle', models: 'MVWC565FW, MVWC6ESWW, MVWC7ESWW', price: 189.50, stock: 'In Stock' },
-            { partNumber: 'W11043369', brand: 'Maytag', appliance: 'Dryer', description: 'Advanced Moisture Sensing', commonIssues: 'Intellidry sensor, moisture detection', models: 'MEDB765FW, MGDB765FW, MEDB835DW', price: 201.75, stock: 'In Stock' },
-            { partNumber: 'W11384471', brand: 'KitchenAid', appliance: 'Washer', description: 'ProWash Control Board', commonIssues: 'ProWash cycles, soil sensing, adaptive wash', models: 'KWCW36100LW, KFCW36100LW, KFWS37100LW', price: 334.75, stock: 'Low Stock' },
-            { partNumber: 'W10285626', brand: 'KitchenAid', appliance: 'Dryer', description: 'ProDry Control System', commonIssues: 'ProDry sensor system, fabric care', models: 'KGHS01PMT, KEHS01PMT, KGHS01RMT', price: 298.95, stock: 'In Stock' },
-            { partNumber: '00655151', brand: 'Bosch', appliance: 'Washer', description: 'EcoSilence Drive Control', commonIssues: 'Brushless motor control, quiet operation', models: 'WAT28401UC, WFMC6401UC, WAW355H1UC', price: 345.75, stock: 'In Stock' },
-            { partNumber: '00637649', brand: 'Bosch', appliance: 'Dryer', description: 'AutoDry Control Board', commonIssues: 'AutoDry sensor system, moisture detection', models: 'WTG86401UC, WTG86402UC, WTW87560UC', price: 298.50, stock: 'Low Stock' },
-            { partNumber: 'EBR93456789', brand: 'LG', appliance: 'Refrigerator', description: 'Door-in-Door Control', commonIssues: 'Door-in-door mechanism, access panel', models: 'LTCS24223S, LTCS20020S, LMXS30776S', price: 389.75, stock: 'Out of Stock' },
-            { partNumber: 'DC92-02456C', brand: 'Samsung', appliance: 'Refrigerator', description: 'Twin Cooling Control', commonIssues: 'Dual evaporator system, humidity control', models: 'RF23J9011SR, RF28JBEDBSG, RF30HDEDTSR', price: 423.50, stock: 'Low Stock' },
-            { partNumber: 'W10754477', brand: 'Maytag', appliance: 'Washer', description: 'Bravos XL Control Board', commonIssues: 'XL capacity control, load balancing', models: 'MVWB855DW, MVWB965HC, MVWB755DW', price: 234.95, stock: 'In Stock' }
+            // MICROWAVE PARTS
+            {
+                partNumber: 'W10211916',
+                brand: 'whirlpool',
+                appliance: 'microwave',
+                component: 'control board',
+                description: 'Control Panel Assembly',
+                symptoms: [
+                    'Microwave not starting',
+                    'Display blank or flickering',
+                    'Buttons not responding'
+                ],
+                errorCodes: ['F1E4', 'F2E6'],
+                compatibility: 'Over-the-Range Microwaves',
+                models: ['WMH31017HS', 'WMH53521H', 'WMH32519H']
+            }
         ];
 
-        let filteredData = [...partsDatabase];
-        let currentBrand = 'Whirlpool';
+        let currentAppliance = '';
+        let currentBrand = '';
 
-        function updateCustomerQuestions(brand) {
-            currentBrand = brand || 'Whirlpool';
-            const brandNameElement = document.getElementById('brandName');
-            const questionsElement = document.getElementById('customerQuestions');
-            
-            brandNameElement.textContent = currentBrand;
-            
-            const questions = brandQuestions[currentBrand] || brandQuestions['Whirlpool'];
-            questionsElement.innerHTML = questions.map(q => `
-                <div class="customer-question" onclick="searchIssue('${q.key}')">
-                    <div class="question-title">${q.title}</div>
-                    <div class="question-desc">${q.desc}</div>
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                searchParts();
+            }
+        }
+
+        function searchParts() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const brandFilter = document.getElementById('brandFilter').value;
+            const applianceFilter = document.getElementById('applianceFilter').value;
+            const componentFilter = document.getElementById('componentFilter').value;
+
+            let filteredParts = applianceParts.filter(part => {
+                const matchesSearch = searchTerm === '' || 
+                    part.partNumber.toLowerCase().includes(searchTerm) ||
+                    part.description.toLowerCase().includes(searchTerm) ||
+                    part.symptoms.some(symptom => symptom.toLowerCase().includes(searchTerm)) ||
+                    part.errorCodes.some(code => code.toLowerCase().includes(searchTerm)) ||
+                    part.models.some(model => model.toLowerCase().includes(searchTerm));
+
+                const matchesBrand = brandFilter === '' || part.brand === brandFilter;
+                const matchesAppliance = applianceFilter === '' || part.appliance === applianceFilter;
+                const matchesComponent = componentFilter === '' || part.component === componentFilter;
+
+                return matchesSearch && matchesBrand && matchesAppliance && matchesComponent;
+            });
+
+            displayResults(filteredParts);
+        }
+
+        function filterParts() {
+            searchParts();
+        }
+
+        function displayResults(parts) {
+            const resultsDiv = document.getElementById('results');
+            const resultsCount = document.getElementById('resultsCount');
+            const partsGrid = document.getElementById('partsGrid');
+            const noResults = document.getElementById('noResults');
+
+            resultsDiv.style.display = 'block';
+            resultsCount.textContent = `${parts.length} parts found`;
+
+            if (parts.length === 0) {
+                partsGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            partsGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            partsGrid.innerHTML = parts.map(part => `
+                <div class="part-card">
+                    <div class="part-header">
+                        <div class="part-number-big">${part.partNumber}</div>
+                    </div>
+                    <div class="brand-tag">${part.brand.toUpperCase()}</div>
+                    <p><strong>${part.description}</strong></p>
+                    <p><em>${part.appliance.charAt(0).toUpperCase() + part.appliance.slice(1)} - ${part.component.charAt(0).toUpperCase() + part.component.slice(1)}</em></p>
+                    
+                    <div class="symptoms">
+                        <h5>🔍 Common Symptoms:</h5>
+                        <ul>
+                            ${part.symptoms.map(symptom => `<li>${symptom}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="error-codes">
+                        <h5>⚠️ Error Codes:</h5>
+                        <ul>
+                            ${part.errorCodes.map(code => `<li>${code}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="compatibility">
+                        <h5>🔧 Compatibility:</h5>
+                        <p>${part.compatibility}</p>
+                        <p><strong>Models:</strong> ${part.models.join(', ')}</p>
+                    </div>
                 </div>
             `).join('');
         }
 
-        function filterTable() {
-            const brandFilter = document.getElementById('brandFilter').value;
-            const applianceFilter = document.getElementById('applianceFilter').value;
-            const stockFilter = document.getElementById('stockFilter').value;
-            const priceFilter = document.getElementById('priceFilter').value;
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-
-            // Update customer questions when brand changes
-            if (brandFilter && brandFilter !== currentBrand) {
-                updateCustomerQuestions(brandFilter);
-            } else if (!brandFilter) {
-                updateCustomerQuestions('Whirlpool');
-            }
-
-            filteredData = partsDatabase.filter(item => {
-                const matchesBrand = !brandFilter || item.brand === brandFilter;
-                const matchesAppliance = !applianceFilter || item.appliance === applianceFilter;
-                const matchesStock = !stockFilter || item.stock === stockFilter;
-                
-                let matchesPrice = true;
-                if (priceFilter) {
-                    const price = item.price;
-                    switch(priceFilter) {
-                        case '0-100': matchesPrice = price < 100; break;
-                        case '100-200': matchesPrice = price >= 100 && price < 200; break;
-                        case '200-300': matchesPrice = price >= 200 && price < 300; break;
-                        case '300+': matchesPrice = price >= 300; break;
-                    }
-                }
-                
-                const matchesSearch = !searchInput || 
-                    item.partNumber.toLowerCase().includes(searchInput) ||
-                    item.description.toLowerCase().includes(searchInput) ||
-                    item.commonIssues.toLowerCase().includes(searchInput) ||
-                    item.models.toLowerCase().includes(searchInput) ||
-                    item.brand.toLowerCase().includes(searchInput);
-
-                return matchesBrand && matchesAppliance && matchesStock && matchesPrice && matchesSearch;
-            });
-
-            displayResults();
-        }
-
-        function displayResults() {
-            const tbody = document.getElementById('inventoryTable');
-            const noResults = document.getElementById('noResults');
-            const filteredCount = document.getElementById('filteredCount');
-
-            if (filteredData.length === 0) {
-                tbody.innerHTML = '';
-                noResults.style.display = 'block';
-                filteredCount.textContent = '0';
-                return;
-            }
-
-            noResults.style.display = 'none';
-            filteredCount.textContent = filteredData.length;
-
-            tbody.innerHTML = filteredData.map(item => `
-                <tr>
-                    <td class="part-number">${item.partNumber}</td>
-                    <td><span class="brand-badge brand-${item.brand.toLowerCase().replace(' ', '-')}">${item.brand}</span></td>
-                    <td>${item.appliance}</td>
-                    <td>${item.description}</td>
-                    <td>${item.commonIssues}</td>
-                    <td>${item.models}</td>
-                    <td class="price-column">$${item.price.toFixed(2)}</td>
-                    <td><span class="stock-indicator ${item.stock.replace(' ', '-').toLowerCase()}">${item.stock}</span></td>
-                </tr>
-            `).join('');
-        }
-
-        function searchIssue(issue) {
-            document.getElementById('searchInput').value = issue;
-            filterTable();
+        function selectAppliance(appliance) {
+            currentAppliance = appliance;
             
-            // Scroll to results
-            document.querySelector('.table-container').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-            // Highlight the search briefly
-            setTimeout(() => {
-                const searchInput = document.getElementById('searchInput');
-                searchInput.style.background = '#3498db';
-                searchInput.style.color = 'white';
-                setTimeout(() => {
-                    searchInput.style.background = '';
-                    searchInput.style.color = '';
-                }, 1500);
-            }, 500);
+            // Update UI
+            document.querySelectorAll('.diagnostic-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Show brand selection
+            const brandStep = document.getElementById('brandStep');
+            const brandOptions = document.getElementById('brandOptions');
+            
+            const brands = [...new Set(applianceParts
+                .filter(part => part.appliance === appliance)
+                .map(part => part.brand))];
+            
+            brandOptions.innerHTML = brands.map(brand => 
+                `<div class="diagnostic-btn" onclick="selectBrand('${brand}')">${brand.charAt(0).toUpperCase() + brand.slice(1)}</div>`
+            ).join('');
+            
+            brandStep.style.display = 'block';
         }
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCustomerQuestions('Whirlpool');
-            displayResults();
-        });
+        function selectBrand(brand) {
+            currentBrand = brand;
+            
+            // Update UI
+            document.querySelectorAll('#brandOptions .diagnostic-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Show symptom selection
+            const symptomStep = document.getElementById('symptomStep');
+            const symptomOptions = document.getElementById('symptomOptions');
+            
+            const symptoms = [...new Set(applianceParts
+                .filter(part => part.appliance === currentAppliance && part.brand === currentBrand)
+                .flatMap(part => part.symptoms))];
+            
+            symptomOptions.innerHTML = symptoms.map(symptom => 
+                `<div class="diagnostic-btn" onclick="selectSymptom('${symptom}')">${symptom}</div>`
+            ).join('');
+            
+            symptomStep.style.display = 'block';
+        }
+
+        function selectSymptom(symptom) {
+            // Filter parts based on selections
+            const matchingParts = applianceParts.filter(part => 
+                part.appliance === currentAppliance && 
+                part.brand === currentBrand && 
+                part.symptoms.some(s => s === symptom)
+            );
+            
+            displayResults(matchingParts);
+        }
+
+        // Initialize with all parts displayed
+        window.onload = function() {
+            displayResults(applianceParts);
+        };
     </script>
 </body>
 </html>
