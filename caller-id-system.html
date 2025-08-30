@@ -1,0 +1,390 @@
+// Comprehensive customer database across all branch territories
+        const customerDatabase = {
+            // OMAHA TERRITORY - Apartment Accounts
+            "(402) 555-1234": {
+                name: "Seldin Property Management",
+                type: "apartment",
+                phone: "(402) 555-1234",
+                address: "1245 Dodge Street, Omaha, NE 68102",
+                property: "Blackstone District Apartments",
+                units: 147,
+                contact: "Sarah Martinez - Maintenance Supervisor",
+                email: "sarah.martinez@seldin.com",
+                creditLimit: 15000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2019-03-15",
+                totalOrders: 312,
+                ytdSpent: 28450.75,
+                lastOrder: "2024-08-25",
+                lastOrderAmount: 847.23,
+                notes: "Always requires PO number. Prefers morning deliveries 8-10 AM. Bulk order discounts applied.",
+                orderHistory: [
+                    { date: "2024-08-25", amount: 847.23, po: "PO-2408-0156", items: "Dishwasher pumps, door seals" },
+                    { date: "2024-08-18", amount: 1235.67, po: "PO-2408-0142", items: "Washer control boards x3, belts" },
+                    { date: "2024-08-12", amount: 678.90, po: "PO-2408-0138", items: "Dryer heating elements, thermostats" }
+                ],
+                commonParts: ["W11096164", "W10724237", "W10619876", "DC92-01021A"],
+                specialInstructions: "Property name FIRST, then caller details. PO can be provided at pickup if needed."
+            },
+            
+            "(402) 555-2345": {
+                name: "Lund Company - Maintenance",
+                type: "apartment",
+                phone: "(402) 555-2345",
+                address: "350 N 76th Street, Omaha, NE 68114",
+                property: "Legacy Apartments",
+                units: 234,
+                contact: "Mike Thompson - Property Manager",
+                email: "mthompson@lundco.com",
+                creditLimit: 25000,
+                paymentTerms: "Net 15",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2017-11-08",
+                totalOrders: 458,
+                ytdSpent: 41250.50,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 1456.78,
+                notes: "Premium account. Emergency after-hours contact available. Prefers OEM parts only.",
+                orderHistory: [
+                    { date: "2024-08-28", amount: 1456.78, po: "LUND-8874", items: "Refrigerator compressor, ice maker kit" },
+                    { date: "2024-08-21", amount: 892.34, po: "LUND-8869", items: "Range control boards x2, igniter" },
+                    { date: "2024-08-15", amount: 734.56, po: "LUND-8863", items: "Washer door locks, drain pump" }
+                ]
+            },
+
+            "(402) 555-3456": {
+                name: "Broodmoore Property Group",
+                type: "apartment",
+                phone: "(402) 555-3456",
+                address: "8825 Arbor Street, Omaha, NE 68124",
+                property: "Broodmoore Luxury Apartments",
+                units: 89,
+                contact: "Jennifer Walsh - Operations Manager",
+                email: "jwalsh@broodmoore.com",
+                creditLimit: 12000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2020-07-22",
+                totalOrders: 187,
+                ytdSpent: 18675.25,
+                lastOrder: "2024-08-26",
+                lastOrderAmount: 623.45,
+                notes: "High-end property. Quality parts only. Tenant satisfaction critical.",
+                orderHistory: [
+                    { date: "2024-08-26", amount: 623.45, po: "BPG-2024-156", items: "Dishwasher control board, wash pump" },
+                    { date: "2024-08-19", amount: 478.90, po: "BPG-2024-153", items: "Microwave magnetron, door switch" }
+                ]
+            },
+
+            // CHICAGO TERRITORY - VIP & Business Accounts
+            "(312) 555-4567": {
+                name: "Premium Home Services",
+                type: "vip",
+                phone: "(312) 555-4567", 
+                address: "875 N Michigan Ave, Chicago, IL 60611",
+                contact: "Robert Chen - Owner",
+                email: "rchen@premiumhomeservices.com",
+                creditLimit: 50000,
+                paymentTerms: "Net 10",
+                poRequired: false,
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2015-01-12",
+                totalOrders: 1247,
+                ytdSpent: 125750.89,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 2847.65,
+                vipPerks: ["15% discount", "Priority shipping", "Dedicated rep", "After-hours support"],
+                notes: "Top tier customer. Concierge-level service required. Same-day delivery available.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 2847.65, items: "Sub-Zero control boards x2, Viking igniter assembly" },
+                    { date: "2024-08-27", amount: 1965.43, items: "Bosch dishwasher pump, premium door seals" },
+                    { date: "2024-08-24", amount: 3215.78, items: "Wolf range controls, premium heating elements" }
+                ],
+                preferredBrands: ["Sub-Zero", "Viking", "Wolf", "Bosch"],
+                serviceArea: "North Shore, Lincoln Park, Gold Coast"
+            },
+
+            "(847) 555-5678": {
+                name: "Suburban Appliance Pros", 
+                type: "business",
+                phone: "(847) 555-5678",
+                address: "1425 Oakton Street, Evanston, IL 60202",
+                contact: "Lisa Rodriguez - Service Manager",
+                email: "lisa@suburbanappliance.com",
+                creditLimit: 20000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "Oak Forest (200)",
+                accountSince: "2018-06-03",
+                totalOrders: 687,
+                ytdSpent: 67890.45,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 1234.56,
+                notes: "High volume customer. Stocks common parts. Weekly delivery route.",
+                orderHistory: [
+                    { date: "2024-08-28", amount: 1234.56, items: "Whirlpool control boards x5, Samsung door locks x3" },
+                    { date: "2024-08-23", amount: 987.34, items: "GE heating elements x4, LG pumps x2" },
+                    { date: "2024-08-21", amount: 1456.78, items: "Mixed repair kits, universal capacitors" }
+                ],
+                serviceArea: "Northwest suburbs, Evanston, Skokie, Wilmette"
+            },
+
+            // MILWAUKEE TERRITORY
+            "(414) 555-6789": {
+                name: "Brew City Appliance Repair",
+                type: "business", 
+                phone: "(414) 555-6789",
+                address: "3247 W National Ave, Milwaukee, WI 53215",
+                contact: "Dave Mueller - Owner/Technician",
+                email: "dave@brewcityrepair.com",
+                creditLimit: 15000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "Milwaukee (400)",
+                accountSince: "2019-09-14",
+                totalOrders: 423,
+                ytdSpent: 34567.89,
+                lastOrder: "2024-08-27",
+                lastOrderAmount: 678.90,
+                notes: "Local family business. Prefers morning deliveries. Cash discount customer.",
+                orderHistory: [
+                    { date: "2024-08-27", amount: 678.90, items: "Whirlpool washer pumps x2, belt kit" },
+                    { date: "2024-08-22", amount: 445.67, items: "Maytag dryer elements, thermostat kit" }
+                ],
+                serviceArea: "Milwaukee metro, West Allis, Wauwatosa"
+            },
+
+            // ROCKFORD TERRITORY
+            "(815) 555-7890": {
+                name: "Joliet Appliance Center",
+                type: "business",
+                phone: "(815) 555-7890", 
+                address: "1847 Essington Rd, Joliet, IL 60435",
+                contact: "Tom Anderson - Service Director",
+                email: "tanderson@jolietappliance.com",
+                creditLimit: 30000,
+                paymentTerms: "Net 30",
+                poRequired: true,
+                preferredWarehouse: "Rockford (500)",
+                accountSince: "2016-04-20",
+                totalOrders: 834,
+                ytdSpent: 78456.23,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 1567.89,
+                notes: "Established dealer. Large service department. Bulk order discounts.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 1567.89, po: "JAC-240829-001", items: "Samsung control boards x3, LG door seals x4" },
+                    { date: "2024-08-25", amount: 2134.56, po: "JAC-240825-002", items: "Mixed inventory restock" }
+                ],
+                serviceArea: "Will County, Grundy County, Kankakee area"
+            },
+
+            // QUAD CITIES TERRITORY  
+            "(563) 555-8901": {
+                name: "Quad Cities Service Co",
+                type: "business",
+                phone: "(563) 555-8901",
+                address: "2156 E Kimberly Rd, Davenport, IA 52807", 
+                contact: "Steve Parker - Operations Manager",
+                email: "sparker@qcservice.com",
+                creditLimit: 25000,
+                paymentTerms: "Net 30", 
+                poRequired: false,
+                preferredWarehouse: "Rockford (500)",
+                accountSince: "2017-08-30",
+                totalOrders: 567,
+                ytdSpent: 56789.12,
+                lastOrder: "2024-08-26",
+                lastOrderAmount: 934.78,
+                notes: "Covers Iowa/Illinois border. Reliable customer. Emergency service contractor.",
+                serviceArea: "Quad Cities metro, Iowa side coverage"
+            },
+
+            // SOUTH ELGIN TERRITORY
+            "(847) 555-9012": {
+                name: "Northwest Suburbs Repair",
+                type: "business",
+                phone: "(847) 555-9012",
+                address: "456 Randall Rd, South Elgin, IL 60177",
+                contact: "Maria Santos - Owner", 
+                email: "maria@nwsuburbsrepair.com",
+                creditLimit: 18000,
+                paymentTerms: "Net 30",
+                poRequired: false,
+                preferredWarehouse: "South Elgin (700)",
+                accountSince: "2020-02-14",
+                totalOrders: 289,
+                ytdSpent: 28934.67,
+                lastOrder: "2024-08-28",
+                lastOrderAmount: 567.45,
+                notes: "Growing business. Female-owned. Community focused service.",
+                serviceArea: "Kane County, western suburbs"
+            },
+
+            // RESIDENTIAL CUSTOMERS - Multiple territories
+            "(312) 555-0123": {
+                name: "Patricia Williams",
+                type: "residential", 
+                phone: "(312) 555-0123",
+                address: "1847 N Cleveland Ave, Chicago, IL 60614",
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2022-11-08",
+                totalOrders: 3,
+                ytdSpent: 287.45,
+                lastOrder: "2024-08-15",
+                lastOrderAmount: 89.99,
+                notes: "Lincoln Park condo owner. Whirlpool washer. Prefers pickup.",
+                orderHistory: [
+                    { date: "2024-08-15", amount: 89.99, items: "Washer door seal W10772617" },
+                    { date: "2024-03-22", amount: 125.50, items: "Control board W11035674" }
+                ]
+            },
+
+            "(402) 555-0234": {
+                name: "John Martinez",
+                type: "residential",
+                phone: "(402) 555-0234", 
+                address: "8756 Dodge Street, Omaha, NE 68114",
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2023-05-12",
+                totalOrders: 2,
+                ytdSpent: 156.78,
+                lastOrder: "2024-07-18",
+                lastOrderAmount: 67.89,
+                notes: "DIY homeowner. Samsung appliances. Researches parts thoroughly.",
+                orderHistory: [
+                    { date: "2024-07-18", amount: 67.89, items: "Dryer belt DC47-00019A" },
+                    { date: "2023-12-14", amount: 88.89, items: "Door lock DC64-01570A" }
+                ]
+            },
+
+            "(847) 555-0345": {
+                name: "Rachel Thompson", 
+                type: "residential",
+                phone: "(847) 555-0345",
+                address: "567 Oak Street, Evanston, IL 60201",
+                preferredWarehouse: "Oak Forest (200)",
+                accountSince: "2024-01-28",
+                totalOrders: 1,
+                ytdSpent: 45.99,
+                lastOrder: "2024-08-20",
+                lastOrderAmount: 45.99,
+                notes: "New customer. LG front-load washer. First-time repair.",
+                orderHistory: [
+                    { date: "2024-08-20", amount: 45.99, items: "Water filter replacement" }
+                ]
+            },
+
+            // COMMERCIAL/INSTITUTIONAL ACCOUNTS
+            "(312) 555-0456": {
+                name: "Chicago Public Housing Authority",
+                type: "commercial",
+                phone: "(312) 555-0456",
+                address: "60 E Van Buren St, Chicago, IL 60605",
+                contact: "James Wilson - Facilities Director",
+                email: "jwilson@cha.org", 
+                creditLimit: 100000,
+                paymentTerms: "Net 45",
+                poRequired: true,
+                preferredWarehouse: "Chicago HQ (100)",
+                accountSince: "2014-06-01",
+                totalOrders: 2156,
+                ytdSpent: 234567.89,
+                lastOrder: "2024-08-29",
+                lastOrderAmount: 5678.90,
+                notes: "Government account. Requires competitive pricing. Volume discounts applied.",
+                orderHistory: [
+                    { date: "2024-08-29", amount: 5678.90, po: "CHA-2024-0892", items: "Bulk washer/dryer parts for housing projects" },
+                    { date: "2024-08-26", amount: 3456.78, po: "CHA-2024-0887", items: "Refrigerator controls, compressors" }
+                ],
+                serviceArea: "Public housing citywide"
+            },
+
+            "(402) 555-0567": {
+                name: "University of Nebraska - Facilities",
+                type: "commercial", 
+                phone: "(402) 555-0567",
+                address: "1400 R St, Lincoln, NE 68588",
+                contact: "Dr. Susan Chen - Facilities Manager",
+                email: "schen@unl.edu",
+                creditLimit: 75000,
+                paymentTerms: "Net 60", 
+                poRequired: true,
+                preferredWarehouse: "Omaha (300)",
+                accountSince: "2016-08-15",
+                totalOrders: 1834,
+                ytdSpent: 167890.34,
+                lastOrder: "2024-08-27",
+                lastOrderAmount: 3456.78,
+                notes: "Educational institution. State purchasing rules. Semester-based heavy usage.",
+                orderHistory: [
+                    { date: "2024-08-27", amount: 3456.78, po: "UNL-FM-24-0156", items: "Dormitory laundry equipment parts" }
+                ],
+                serviceArea: "University campuses, dormitories"
+            }
+        // Website parts database for search functionality
+        const websiteParts = [
+            { partNumber: 'W11608056', brand: 'whirlpool', category: 'control_board', description: 'Electronic Control Board - Smart Series 2024', price: 289.99 },
+            { partNumber: 'DC92-01021A', brand: 'samsung', category: 'control_board', description: 'Main Control PCB - Smart', price: 295.99 },
+            { partNumber: '6871EC1073D', brand: 'lg', category: 'control_board', description: 'Main Control Board - ThinQ', price: 275.50 },
+            { partNumber: 'W10724237', brand: 'whirlpool', category: 'heating_element', description: 'Electric Heating Element - 5400W', price: 125.99 },
+            { partNumber: '12905', brand: 'mars', category: 'capacitor', description: 'Run Capacitor 370V 45MFD', price: 35.99 },
+            { partNumber: 'W10619876', brand: 'whirlpool', category: 'door_lock', description: 'Front Load Door Lock', price: 95.99 },
+            { partNumber: 'W11259272', brand: 'whirlpool', category: 'motor', description: 'Direct Drive Motor Assembly', price: 425.99 },
+            { partNumber: 'RCS3', brand: 'supco', category: 'repair_kit', description: '3-in-1 Start Kit', price: 75.99 },
+            { partNumber: 'W11096164', brand: 'whirlpool', category: 'valve', description: 'Water Inlet Valve - Dual Port', price: 85.50 },
+            { partNumber: 'W10171019', brand: 'whirlpool', category: 'pump', description: 'Drain Pump Assembly - Heavy Duty', price: 125.99 },
+            { partNumber: 'WH12X10355', brand: 'ge', category: 'control_board', description: 'Front Load Control Board - Smart', price: 285.50 },
+            { partNumber: 'W10613606', brand: 'whirlpool', category: 'igniter', description: 'Gas Igniter - Hot Surface Type', price: 75.99 }
+        ];
+
+        function filterWebsiteParts() {
+            const searchTerm = document.getElementById('websiteSearch').value.toLowerCase();
+            const brandFilter = document.getElementById('websiteBrand').value;
+            const categoryFilter = document.getElementById('websiteCategory').value;
+
+            let filteredParts = websiteParts.filter(part => {
+                const matchesSearch = searchTerm === '' || 
+                    part.partNumber.toLowerCase().includes(searchTerm) ||
+                    part.description.toLowerCase().includes(searchTerm) ||
+                    part.brand.toLowerCase().includes(searchTerm);
+
+                const matchesBrand = brandFilter === '' || part.brand === brandFilter;
+                const matchesCategory = categoryFilter === '' || part.category === categoryFilter;
+
+                return matchesSearch && matchesBrand && matchesCategory;
+            });
+
+            displayWebsiteParts(filteredParts);
+        }
+
+        function displayWebsiteParts(parts) {
+            const resultsContainer = document.getElementById('websiteResults');
+            
+            if (parts.length === 0) {
+                resultsContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">No parts found matching your search criteria.</div>';
+                return;
+            }
+
+            resultsContainer.innerHTML = parts.map(part => `
+                <div class="website-part-card">
+                    <div class="website-part-number">${part.partNumber}</div>
+                    <span class="website-part-brand">${part.brand.toUpperCase()}</span>
+                    <div class="website-part-description">${part.description}</div>
+                    <div class="website-part-price">${part.price}</div>
+                </div>
+            `).join('');
+        }
+
+        // Add event listeners for website functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('websiteSearch').addEventListener('input', filterWebsiteParts);
+            document.getElementById('websiteBrand').addEventListener('change', filterWebsiteParts);
+            document.getElementById('websiteCategory').addEventListener('change', filterWebsiteParts);
+        });
+
+        };
