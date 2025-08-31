@@ -142,6 +142,48 @@
             padding: 25px;
         }
 
+        .lookup-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 0 25px;
+        }
+
+        .tab-btn {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #495057;
+            border: 2px solid #dee2e6;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .tab-btn:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 25px;
+        }
+
         .section {
             background: white;
             border-radius: 15px;
@@ -679,7 +721,7 @@
 
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-number" id="totalParts">8,547</div>
+                <div class="stat-number" id="totalParts">8,674</div>
                 <div class="stat-label">Parts Database</div>
             </div>
             <div class="stat-card">
@@ -704,9 +746,17 @@
             </div>
         </div>
 
+        <!-- Navigation Tabs -->
+        <div class="lookup-tabs">
+            <button class="tab-btn active" onclick="switchLookupMode('customer')" id="customerTab">📱 Customer Lookup</button>
+            <button class="tab-btn" onclick="switchLookupMode('diagnostic')" id="diagnosticTab">🧙‍♂️ Smart Diagnostic</button>
+            <button class="tab-btn" onclick="switchLookupMode('parts')" id="partsTab">🔍 Parts Search</button>
+            <button class="tab-btn" onclick="switchLookupMode('model')" id="modelTab">🏷️ Model Lookup</button>
+        </div>
+
         <div class="main-content">
             <!-- Live Caller ID Section -->
-            <div class="section">
+            <div class="section" id="customerSection">
                 <h2 class="section-title">📱 Live Caller ID</h2>
                 
                 <div class="search-container">
@@ -779,7 +829,7 @@
             </div>
 
             <!-- Smart Diagnostic Wizard -->
-            <div class="section">
+            <div class="section" id="diagnosticSection" style="display: none;">
                 <h2 class="section-title">🧙‍♂️ Smart Diagnostic</h2>
                 
                 <div class="diagnostic-wizard">
@@ -832,7 +882,7 @@
             </div>
 
             <!-- Advanced Parts Search -->
-            <div class="section">
+            <div class="section" id="partsSection">
                 <h2 class="section-title">🔍 Advanced Parts Search</h2>
                 
                 <div class="search-container">
@@ -854,7 +904,7 @@
                         <div class="analytics-badge" id="sealSearchCount">0</div>
                     </button>
                     <button class="quick-btn recent" onclick="showRecentParts()" id="recentPartsBtn">Recent (0)</button>
-                    <button class="quick-btn" onclick="clearPartsSearch()">Clear</button>
+                    <button class="quick-btn" onclick="addMissingPart()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);" id="addMissingBtn">+ Missing</button>
                 </div>
 
                 <div class="advanced-search">
@@ -873,6 +923,35 @@
                 </div>
 
                 <div id="partsResults" class="results-area"></div>
+            </div>
+
+            <!-- Model Number Lookup -->
+            <div class="section" id="modelSection" style="display: none;">
+                <h2 class="section-title">🏷️ Model Number Lookup</h2>
+                
+                <div class="search-container">
+                    <input type="text" class="search-box" id="modelSearch" placeholder="Enter complete model number... WFW9620HBK01">
+                    <div class="search-suggestions" id="modelSuggestions"></div>
+                </div>
+                
+                <div class="quick-grid">
+                    <button class="quick-btn" onclick="quickModelSearch('WFW9620HBK01')">Whirlpool Washer</button>
+                    <button class="quick-btn" onclick="quickModelSearch('GFE28GSKSS')">GE Refrigerator</button>
+                    <button class="quick-btn" onclick="quickModelSearch('WM3900HWA')">LG Washer</button>
+                    <button class="quick-btn" onclick="quickModelSearch('DLE7100W')">LG Dryer</button>
+                    <button class="quick-btn" onclick="showRecentModels()" id="recentModelsBtn">Recent (0)</button>
+                    <button class="quick-btn" onclick="clearModelSearch()">Clear</button>
+                </div>
+
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #2196f3;">
+                    <strong>Model Number Tips:</strong><br>
+                    • Enter complete model number for best results<br>
+                    • Model numbers are usually on a sticker inside the appliance<br>
+                    • Some have serial numbers - use model number only<br>
+                    • Example formats: WFW9620HBK01, GFE28GSKSS, DV42H5000EW
+                </div>
+
+                <div id="modelResults" class="results-area"></div>
             </div>
         </div>
     </div>
@@ -935,6 +1014,24 @@
                 </div>
                 <button onclick="exportBookmarks()" style="margin-top: 10px; padding: 8px 15px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;">Export Bookmarks</button>
             </div>
+
+            <div class="settings-section">
+                <h3>📋 Missing Parts Queue</h3>
+                <div id="missingPartsDisplay">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="newPartNumber" placeholder="Enter part number..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <button onclick="quickAddMissingPart()" style="padding: 8px 15px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">+ Add</button>
+                    </div>
+                    <div id="missingPartsList">
+                        <p>No parts in queue. Add parts you need to research and add to your database later.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button onclick="processMissingParts()" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">🔍 Research & Add</button>
+                    <button onclick="exportMissingParts()" style="padding: 8px 15px; background: #6f42c1; color: white; border: none; border-radius: 5px; cursor: pointer;">Export List</button>
+                    <button onclick="clearMissingParts()" style="padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear All</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -960,7 +1057,8 @@
                 autoSave: true,
                 fuzzySearch: true,
                 analytics: true
-            }
+            },
+            missingParts: [] // New feature for parts queue
         };
 
         // Load data from localStorage on startup
@@ -1250,6 +1348,9 @@
                 html += '</ul>';
                 bookmarksList.innerHTML = html;
             }
+
+            // Update missing parts display
+            updateMissingPartsDisplay();
         }
 
         // Data management functions
@@ -1736,6 +1837,1585 @@
                 warranty: "90 Days",
                 amperage: "3.2-3.6 amps",
                 material: "Silicon Carbide"
+            },
+
+            // MASSIVE EXPANSION - Additional Whirlpool Parts
+            {
+                partNumber: "W10839136",
+                description: "Whirlpool Dryer Moisture Sensor - Automatic Dry Control",
+                price: 89.99,
+                stock: 14,
+                brand: "whirlpool",
+                category: "sensor",
+                appliance: "dryer",
+                symptoms: ["Over drying", "Under drying", "Auto dry not working", "Clothes still damp"],
+                models: ["WED7120HC1", "WGD7120HC1", "WED8120HC1", "WGD8120HC1"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "W11035747",
+                description: "Whirlpool Dishwasher Wash Arm - Upper Spray Assembly",
+                price: 34.50,
+                stock: 28,
+                brand: "whirlpool",
+                category: "spray",
+                appliance: "dishwasher",
+                symptoms: ["Poor cleaning top rack", "No spray action", "Food remains on dishes", "Weak water pressure"],
+                models: ["WDT750SAKZ1", "WDF520PADM7", "WDT710PAHZ1"],
+                installation: "Very easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "W10195417",
+                description: "Whirlpool Refrigerator Evaporator Fan Motor - Freezer Section",
+                price: 156.78,
+                stock: 9,
+                brand: "whirlpool",
+                category: "motor",
+                appliance: "refrigerator",
+                symptoms: ["Loud noise from freezer", "Poor cooling", "Fan not running", "Ice buildup"],
+                models: ["WRS325SDHZ01", "WRF535SWHZ01", "WRS588FIHZ01"],
+                installation: "Difficult - refrigeration knowledge required",
+                warranty: "2 Year Motor"
+            },
+            {
+                partNumber: "W10832845",
+                description: "Whirlpool Washer Suspension Rod Kit - Vibration Control",
+                price: 67.89,
+                stock: 18,
+                brand: "whirlpool",
+                category: "suspension",
+                appliance: "washer",
+                symptoms: ["Excessive vibration", "Walking washer", "Loud banging", "Unbalanced loads"],
+                models: ["WTW7120HC1", "WTW8120HC1", "WTW5105HC1"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "W10293048",
+                description: "Whirlpool Range Bake Element - 2800W Coil Style",
+                price: 89.45,
+                stock: 22,
+                brand: "whirlpool",
+                category: "element",
+                appliance: "range",
+                symptoms: ["No bake heat", "Uneven baking", "Element not glowing", "Slow preheating"],
+                models: ["WFE525S0HS1", "WFE515S0ES1", "WFE505W0HS1"],
+                installation: "Easy",
+                warranty: "90 Days",
+                wattage: "2800W"
+            },
+
+            // GE Expanded Inventory
+            {
+                partNumber: "WH23X10030",
+                description: "GE Washer Transmission - Gear Case Assembly",
+                price: 445.99,
+                stock: 4,
+                brand: "ge",
+                category: "transmission",
+                appliance: "washer",
+                symptoms: ["Won't agitate", "Grinding noise", "Won't spin", "Stuck in one direction"],
+                models: ["GTWS8650DWS", "GTWS8355DWS", "GTWS8400DWS"],
+                installation: "Professional required",
+                warranty: "5 Year Transmission"
+            },
+            {
+                partNumber: "WB27T11230",
+                description: "GE Range Control Knob Set - Temperature Selection",
+                price: 25.99,
+                stock: 35,
+                brand: "ge",
+                category: "knob",
+                appliance: "range",
+                symptoms: ["Knob won't turn", "Temperature incorrect", "Broken knob", "Missing markings"],
+                models: ["JGS760BELTS", "JGB735DEPBB", "JGS750DEFBB"],
+                installation: "Very easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "WR55X10942",
+                description: "GE Refrigerator Defrost Heater - Evaporator Coil",
+                price: 67.45,
+                stock: 16,
+                brand: "ge",
+                category: "heater",
+                appliance: "refrigerator",
+                symptoms: ["Frost buildup", "Ice in freezer", "Poor cooling", "Defrost cycle not working"],
+                models: ["GFE28GSKSS", "GNE27JSMSS", "GFE26JSMSS"],
+                installation: "Professional recommended",
+                warranty: "1 Year",
+                wattage: "500W"
+            },
+            {
+                partNumber: "WH12X10479",
+                description: "GE Washer Door Lock Assembly - Electronic Latch",
+                price: 189.99,
+                stock: 11,
+                brand: "ge",
+                category: "door",
+                appliance: "washer",
+                symptoms: ["Door won't lock", "Won't start", "Error code", "Door ajar light"],
+                models: ["GFWN1000L0WW", "GFWN1100L0WW", "GFWH1200L0WW"],
+                errorCodes: ["E20", "E23", "E54"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // Samsung Expanded Parts
+            {
+                partNumber: "DC97-16782A",
+                description: "Samsung Washer Drum Spider Assembly - Stainless Steel",
+                price: 234.99,
+                stock: 7,
+                brand: "samsung",
+                category: "drum",
+                appliance: "washer",
+                symptoms: ["Loud banging", "Unbalanced drum", "Clothes torn", "Metal grinding noise"],
+                models: ["WF45R6100AC", "WF45R6300AC", "WF50R8500AC"],
+                installation: "Professional required - major disassembly",
+                warranty: "2 Year"
+            },
+            {
+                partNumber: "DA82-02376A",
+                description: "Samsung Refrigerator Water Filter - HAF-CIN/EXP",
+                price: 42.99,
+                stock: 67,
+                brand: "samsung",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Bad taste", "Slow water flow", "Filter light on", "Cloudy water"],
+                models: ["RF23J9011SR", "RF28R7351SR", "RF28R6201SR"],
+                installation: "Very easy - twist and lock",
+                warranty: "6 Months",
+                lifespan: "6 months or 300 gallons"
+            },
+            {
+                partNumber: "DG94-01545A",
+                description: "Samsung Range Gas Valve Assembly - Safety Control",
+                price: 156.78,
+                stock: 8,
+                brand: "samsung",
+                category: "valve",
+                appliance: "range",
+                symptoms: ["Burner won't light", "Gas smell", "Uneven flame", "Safety lockout"],
+                models: ["NX60T8111SS", "NX58R5601SS", "NX58M6630SS"],
+                installation: "Professional required - gas line work",
+                warranty: "1 Year"
+            },
+
+            // LG Premium Parts
+            {
+                partNumber: "AEQ73110205",
+                description: "LG Washer Inverter Control Board - Direct Drive Motor",
+                price: 378.99,
+                stock: 5,
+                brand: "lg",
+                category: "control",
+                appliance: "washer",
+                symptoms: ["Motor not running", "Error codes", "No power to motor", "Inverter failure"],
+                models: ["WM3900HWA", "WM4000HWA", "WM4200HWA"],
+                errorCodes: ["IE", "OE", "UE", "dE"],
+                installation: "Professional required",
+                warranty: "10 Year Inverter"
+            },
+            {
+                partNumber: "MEF62185002",
+                description: "LG Dryer Lint Filter Screen - High Efficiency Mesh",
+                price: 28.50,
+                stock: 45,
+                brand: "lg",
+                category: "filter",
+                appliance: "dryer",
+                symptoms: ["Poor drying", "Lint everywhere", "Long dry times", "Overheating"],
+                models: ["DLE7100W", "DLE7200W", "DLE7300WE"],
+                installation: "Very easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "AGL74852608",
+                description: "LG Dishwasher Drain Hose Assembly - Corrugated",
+                price: 34.99,
+                stock: 19,
+                brand: "lg",
+                category: "hose",
+                appliance: "dishwasher",
+                symptoms: ["Won't drain", "Water backing up", "Leak under dishwasher", "Slow drain"],
+                models: ["LDP6797ST", "LDT5665ST", "LDF5545ST"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // Frigidaire Parts
+            {
+                partNumber: "5304505350",
+                description: "Frigidaire Refrigerator Compressor Start Relay",
+                price: 23.99,
+                stock: 38,
+                brand: "frigidaire",
+                category: "relay",
+                appliance: "refrigerator",
+                symptoms: ["Compressor won't start", "Clicking noise", "Not cooling", "Runs briefly then stops"],
+                models: ["FFTR1821TW", "FFTR2021TS", "FFTR1222QW"],
+                installation: "Easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "316048413",
+                description: "Frigidaire Range Surface Element - 8 Inch 2100W",
+                price: 67.89,
+                stock: 24,
+                brand: "frigidaire",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Hot spots", "Element cracked"],
+                models: ["FGEF3059MF", "FGEF3035RF", "FGEF3032MF"],
+                installation: "Easy - plug in",
+                warranty: "90 Days",
+                wattage: "2100W"
+            },
+            {
+                partNumber: "134550800",
+                description: "Frigidaire Dryer Idler Pulley - Tension Assembly",
+                price: 45.99,
+                stock: 27,
+                brand: "frigidaire",
+                category: "pulley",
+                appliance: "dryer",
+                symptoms: ["Squealing noise", "Belt slipping", "Drum not turning", "Intermittent operation"],
+                models: ["FAQG7011KW", "FAQG7073KW", "FARE4044MW"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // Maytag Heavy Duty Parts
+            {
+                partNumber: "W11035523",
+                description: "Maytag Washer Agitator Assembly - Dual Action",
+                price: 145.99,
+                stock: 12,
+                brand: "maytag",
+                category: "agitator",
+                appliance: "washer",
+                symptoms: ["Poor wash action", "Agitator loose", "Won't agitate", "Clothes tangled"],
+                models: ["MVWC465HW", "MVWC565FW", "MVWC665EW"],
+                installation: "Easy - twist off/on",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "W11259787",
+                description: "Maytag Dryer Thermal Fuse - Overheat Protection",
+                price: 18.99,
+                stock: 89,
+                brand: "maytag",
+                category: "fuse",
+                appliance: "dryer",
+                symptoms: ["No heat", "Won't start", "Runs but cold", "Thermal cutoff"],
+                models: ["MEDC465HW", "MEDC555DW", "MGDC465HW"],
+                installation: "Easy",
+                warranty: "90 Days",
+                temperature: "325°F cutoff"
+            },
+
+            // Kenmore Universal Parts
+            {
+                partNumber: "8183196",
+                description: "Kenmore Dishwasher Upper Dish Rack Assembly - Adjustable",
+                price: 189.99,
+                stock: 8,
+                brand: "kenmore",
+                category: "rack",
+                appliance: "dishwasher",
+                symptoms: ["Rack won't slide", "Broken wheels", "Bent tines", "Poor cleaning top dishes"],
+                models: ["665.13543N411", "665.13549N411", "665.13553N411"],
+                installation: "Easy - lift out",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "4389102",
+                description: "Kenmore Refrigerator Ice Maker Water Valve - Dual Solenoid",
+                price: 89.45,
+                stock: 16,
+                brand: "kenmore",
+                category: "valve",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Slow ice making", "Water not filling", "Valve stuck"],
+                models: ["596.76523410", "596.76529410", "596.76533410"],
+                installation: "Moderate - water line connection",
+                warranty: "1 Year",
+                voltage: "120V AC"
+            },
+
+            // Bosch Precision Parts
+            {
+                partNumber: "00644997",
+                description: "Bosch Dishwasher Wash Pump and Motor Assembly - German Engineering",
+                price: 267.89,
+                stock: 6,
+                brand: "bosch",
+                category: "pump",
+                appliance: "dishwasher",
+                symptoms: ["Poor wash performance", "No water circulation", "Grinding noise", "Error E24"],
+                models: ["SHE68T55UC", "SHE68T52UC", "SHE65T55UC"],
+                errorCodes: ["E24", "E25"],
+                installation: "Professional recommended",
+                warranty: "2 Year Pump",
+                voltage: "120V"
+            },
+            {
+                partNumber: "00754869",
+                description: "Bosch Range Door Handle - Stainless Steel",
+                price: 156.99,
+                stock: 11,
+                brand: "bosch",
+                category: "handle",
+                appliance: "range",
+                symptoms: ["Handle broken", "Door won't open", "Loose handle", "Handle discolored"],
+                models: ["HGS8655UC", "HGS8645UC", "HGS8056UC"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                material: "Stainless Steel"
+            },
+
+            // KitchenAid Premium Appliance Parts
+            {
+                partNumber: "W11127809",
+                description: "KitchenAid Stand Mixer Planetary Assembly - Professional Series",
+                price: 89.99,
+                stock: 13,
+                brand: "kitchenaid",
+                category: "planetary",
+                appliance: "mixer",
+                symptoms: ["Beater not reaching bowl", "Poor mixing", "Attachment loose", "Uneven mixing"],
+                models: ["KV25G0XWH", "KP26M1XWH", "KSM150PSWH"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "W10756692",
+                description: "KitchenAid Dishwasher Control Panel - ProWash Series",
+                price: 234.99,
+                stock: 7,
+                brand: "kitchenaid",
+                category: "control",
+                appliance: "dishwasher",
+                symptoms: ["Buttons not working", "Display blank", "Won't start", "Control panel cracked"],
+                models: ["KDPE334GPS", "KDPE234GPS", "KDTE334GPS"],
+                installation: "Professional recommended",
+                warranty: "1 Year"
+            },
+
+            // Amana Value Parts
+            {
+                partNumber: "W10613606",
+                description: "Amana Dryer Drive Belt - Multi-Rib Design",
+                price: 24.99,
+                stock: 34,
+                brand: "amana",
+                category: "belt",
+                appliance: "dryer",
+                symptoms: ["Drum not turning", "Belt squealing", "Burning smell", "Belt broken"],
+                models: ["NED4655EW", "NGD4655EW", "NED4700YQ1"],
+                installation: "Moderate difficulty",
+                warranty: "90 Days",
+                length: "92.25 inches"
+            },
+            {
+                partNumber: "W10577846",
+                description: "Amana Refrigerator Temperature Control Thermostat",
+                price: 67.45,
+                stock: 21,
+                brand: "amana",
+                category: "thermostat",
+                appliance: "refrigerator",
+                symptoms: ["Too cold", "Too warm", "Temperature fluctuating", "Won't cycle"],
+                models: ["ART318FFDB", "ART318FFDM", "ART318FFDW"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // Specialty and Universal Parts
+            {
+                partNumber: "285753A",
+                description: "Universal Washer Lid Switch - Safety Interlock",
+                price: 29.99,
+                stock: 45,
+                brand: "universal",
+                category: "switch",
+                appliance: "washer",
+                symptoms: ["Won't start with lid closed", "Lid switch clicking", "Safety lockout", "No power"],
+                models: ["Fits most top-load washers"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "341241",
+                description: "Universal Dryer Door Catch Assembly - Spring Loaded",
+                price: 19.99,
+                stock: 67,
+                brand: "universal",
+                category: "door",
+                appliance: "dryer",
+                symptoms: ["Door won't stay closed", "Door pops open", "Catch worn", "Door alignment"],
+                models: ["Fits most dryers"],
+                installation: "Easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "WPW10158389",
+                description: "Universal Dishwasher Rinse Aid Dispenser - Blue Cap",
+                price: 34.50,
+                stock: 28,
+                brand: "universal",
+                category: "dispenser",
+                appliance: "dishwasher",
+                symptoms: ["Spots on dishes", "Poor drying", "Rinse aid not dispensing", "Dispenser leaking"],
+                models: ["Fits most dishwashers"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+
+            // High-Volume Consumable Parts
+            {
+                partNumber: "WP8212526",
+                description: "Universal Appliance Light Bulb - 40W 130V",
+                price: 8.99,
+                stock: 125,
+                brand: "universal",
+                category: "bulb",
+                appliance: "universal",
+                symptoms: ["No light", "Dim light", "Flickering", "Bulb burned out"],
+                models: ["Fits most appliances"],
+                installation: "Very easy",
+                warranty: "30 Days",
+                wattage: "40W",
+                voltage: "130V"
+            },
+            {
+                partNumber: "285068A",
+                description: "Universal Dryer Belt Tensioner Pulley",
+                price: 45.99,
+                stock: 89,
+                brand: "universal",
+                category: "pulley",
+                appliance: "dryer",
+                symptoms: ["Belt slipping", "Squealing", "Poor tension", "Drum slow to start"],
+                models: ["Fits most dryers"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // Professional Series Parts
+            {
+                partNumber: "WPW10482314",
+                description: "EveryDrop Water Filter 1 - Refrigerator Filter Replacement",
+                price: 49.99,
+                stock: 156,
+                brand: "everydrop",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Bad taste", "Slow water flow", "Filter light on", "Cloudy ice"],
+                models: ["W10295370A", "W10413645A", "NL240V"],
+                installation: "Very easy - twist and lock",
+                warranty: "6 Months",
+                lifespan: "6 months or 200 gallons",
+                certifications: "NSF 42 & 53 certified"
+            },
+            {
+                partNumber: "EPTWFU01",
+                description: "PureDrop Water Filter - Premium Filtration System",
+                price: 59.99,
+                stock: 98,
+                brand: "puredrop",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Chlorine taste", "Bad odor", "Sediment in water", "Filter expired"],
+                models: ["FGHB2868TF", "FGHC2331PF", "FGHS2355PF"],
+                installation: "Very easy",
+                warranty: "6 Months",
+                lifespan: "6 months or 300 gallons"
+            },
+
+            // HIGH-DEMAND WHIRLPOOL PARTS - Most Common Service Calls
+            {
+                partNumber: "W10536347",
+                description: "Whirlpool Washer Lid Switch Assembly - Top Load Safety",
+                price: 45.99,
+                stock: 67,
+                brand: "whirlpool",
+                category: "switch",
+                appliance: "washer",
+                symptoms: ["Won't start", "Lid switch clicking", "Safety error", "Won't fill"],
+                models: ["WTW4816FW", "WTW4950XW", "WTW5000DW", "WTW4855HW"],
+                installation: "Easy",
+                warranty: "1 Year",
+                note: "Most common washer failure"
+            },
+            {
+                partNumber: "3392519",
+                description: "Whirlpool Dryer Thermal Fuse - Most Common Failure",
+                price: 15.99,
+                stock: 156,
+                brand: "whirlpool",
+                category: "fuse",
+                appliance: "dryer",
+                symptoms: ["No power", "Won't start", "Dead unit", "Thermal cutoff"],
+                models: ["WED4815EW", "WGD4815EW", "WED5620HW", "WGD5620HW"],
+                installation: "Easy - 2 wire connections",
+                warranty: "90 Days",
+                temperature: "325°F cutoff",
+                note: "Stock high - sells daily"
+            },
+            {
+                partNumber: "W10613606",
+                description: "Whirlpool Dryer Drive Belt - 92.25\" Multi-Rib",
+                price: 28.99,
+                stock: 89,
+                brand: "whirlpool",
+                category: "belt",
+                appliance: "dryer",
+                symptoms: ["Drum not turning", "Belt squealing", "Loud noise", "Belt broken"],
+                models: ["WED4815EW", "WGD4815EW", "WED5620HW", "WED4950HW"],
+                installation: "Moderate - drum removal needed",
+                warranty: "1 Year",
+                length: "92.25 inches",
+                note: "High turnover item"
+            },
+            {
+                partNumber: "W10837240",
+                description: "Whirlpool Washer Water Pump - Universal Drain Pump",
+                price: 89.99,
+                stock: 34,
+                brand: "whirlpool",
+                category: "pump",
+                appliance: "washer",
+                symptoms: ["Won't drain", "Slow drain", "Pump noise", "Error code F9 E1"],
+                models: ["WFW9620H", "WFW8620H", "WFW7620H", "WFW6620H"],
+                errorCodes: ["F9 E1", "F9 E2"],
+                installation: "Moderate difficulty",
+                warranty: "2 Year Pump",
+                gpm: "8 gallons per minute"
+            },
+            {
+                partNumber: "W10212596",
+                description: "Whirlpool Refrigerator Water Valve - Ice Maker Fill",
+                price: 67.89,
+                stock: 45,
+                brand: "whirlpool",
+                category: "valve",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Slow ice production", "Water not filling", "Ice maker cycling but no water"],
+                models: ["WRS325SDHZ", "WRF535SWHZ", "WRS588FIHZ", "WRF757SDEM"],
+                installation: "Moderate - water line connection",
+                warranty: "1 Year",
+                voltage: "120V AC",
+                note: "Summer high-demand item"
+            },
+            {
+                partNumber: "8559308",
+                description: "Whirlpool Dishwasher Chopper Assembly - Food Disposal Unit",
+                price: 156.78,
+                stock: 18,
+                brand: "whirlpool",
+                category: "chopper",
+                appliance: "dishwasher",
+                symptoms: ["Food not grinding", "Loud grinding noise", "Poor wash performance", "Clogged spray arms"],
+                models: ["WDT750SAKZ", "WDF520PADM", "WDT710PAHZ", "WDF540PADM"],
+                installation: "Professional recommended",
+                warranty: "2 Year",
+                note: "Hard water areas - frequent replacement"
+            },
+            {
+                partNumber: "W10190606",
+                description: "Whirlpool Range Surface Element - 8\" 2500W Coil",
+                price: 45.99,
+                stock: 78,
+                brand: "whirlpool",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Uneven heat", "Element cracked"],
+                models: ["WFE515S0ES", "WFE525S0HS", "WFE505W0HS", "WFE540H0ES"],
+                installation: "Very easy - plug and play",
+                warranty: "90 Days",
+                wattage: "2500W",
+                diameter: "8 inches"
+            },
+            {
+                partNumber: "W10394018",
+                description: "Whirlpool Washer Drive Motor - Direct Drive 3/4 HP",
+                price: 289.99,
+                stock: 12,
+                brand: "whirlpool",
+                category: "motor",
+                appliance: "washer",
+                symptoms: ["Won't spin", "Won't agitate", "Motor humming", "Burning smell"],
+                models: ["WTW4955HW", "WTW4815EW", "WTW5000DW", "WTW4850HW"],
+                installation: "Professional recommended",
+                warranty: "5 Year Motor",
+                horsepower: "3/4 HP",
+                rpm: "650/350 dual speed"
+            },
+            {
+                partNumber: "W10295370A",
+                description: "Whirlpool EveryDrop Filter 1 - Refrigerator Water Filter",
+                price: 44.99,
+                stock: 234,
+                brand: "whirlpool",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Filter light on", "Bad taste", "Slow flow", "Cloudy water"],
+                models: ["WRS325SDHZ", "WRF535SWHZ", "WRS588FIHZ", "WRF757SDEM"],
+                installation: "Very easy - twist and lock",
+                warranty: "6 Months",
+                lifespan: "6 months or 200 gallons",
+                certifications: "NSF 42 & 53",
+                note: "Highest volume seller"
+            },
+            {
+                partNumber: "W11035523",
+                description: "Whirlpool Washer Agitator Dogs - Ratcheting Cams",
+                price: 19.99,
+                stock: 145,
+                brand: "whirlpool",
+                category: "agitator",
+                appliance: "washer",
+                symptoms: ["Agitator spins freely", "No wash action", "Clothes not moving", "Agitator loose"],
+                models: ["WTW4955HW", "WTW4815EW", "WTW5000DW", "WTW4950XW"],
+                installation: "Easy - agitator removal",
+                warranty: "1 Year",
+                note: "Wear item - frequent replacement"
+            },
+            {
+                partNumber: "74007498",
+                description: "Whirlpool Range Oven Door Seal - Heat Resistant Gasket",
+                price: 78.99,
+                stock: 28,
+                brand: "whirlpool",
+                category: "seal",
+                appliance: "range",
+                symptoms: ["Heat escaping", "Uneven baking", "Door not sealing", "Worn gasket"],
+                models: ["WFE515S0ES", "WFE525S0HS", "WFE505W0HS", "WFE540H0ES"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                temperature: "Up to 500°F",
+                material: "High-temp rubber"
+            },
+            {
+                partNumber: "W10469845",
+                description: "Whirlpool Dishwasher Door Latch Assembly - Electronic Lock",
+                price: 89.99,
+                stock: 31,
+                brand: "whirlpool",
+                category: "latch",
+                appliance: "dishwasher",
+                symptoms: ["Door won't latch", "Won't start", "Door pops open", "Latch clicking"],
+                models: ["WDT750SAKZ", "WDF520PADM", "WDT710PAHZ", "WDF540PADM"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                note: "Common failure on models 2018+"
+            },
+            {
+                partNumber: "W10857612",
+                description: "Whirlpool Microwave Magnetron - 1000W High Power",
+                price: 189.99,
+                stock: 8,
+                brand: "whirlpool",
+                category: "magnetron",
+                appliance: "microwave",
+                symptoms: ["Not heating food", "Sparking", "Running but cold", "Loud humming"],
+                models: ["WMH31017HZ", "WMH32519HZ", "WMH53521HZ", "WMH76719CS"],
+                installation: "Professional only - high voltage danger",
+                warranty: "1 Year",
+                wattage: "1000W",
+                frequency: "2450 MHz"
+            },
+            {
+                partNumber: "W10428773",
+                description: "Whirlpool Washer Water Temperature Switch - Hot/Cold Select",
+                price: 34.99,
+                stock: 52,
+                brand: "whirlpool",
+                category: "switch",
+                appliance: "washer",
+                symptoms: ["Wrong water temperature", "Switch not clicking", "No hot water", "Temperature mix problems"],
+                models: ["WTW4955HW", "WTW4815EW", "WTW5000DW", "WTW4950XW"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "W10190965",
+                description: "Whirlpool Ice Maker Assembly - Complete Replacement Unit",
+                price: 198.99,
+                stock: 16,
+                brand: "whirlpool",
+                category: "icemaker",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Small ice cubes", "Ice maker not cycling", "Water not filling"],
+                models: ["WRS325SDHZ", "WRF535SWHZ", "WRS588FIHZ", "WRF757SDEM"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                production: "8 lbs per day",
+                cubeType: "Crescent shaped",
+                note: "Complete assembly - easier than parts"
+            },
+
+            // HIGH-DEMAND GE PARTS - Most Common Service Calls
+            {
+                partNumber: "WE4M533",
+                description: "GE Dryer Thermal Fuse - Overheating Protection",
+                price: 18.99,
+                stock: 142,
+                brand: "ge",
+                category: "fuse",
+                appliance: "dryer",
+                symptoms: ["No power", "Won't start", "Dead unit", "Thermal cutoff"],
+                models: ["GTD72EBPNDG", "GTD75ECPLDG", "GTD76GCPNRG", "GFD65ESSMWW"],
+                installation: "Easy - 2 spade connections",
+                warranty: "90 Days",
+                temperature: "325°F cutoff",
+                note: "Top GE failure item - high turnover"
+            },
+            {
+                partNumber: "WH01X10462",
+                description: "GE Washer Water Pump - Universal Drain Assembly",
+                price: 95.99,
+                stock: 38,
+                brand: "ge",
+                category: "pump", 
+                appliance: "washer",
+                symptoms: ["Won't drain", "Slow drain", "Pump noise", "Error E20"],
+                models: ["GFWN1000L0WW", "GFWN1100L0WW", "GFWH1200L0WW", "GFWS1700H0WW"],
+                errorCodes: ["E20", "E23", "E40"],
+                installation: "Moderate difficulty",
+                warranty: "2 Year Pump",
+                gpm: "10 gallons per minute"
+            },
+            {
+                partNumber: "WB36X10003",
+                description: "GE Range Surface Element - 8\" 2600W Coil",
+                price: 52.99,
+                stock: 89,
+                brand: "ge",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Uneven heat", "Element burned out"],
+                models: ["JB655SKSS", "JB645RKSS", "JB258DMWW", "JB735SPSS"],
+                installation: "Very easy - plug and play",
+                warranty: "90 Days",
+                wattage: "2600W",
+                diameter: "8 inches"
+            },
+            {
+                partNumber: "WR02X12208",
+                description: "GE Refrigerator Water Filter - RPWF Replacement",
+                price: 47.99,
+                stock: 178,
+                brand: "ge",
+                category: "filter",
+                appliance: "refrigerator", 
+                symptoms: ["Filter light on", "Bad taste", "Slow flow", "Cloudy water"],
+                models: ["GFE28GSKSS", "GNE27JSMSS", "GFE26JSMSS", "GNE25JSKSS"],
+                installation: "Very easy - twist and lock",
+                warranty: "6 Months",
+                lifespan: "6 months or 300 gallons",
+                certifications: "NSF 42 & 53",
+                note: "High-volume seller"
+            },
+            {
+                partNumber: "WE25M40",
+                description: "GE Dryer Door Switch - Safety Interlock",
+                price: 28.99,
+                stock: 76,
+                brand: "ge",
+                category: "switch",
+                appliance: "dryer",
+                symptoms: ["Won't start", "Door switch clicking", "No power", "Safety lockout"],
+                models: ["GTD72EBPNDG", "GTD75ECPLDG", "GTD76GCPNRG", "GFD65ESSMWW"],
+                installation: "Easy",
+                warranty: "1 Year",
+                note: "Common wear item"
+            },
+            {
+                partNumber: "WB02T10327",
+                description: "GE Microwave Door Handle - Black Plastic",
+                price: 34.50,
+                stock: 45,
+                brand: "ge",
+                category: "handle",
+                appliance: "microwave",
+                symptoms: ["Handle broken", "Door won't open", "Handle loose", "Cracked handle"],
+                models: ["JVM3160RFSS", "JVM3162RJSS", "JVM6175YKFS", "JNM3163DJBB"],
+                installation: "Easy - 2 screws",
+                warranty: "90 Days",
+                color: "Black"
+            },
+            {
+                partNumber: "WH23X24178",
+                description: "GE Washer Drive Belt - V-Belt Style",
+                price: 32.99,
+                stock: 67,
+                brand: "ge",
+                category: "belt",
+                appliance: "washer",
+                symptoms: ["Won't spin", "Won't agitate", "Belt squealing", "Washing machine dead"],
+                models: ["GTWS8350D5WS", "GTWS8655DGS", "GTWS8400DWS"],
+                installation: "Moderate - cabinet removal",
+                warranty: "1 Year",
+                type: "V-Belt configuration"
+            },
+            {
+                partNumber: "WR17X11705",
+                description: "GE Refrigerator Ice Maker Water Valve - Dual Solenoid",
+                price: 78.99,
+                stock: 29,
+                brand: "ge",
+                category: "valve",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Slow ice production", "Water not filling", "Ice maker cycling"],
+                models: ["GFE28GSKSS", "GNE27JSMSS", "GFE26JSMSS", "GNE25JSKSS"],
+                installation: "Moderate - water line connection", 
+                warranty: "1 Year",
+                voltage: "120V AC"
+            },
+            {
+                partNumber: "WB25T10073",
+                description: "GE Range Oven Light Bulb - High Temperature 40W",
+                price: 12.99,
+                stock: 234,
+                brand: "ge",
+                category: "bulb",
+                appliance: "range",
+                symptoms: ["No oven light", "Dim light", "Bulb burned out", "Flickering light"],
+                models: ["JB655SKSS", "JB645RKSS", "JB258DMWW", "JB735SPSS"],
+                installation: "Very easy - screw in",
+                warranty: "30 Days",
+                wattage: "40W",
+                temperature: "Up to 500°F",
+                note: "Consumable - high stock"
+            },
+            {
+                partNumber: "WR49X10283",
+                description: "GE Refrigerator Defrost Timer - 8-Hour Cycle",
+                price: 89.99,
+                stock: 22,
+                brand: "ge",
+                category: "timer",
+                appliance: "refrigerator",
+                symptoms: ["Frost buildup", "Not defrosting", "Running constantly", "Temperature issues"],
+                models: ["GTS22KBPBRWW", "GTS18KBPBRWW", "GTS20KBPBRWW"],
+                installation: "Professional recommended",
+                warranty: "1 Year",
+                cycle: "8-hour automatic defrost"
+            },
+            {
+                partNumber: "WE49X20697",
+                description: "GE Dryer Lint Screen Filter - Fine Mesh",
+                price: 24.99,
+                stock: 123,
+                brand: "ge",
+                category: "filter",
+                appliance: "dryer",
+                symptoms: ["Poor drying", "Lint everywhere", "Long dry times", "Overheating"],
+                models: ["GTD72EBPNDG", "GTD75ECPLDG", "GTD76GCPNRG", "GFD65ESSMWW"],
+                installation: "Very easy - slide in",
+                warranty: "90 Days",
+                note: "Wear item - regular replacement"
+            },
+            {
+                partNumber: "WH12X10065",
+                description: "GE Washer Agitator Assembly - Dual Action Wash",
+                price: 134.99,
+                stock: 18,
+                brand: "ge",
+                category: "agitator",
+                appliance: "washer",
+                symptoms: ["Poor wash action", "Agitator loose", "Won't agitate", "Clothes not moving"],
+                models: ["GTWS8350D5WS", "GTWS8655DGS", "GTWS8400DWS"],
+                installation: "Easy - bolt on",
+                warranty: "1 Year",
+                type: "Dual action wash system"
+            },
+            {
+                partNumber: "WB56X10828",
+                description: "GE Microwave Magnetron - 1000W High Output",
+                price: 178.99,
+                stock: 9,
+                brand: "ge",
+                category: "magnetron",
+                appliance: "microwave",
+                symptoms: ["Not heating food", "Sparking", "Running but cold", "Loud humming"],
+                models: ["JVM3160RFSS", "JVM3162RJSS", "JVM6175YKFS", "JNM3163DJBB"],
+                installation: "Professional only - high voltage danger",
+                warranty: "1 Year",
+                wattage: "1000W",
+                frequency: "2450 MHz"
+            },
+            {
+                partNumber: "WR55X10025",
+                description: "GE Refrigerator Evaporator Fan Motor - Quiet Operation", 
+                price: 145.99,
+                stock: 14,
+                brand: "ge",
+                category: "motor",
+                appliance: "refrigerator",
+                symptoms: ["Loud noise from freezer", "Poor cooling", "Fan not running", "Temperature issues"],
+                models: ["GFE28GSKSS", "GNE27JSMSS", "GFE26JSMSS", "GNE25JSKSS"],
+                installation: "Professional recommended",
+                warranty: "2 Year Motor",
+                rpm: "1550 RPM",
+                voltage: "115V"
+            },
+            {
+                partNumber: "WE25X10030",
+                description: "GE Dryer Drive Motor - 1/3 HP Reversible",
+                price: 245.99,
+                stock: 8,
+                brand: "ge",
+                category: "motor",
+                appliance: "dryer",
+                symptoms: ["Drum not turning", "Motor humming", "Won't start", "Burning smell"],
+                models: ["GTD72EBPNDG", "GTD75ECPLDG", "GTD76GCPNRG", "GFD65ESSMWW"],
+                installation: "Professional recommended",
+                warranty: "3 Year Motor",
+                horsepower: "1/3 HP",
+                type: "Reversible rotation"
+            },
+            {
+                partNumber: "WE04X25300",
+                description: "GE Dryer Idler Pulley Assembly - Spring Tensioner",
+                price: 42.99,
+                stock: 55,
+                brand: "ge",
+                category: "pulley",
+                appliance: "dryer",
+                symptoms: ["Belt slipping", "Squealing noise", "Drum slow to start", "Belt jumping"],
+                models: ["GTD72EBPNDG", "GTD75ECPLDG", "GTD76GCPNRG", "GFD65ESSMWW"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                type: "Spring-loaded tensioner"
+            },
+
+            // HIGH-DEMAND LG PARTS - Most Common Service Calls
+            {
+                partNumber: "EBF49827801",
+                description: "LG Washer Door Boot Seal - Front Load Gasket",
+                price: 167.99,
+                stock: 31,
+                brand: "lg",
+                category: "seal",
+                appliance: "washer",
+                symptoms: ["Water leaking from door", "Mold on seal", "Door won't close properly", "Musty odor"],
+                models: ["WM3900HWA", "WM4000HWA", "WM4200HWA", "WM3700HWA"],
+                installation: "Difficult - special clamps needed",
+                warranty: "1 Year",
+                material: "EPDM rubber with mold resistance",
+                note: "Most common LG front-load issue"
+            },
+            {
+                partNumber: "ADQ36006101",
+                description: "LG Refrigerator Water Filter - LT1000P Replacement",
+                price: 39.99,
+                stock: 189,
+                brand: "lg",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Filter light on", "Bad taste", "Slow water flow", "Cloudy ice"],
+                models: ["LTCS24223S", "LMXS28596S", "LRFDS3006S", "LMXS30776S"],
+                installation: "Very easy - twist and lock",
+                warranty: "6 Months",
+                lifespan: "6 months or 200 gallons",
+                certifications: "NSF 42 & 53",
+                note: "High-volume LG filter"
+            },
+            {
+                partNumber: "6501KW2002A",
+                description: "LG Washer Door Lock Assembly - Electronic Interlock",
+                price: 89.99,
+                stock: 47,
+                brand: "lg",
+                category: "lock",
+                appliance: "washer",
+                symptoms: ["Door won't lock", "Won't start", "dE error code", "Door ajar"],
+                models: ["WM3900HWA", "WM4000HWA", "WM4200HWA", "WM3700HWA"],
+                errorCodes: ["dE", "dE2"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                note: "Common failure on LG front loaders"
+            },
+            {
+                partNumber: "AGL74852608",
+                description: "LG Dishwasher Spray Arm Assembly - QuadWash System",
+                price: 45.99,
+                stock: 68,
+                brand: "lg",
+                category: "spray",
+                appliance: "dishwasher",
+                symptoms: ["Poor cleaning", "Food remains on dishes", "Weak spray", "Clogged holes"],
+                models: ["LDP6797ST", "LDT5665ST", "LDF5545ST", "LDT7797ST"],
+                installation: "Easy - twist off/on",
+                warranty: "1 Year",
+                system: "QuadWash technology"
+            },
+            {
+                partNumber: "5221ER1003A",
+                description: "LG Dryer Door Switch - Safety Interlock",
+                price: 32.99,
+                stock: 87,
+                brand: "lg",
+                category: "switch", 
+                appliance: "dryer",
+                symptoms: ["Won't start", "Door switch clicking", "No power", "PS error"],
+                models: ["DLE7100W", "DLE7200W", "DLE7300WE", "DLE8600WE"],
+                errorCodes: ["PS"],
+                installation: "Easy - 3 wire connections",
+                warranty: "1 Year",
+                note: "High-wear item"
+            },
+            {
+                partNumber: "EAU62043401",
+                description: "LG Washer Water Drain Pump - Self-Priming",
+                price: 98.99,
+                stock: 29,
+                brand: "lg",
+                category: "pump",
+                appliance: "washer",
+                symptoms: ["Won't drain", "Slow drain", "OE error code", "Water remains in tub"],
+                models: ["WM3900HWA", "WM4000HWA", "WM4200HWA", "WM3700HWA"],
+                errorCodes: ["OE", "OE3"],
+                installation: "Moderate difficulty",
+                warranty: "2 Year Pump",
+                gpm: "12 gallons per minute"
+            },
+            {
+                partNumber: "MDS47123604",
+                description: "LG Dryer Lint Filter Screen - Fine Mesh Design",
+                price: 27.99,
+                stock: 156,
+                brand: "lg",
+                category: "filter",
+                appliance: "dryer",
+                symptoms: ["Poor drying", "Long dry times", "Lint everywhere", "Overheating"],
+                models: ["DLE7100W", "DLE7200W", "DLE7300WE", "DLE8600WE"],
+                installation: "Very easy - slide in place",
+                warranty: "90 Days",
+                note: "Regular maintenance item"
+            },
+            {
+                partNumber: "EAU61383503",
+                description: "LG Refrigerator Linear Compressor - Inverter Technology",
+                price: 378.99,
+                stock: 6,
+                brand: "lg",
+                category: "compressor",
+                appliance: "refrigerator",
+                symptoms: ["Not cooling", "Loud noise", "Running constantly", "Temperature fluctuating"],
+                models: ["LTCS24223S", "LMXS28596S", "LRFDS3006S", "LMXS30776S"],
+                installation: "Professional only - EPA certification required",
+                warranty: "10 Year Linear Compressor",
+                technology: "Inverter Linear Compressor",
+                note: "LG's premium technology"
+            },
+            {
+                partNumber: "6871W1N009D",
+                description: "LG Microwave Control Panel - Touch Display",
+                price: 156.99,
+                stock: 18,
+                brand: "lg",
+                category: "control",
+                appliance: "microwave",
+                symptoms: ["Buttons not working", "Display blank", "Touch panel dead", "Erratic operation"],
+                models: ["LMV2031ST", "LMV1831ST", "LMV1762ST", "LMVM2033ST"],
+                installation: "Professional recommended",
+                warranty: "1 Year",
+                type: "Touch control membrane"
+            },
+            {
+                partNumber: "MEF62185002",
+                description: "LG Range Surface Element - Radiant 1800W",
+                price: 78.99,
+                stock: 52,
+                brand: "lg",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Uneven heat", "Element cracked"],
+                models: ["LRE3194ST", "LRE3061ST", "LRE4213ST", "LRE4215ST"],
+                installation: "Moderate - electrical connections",
+                warranty: "1 Year",
+                wattage: "1800W",
+                type: "Radiant glass-top element"
+            },
+            {
+                partNumber: "6501KW2001A",
+                description: "LG Washer Water Level Pressure Switch",
+                price: 45.99,
+                stock: 41,
+                brand: "lg",
+                category: "switch",
+                appliance: "washer",
+                symptoms: ["Wrong water level", "Overfilling", "Won't fill", "IE error code"],
+                models: ["WM3900HWA", "WM4000HWA", "WM4200HWA", "WM3700HWA"],
+                errorCodes: ["IE", "1E"],
+                installation: "Easy - pressure tube connection",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "AGL72914402",
+                description: "LG Dishwasher Wash Motor Assembly - Direct Drive",
+                price: 189.99,
+                stock: 12,
+                brand: "lg",
+                category: "motor",
+                appliance: "dishwasher",
+                symptoms: ["Poor wash performance", "No water circulation", "Grinding noise", "IE error"],
+                models: ["LDP6797ST", "LDT5665ST", "LDF5545ST", "LDT7797ST"],
+                errorCodes: ["IE", "OE"],
+                installation: "Professional recommended",
+                warranty: "3 Year Motor",
+                type: "Direct drive technology"
+            },
+            {
+                partNumber: "EAD40421428",
+                description: "LG Refrigerator Ice Maker Assembly - Craft Ice Compatible",
+                price: 245.99,
+                stock: 9,
+                brand: "lg",
+                category: "icemaker",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Slow ice production", "Small cubes", "Ice maker not cycling"],
+                models: ["LTCS24223S", "LMXS28596S", "LRFDS3006S", "LMXS30776S"],
+                installation: "Professional recommended",
+                warranty: "1 Year",
+                production: "6 lbs per day",
+                features: "Craft Ice compatible"
+            },
+            {
+                partNumber: "6870W1A052A",
+                description: "LG Microwave Magnetron - 1000W Inverter",
+                price: 198.99,
+                stock: 7,
+                brand: "lg",
+                category: "magnetron",
+                appliance: "microwave",
+                symptoms: ["Not heating food", "Sparking", "Running but cold", "Loud humming"],
+                models: ["LMV2031ST", "LMV1831ST", "LMV1762ST", "LMVM2033ST"],
+                installation: "Professional only - high voltage danger",
+                warranty: "1 Year",
+                wattage: "1000W",
+                technology: "Inverter magnetron"
+            },
+            {
+                partNumber: "EAU62923401",
+                description: "LG Dryer Moisture Sensor Bar - Auto Dry Control",
+                price: 67.99,
+                stock: 35,
+                brand: "lg",
+                category: "sensor",
+                appliance: "dryer",
+                symptoms: ["Over drying", "Under drying", "Auto dry not working", "Sensor bar corroded"],
+                models: ["DLE7100W", "DLE7200W", "DLE7300WE", "DLE8600WE"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                type: "Dual bar moisture detection"
+            },
+            {
+                partNumber: "AGM76269501",
+                description: "LG Range Oven Door Handle - Stainless Steel",
+                price: 89.99,
+                stock: 23,
+                brand: "lg",
+                category: "handle",
+                appliance: "range",
+                symptoms: ["Handle broken", "Door won't open", "Handle loose", "Mounting screws stripped"],
+                models: ["LRE3194ST", "LRE3061ST", "LRE4213ST", "LRE4215ST"],
+                installation: "Easy - 2 mounting screws",
+                warranty: "1 Year",
+                finish: "Stainless steel"
+            },
+
+            // MASSIVE SAMSUNG EXPANSION - Popular Consumer Brand
+            {
+                partNumber: "DC97-17206A",
+                description: "Samsung Washer Water Pump - Self-Cleaning Filter",
+                price: 67.99,
+                stock: 45,
+                brand: "samsung",
+                category: "pump",
+                appliance: "washer",
+                symptoms: ["Won't drain", "OE error", "Water remains", "Pump noise"],
+                models: ["WF45R6100AC", "WF45R6300AC", "WF50R8500AC", "WF42H5000AW"],
+                errorCodes: ["5E", "SE", "OE"],
+                installation: "Moderate difficulty",
+                warranty: "2 Year Pump"
+            },
+            {
+                partNumber: "DC63-00653A",
+                description: "Samsung Dryer Door Latch Assembly - Magnetic Lock",
+                price: 34.99,
+                stock: 78,
+                brand: "samsung",
+                category: "latch",
+                appliance: "dryer",
+                symptoms: ["Door won't stay closed", "dE4 error", "Door pops open", "Latch clicking"],
+                models: ["DV42H5000EW", "DV45H7000EW", "DV48H7400EW", "DV50F9A8EVP"],
+                errorCodes: ["dE4"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "DA82-02376A",
+                description: "Samsung Refrigerator Water Filter - HAF-CIN Replacement",
+                price: 42.99,
+                stock: 167,
+                brand: "samsung",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Bad taste", "Slow flow", "Filter light on", "Cloudy ice"],
+                models: ["RF23J9011SR", "RF28R7351SR", "RF28R6201SR", "RF23M8070SR"],
+                installation: "Very easy - twist and pull",
+                warranty: "6 Months",
+                lifespan: "6 months or 300 gallons"
+            },
+            {
+                partNumber: "DC66-00343A",
+                description: "Samsung Dishwasher Drain Hose - Corrugated Design",
+                price: 28.99,
+                stock: 56,
+                brand: "samsung",
+                category: "hose",
+                appliance: "dishwasher",
+                symptoms: ["Won't drain", "5E error", "Water backing up", "Slow drain"],
+                models: ["DW80R5060US", "DW80R7060UG", "DW80R9950UG", "DW80R2031US"],
+                errorCodes: ["5E", "SE"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "DE63-00196A",
+                description: "Samsung Microwave Door Handle - Black Plastic",
+                price: 25.99,
+                stock: 89,
+                brand: "samsung",
+                category: "handle",
+                appliance: "microwave",
+                symptoms: ["Handle broken", "Door won't open", "Handle loose", "Plastic cracked"],
+                models: ["MS14K6000AS", "MS11K3000AS", "ME16K3000AS", "ME19R7041FS"],
+                installation: "Easy - 2 screws",
+                warranty: "90 Days"
+            },
+
+            // FRIGIDAIRE MAJOR EXPANSION - Major US Brand
+            {
+                partNumber: "5304519273",
+                description: "Frigidaire Refrigerator Compressor Start Kit - Universal",
+                price: 34.99,
+                stock: 67,
+                brand: "frigidaire",
+                category: "relay",
+                appliance: "refrigerator",
+                symptoms: ["Compressor won't start", "Clicking noise", "Not cooling", "Short cycling"],
+                models: ["FFTR1814TW", "FFTR1821TS", "FFTR2021TS", "FFSS2615TS"],
+                installation: "Moderate - electrical connections",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "134792700",
+                description: "Frigidaire Dryer Drive Belt - 92 Inch Multi-Rib",
+                price: 29.99,
+                stock: 95,
+                brand: "frigidaire",
+                category: "belt",
+                appliance: "dryer",
+                symptoms: ["Drum not turning", "Belt squealing", "Burning smell", "Belt broken"],
+                models: ["FAQG7011KW", "FAQG7073KW", "FARE4044MW", "FARE7011KW"],
+                installation: "Moderate - drum removal",
+                warranty: "1 Year",
+                length: "92 inches"
+            },
+            {
+                partNumber: "154844101",
+                description: "Frigidaire Dishwasher Upper Wash Arm - Spray Assembly",
+                price: 24.99,
+                stock: 76,
+                brand: "frigidaire",
+                category: "spray",
+                appliance: "dishwasher",
+                symptoms: ["Poor top rack cleaning", "No spray action", "Food remains", "Clogged holes"],
+                models: ["FGID2466QF", "FGBD2434PF", "FFCD2413US", "FGIP2468UF"],
+                installation: "Very easy - twist off",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "316442301",
+                description: "Frigidaire Range Drip Pan Set - Chrome Plated",
+                price: 19.99,
+                stock: 145,
+                brand: "frigidaire",
+                category: "drip",
+                appliance: "range",
+                symptoms: ["Rusty drip pans", "Food buildup", "Discolored pans", "Warped bowls"],
+                models: ["FGEF3059MF", "FGEF3035RF", "FFEF3052TS", "CFEF3017LW"],
+                installation: "Very easy - lift out",
+                warranty: "90 Days",
+                finish: "Chrome plated steel"
+            },
+
+            // ELECTROLUX PREMIUM PARTS
+            {
+                partNumber: "137108100",
+                description: "Electrolux Dryer Lint Filter Screen - Fine Mesh",
+                price: 32.99,
+                stock: 67,
+                brand: "electrolux",
+                category: "filter",
+                appliance: "dryer",
+                symptoms: ["Poor drying", "Lint buildup", "Long dry times", "Overheating"],
+                models: ["EIED200QSW", "EIED55HIW0", "EIMGD55HIW0", "EIMED60LT1"],
+                installation: "Very easy",
+                warranty: "90 Days"
+            },
+            {
+                partNumber: "154783501",
+                description: "Electrolux Dishwasher Control Board - Touch Panel",
+                price: 267.89,
+                stock: 8,
+                brand: "electrolux",
+                category: "control",
+                appliance: "dishwasher",
+                symptoms: ["Touch panel dead", "Won't start", "Display blank", "Buttons not responding"],
+                models: ["EW24ID80QS", "EI24ID81SS", "EW24PS65SS", "EI24CD35QS"],
+                installation: "Professional recommended",
+                warranty: "1 Year"
+            },
+
+            // MAYTAG COMMERCIAL-GRADE EXPANSION
+            {
+                partNumber: "W11035700",
+                description: "Maytag Washer Transmission - Heavy Duty Gearcase",
+                price: 445.99,
+                stock: 4,
+                brand: "maytag",
+                category: "transmission",
+                appliance: "washer",
+                symptoms: ["Won't agitate", "Grinding noise", "Won't spin", "Transmission leak"],
+                models: ["MVWC465HW", "MVWC565FW", "MVWC665EW", "MVWC755DW"],
+                installation: "Professional required",
+                warranty: "10 Year Transmission"
+            },
+            {
+                partNumber: "W10183157",
+                description: "Maytag Dryer Heating Element - 5600W Heavy Duty",
+                price: 89.99,
+                stock: 34,
+                brand: "maytag",
+                category: "element",
+                appliance: "dryer",
+                symptoms: ["No heat", "Takes forever to dry", "Element not glowing", "Cold air"],
+                models: ["MEDC465HW", "MEDC555DW", "MGDC465HW", "MGDC555DW"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year",
+                wattage: "5600W"
+            },
+
+            // KENMORE EXTENSIVE COVERAGE
+            {
+                partNumber: "W10130913",
+                description: "Kenmore Washer Agitator Dogs - Cam Kit",
+                price: 16.99,
+                stock: 134,
+                brand: "kenmore",
+                category: "agitator",
+                appliance: "washer",
+                symptoms: ["Agitator spins freely", "No wash action", "Clothes not moving", "Worn dogs"],
+                models: ["110.28132410", "110.27032601", "110.26132411", "110.28032700"],
+                installation: "Easy - agitator removal",
+                warranty: "1 Year"
+            },
+            {
+                partNumber: "4389144",
+                description: "Kenmore Refrigerator Ice Maker - Complete Assembly",
+                price: 167.99,
+                stock: 19,
+                brand: "kenmore",
+                category: "icemaker",
+                appliance: "refrigerator",
+                symptoms: ["No ice", "Slow ice making", "Ice maker not cycling", "Water not filling"],
+                models: ["596.76523410", "596.76529410", "253.70412414", "253.67879505"],
+                installation: "Moderate difficulty",
+                warranty: "1 Year"
+            },
+
+            // THERMADOR LUXURY BRAND
+            {
+                partNumber: "00772591",
+                description: "Thermador Range Surface Element - 2500W Radiant",
+                price: 189.99,
+                stock: 12,
+                brand: "thermador",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Uneven heat", "Element cracked"],
+                models: ["CET366NS", "CET304NS", "CIT304KM", "CEM304NS"],
+                installation: "Professional recommended",
+                warranty: "2 Years",
+                wattage: "2500W"
+            },
+            {
+                partNumber: "00772840",
+                description: "Thermador Dishwasher Wash Pump Motor - German Engineering",
+                price: 389.99,
+                stock: 3,
+                brand: "thermador",
+                category: "pump",
+                appliance: "dishwasher",
+                symptoms: ["Poor wash performance", "No circulation", "Grinding noise", "E24 error"],
+                models: ["DWHD650WFP", "DWHD770WFP", "DWHD940NSM", "DWHD650JPR"],
+                errorCodes: ["E24", "E25"],
+                installation: "Professional only",
+                warranty: "5 Year Motor"
+            },
+
+            // SUB-ZERO ULTRA-PREMIUM
+            {
+                partNumber: "7007067",
+                description: "Sub-Zero Refrigerator Water Filter - Premium Filtration",
+                price: 89.99,
+                stock: 45,
+                brand: "subzero",
+                category: "filter",
+                appliance: "refrigerator",
+                symptoms: ["Filter light on", "Bad taste", "Slow flow", "Cloudy water"],
+                models: ["BI36UFD", "BI42SD", "PRO4850", "IT36CIID"],
+                installation: "Easy - twist and lock",
+                warranty: "1 Year",
+                lifespan: "12 months or 750 gallons"
+            },
+
+            // SPEED QUEEN COMMERCIAL
+            {
+                partNumber: "510105P",
+                description: "Speed Queen Washer Drive Belt - Commercial Grade",
+                price: 67.99,
+                stock: 28,
+                brand: "speedqueen",
+                category: "belt",
+                appliance: "washer",
+                symptoms: ["Won't spin", "Belt squealing", "Transmission noise", "Belt broken"],
+                models: ["AWN432SP", "AWN542SP", "AWNE92SP", "TR7003WN"],
+                installation: "Professional recommended",
+                warranty: "3 Years",
+                type: "Commercial duty"
+            },
+
+            // JENN-AIR LUXURY
+            {
+                partNumber: "W11545848",
+                description: "Jenn-Air Range Control Knob - Professional Series",
+                price: 45.99,
+                stock: 34,
+                brand: "jennair",
+                category: "knob",
+                appliance: "range",
+                symptoms: ["Knob broken", "Won't turn", "Temperature incorrect", "Missing markings"],
+                models: ["JJW3830WP", "JJW3430WP", "JFC2290REM", "JGC7636BP"],
+                installation: "Easy - pull off/push on",
+                warranty: "1 Year",
+                finish: "Stainless steel"
+            },
+
+            // VIKING PROFESSIONAL
+            {
+                partNumber: "PE010172",
+                description: "Viking Range Oven Igniter - Professional Grade",
+                price: 134.99,
+                stock: 8,
+                brand: "viking",
+                category: "igniter",
+                appliance: "range",
+                symptoms: ["Oven won't heat", "Gas smell", "Long preheat", "Igniter not glowing"],
+                models: ["VGSC5366BSS", "VGCC5366BSS", "VGSC5304BSS", "VDSC5366BSS"],
+                installation: "Professional required - gas safety",
+                warranty: "2 Years",
+                amperage: "3.3-3.7 amps"
+            },
+
+            // MIELE GERMAN ENGINEERING
+            {
+                partNumber: "6057930",
+                description: "Miele Dishwasher Circulation Pump - German Precision",
+                price: 245.99,
+                stock: 6,
+                brand: "miele",
+                category: "pump",
+                appliance: "dishwasher",
+                symptoms: ["Poor wash performance", "No circulation", "Quiet operation lost", "F70 error"],
+                models: ["G7316SCU", "G4998SCVi", "G6665SCVi", "G7566SCVi"],
+                errorCodes: ["F70", "F78"],
+                installation: "Professional only",
+                warranty: "5 Year Motor"
+            },
+
+            // INSINKERATOR DISPOSAL SPECIALIST
+            {
+                partNumber: "13952",
+                description: "InSinkErator Garbage Disposal Motor - 3/4 HP Dura-Drive",
+                price: 189.99,
+                stock: 15,
+                brand: "insinkerator",
+                category: "motor",
+                appliance: "disposal",
+                symptoms: ["Won't turn on", "Humming", "Tripped breaker", "Motor burned out"],
+                models: ["Evolution Excel", "Evolution Compact", "Badger 5", "Pro750"],
+                installation: "Professional recommended - electrical",
+                warranty: "6 Year Motor",
+                horsepower: "3/4 HP"
+            },
+
+            // HAIER GROWING MARKET
+            {
+                partNumber: "WD-3550-07",
+                description: "Haier Washer Water Level Switch - Pressure Activated",
+                price: 34.99,
+                stock: 45,
+                brand: "haier",
+                category: "switch",
+                appliance: "washer",
+                symptoms: ["Wrong water level", "Overfilling", "Won't fill", "E4 error"],
+                models: ["HLP21N", "HWM70-1282S", "HWD80-B14636", "HWM85-1403D"],
+                errorCodes: ["E4"],
+                installation: "Easy",
+                warranty: "1 Year"
+            },
+
+            // INSIGNIA BUDGET BRAND
+            {
+                partNumber: "5304505392",
+                description: "Insignia Refrigerator Start Relay - Budget Replacement",
+                price: 18.99,
+                stock: 89,
+                brand: "insignia",
+                category: "relay",
+                appliance: "refrigerator",
+                symptoms: ["Compressor won't start", "Clicking", "Not cooling", "Short cycling"],
+                models: ["NS-RTM18SS7", "NS-RTM21SS8", "NS-CF50WH6", "NS-RTM10SS7"],
+                installation: "Easy - plug in",
+                warranty: "90 Days"
+            },
+
+            // MAGIC CHEF RENTAL PROPERTY STAPLE
+            {
+                partNumber: "12002535",
+                description: "Magic Chef Range Surface Element - 8 Inch 2100W",
+                price: 34.99,
+                stock: 67,
+                brand: "magicchef",
+                category: "element",
+                appliance: "range",
+                symptoms: ["Burner not heating", "Slow heating", "Uneven heat", "Element burned out"],
+                models: ["MCSRE24S", "MCSRE30S", "MCSR30S", "MCER24S"],
+                installation: "Very easy - plug in",
+                warranty: "90 Days",
+                wattage: "2100W"
             }
         ];
 
@@ -1959,6 +3639,8 @@
             if (parts.length === 0) {
                 resultsDiv.innerHTML = '<div class="no-results">No parts found matching your search.</div>';
                 resultsDiv.style.display = 'block';
+                // Auto-scroll to results
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
 
@@ -1975,7 +3657,7 @@
                                     ${systemData.bookmarks.parts.includes(part.partNumber) ? '★' : '☆'}
                                 </span>
                             </div>
-                            <div class="part-price">$${part.price.toFixed(2)}</div>
+                            <div class="part-price">${part.price.toFixed(2)}</div>
                         </div>
                         <div class="part-description">${part.description}</div>
                         <div class="part-meta">
@@ -1992,6 +3674,9 @@
             
             resultsDiv.innerHTML = resultsHtml;
             resultsDiv.style.display = 'block';
+            
+            // Auto-scroll to results with smooth animation
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // Rest of the original functions with enhancements
@@ -2143,6 +3828,18 @@
             }
         });
 
+        // Add Enter key support for phone search
+        document.getElementById('phoneSearch').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const value = e.target.value.trim();
+                if (value.length >= 10) {
+                    const formatted = formatPhone(value);
+                    lookupCustomer(formatted);
+                    document.getElementById('phoneSuggestions').style.display = 'none';
+                }
+            }
+        });
+
         document.getElementById('partsSearch').addEventListener('input', function(e) {
             if (e.target.value.length >= 2) {
                 showSearchSuggestions('partsSearch', 'partsSuggestions', 'quickPartsSearch');
@@ -2154,6 +3851,44 @@
                 searchParts(e.target.value);
             } else if (e.target.value.length === 0) {
                 document.getElementById('partsResults').style.display = 'none';
+            }
+        });
+
+        // Add Enter key support for parts search
+        document.getElementById('partsSearch').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const value = e.target.value.trim();
+                if (value.length > 0) {
+                    searchParts(value);
+                    document.getElementById('partsSuggestions').style.display = 'none';
+                }
+            }
+        });
+
+        // Add Enter key support for missing parts input
+        document.addEventListener('DOMContentLoaded', function() {
+            // Model search Enter key support
+            const modelSearchInput = document.getElementById('modelSearch');
+            if (modelSearchInput) {
+                modelSearchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        const value = e.target.value.trim();
+                        if (value.length > 0) {
+                            searchByModel(value);
+                            document.getElementById('modelSuggestions').style.display = 'none';
+                        }
+                    }
+                });
+            }
+            
+            // Missing parts input Enter key support
+            const newPartInput = document.getElementById('newPartNumber');
+            if (newPartInput) {
+                newPartInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        quickAddMissingPart();
+                    }
+                });
             }
         });
 
